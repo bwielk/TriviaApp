@@ -5,7 +5,7 @@
   "main": "seeds.js",
   "scripts": {
     "test": "mocha client/src/models/specs",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

@@ -8,8 +8,8 @@ router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/src/views/index.html'));
 });
 
-router.get('about', function(req, res){
+router.get('/about', function(req, res){
   res.json({data: "Your home for quizzes"});
-})
+});
 
 module.exports = router;
