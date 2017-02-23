@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
 var QuestionsQuery = function(){
-  this.url = 'mongodb://localhost:27017/questions';
+  this.url = 'mongodb://localhost:27017/trivia';
 }
 
 QuestionsQuery.prototype = {
