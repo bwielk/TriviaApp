@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 
-router.use('/api/quiz', require('./quiz'));
+router.use('/api/questions', require('./questions'));
 
 router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/src/views/index.html'));
