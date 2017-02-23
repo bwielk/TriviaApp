@@ -1,5 +1,7 @@
 use trivia;
 
+db.dropDatabase();
+
 db.questions.insert([
   
   {
@@ -9,9 +11,11 @@ db.questions.insert([
   },
 
   {
-    question: "What show made the Olsen twins famous?"
+    question: "What show made the Olsen twins famous?",
     options: ["Family Matters","Full House","Friends","Blossom"],
     correctAnswer: "Full House"
   }
 
 ]);
+
+db.questions.find();
