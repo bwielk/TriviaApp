@@ -1,4 +1,4 @@
-use triva;
+use trivia;
 
 db.questions.insert([
   
