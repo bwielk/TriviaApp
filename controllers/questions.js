@@ -14,7 +14,6 @@ questionsRouter.get('/', function(req, res) {
 
 questionsRouter.get('/:id', function(req, res) {
   query.all(function(results) {
-    console.log(results[req.params.id]);
     res.json(results[req.params.id]);
   });
 });
@@ -25,7 +24,6 @@ questionsRouter.post('/', function(req, res){
     correctAnswer: req.body.correctAnswer,
     possibleAnswers: req.body.possibleAnswers//array?
   });
-  console.log(newQuestion);
   query.add(newQuestion,function(results){ //NEW
     res.json(results);
   });
@@ -37,7 +35,6 @@ questionsRouter.put('/:id', function(req, res){
     correctAnswer: req.body.correctAnswer,
     possibleAnswers: req.body.possibleAnswers //array?
   });
-  console.log(updatedQuestion);
 
   query.all(function(results) {
     var questionToUpdate = results[req.params.id];
