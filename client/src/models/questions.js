@@ -9,28 +9,28 @@ Questions.prototype = {
     request.send();
   }, 
 
-  makePostRequest: function(url, callback, entryData) {
-    var request = new XMLHttpRequest();
-    request.open("POST", url);//we request the POST connection
-    request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
-    request.onload = callback;
-    request.send(entryData);
-  },
+  // makePostRequest: function(url, callback, entryData) {
+  //   var request = new XMLHttpRequest();
+  //   request.open("POST", url);//we request the POST connection
+  //   request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
+  //   request.onload = callback;
+  //   request.send(entryData);
+  // },
 
-  /////////////////////TO BE CHECKED/////////////////////////////////////////////////
-  makePutRequest: function(url, callback, entryData){
-    request.open("PUT", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send(entryData);
-  },
+  // /////////////////////TO BE CHECKED/////////////////////////////////////////////////
+  // makePutRequest: function(url, callback, entryData){
+  //   request.open("PUT", url);
+  //   request.setRequestHeader("Content-type", "application/json");
+  //   request.onload = callback;
+  //   request.send(entryData);
+  // },
 
-  makeDeleteRequest: function(url, callback){
-    request.open("DELETE", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send();
-  },
+  // makeDeleteRequest: function(url, callback){
+  //   request.open("DELETE", url);
+  //   request.setRequestHeader("Content-type", "application/json");
+  //   request.onload = callback;
+  //   request.send();
+  // },
 
   all: function(callback) {
     this.makeRequest('http://localhost:3000/api/questions', function() {
