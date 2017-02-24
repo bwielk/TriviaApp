@@ -5,7 +5,7 @@ Players.prototype = {
     var request = new XMLHttpRequest();
     request.open('GET', url);
     request.onload = callback;
-    request.close();
+    request.send();
   },
 
   all: function(callback){

@@ -63,31 +63,15 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-
-var registrationUI = function() {
-  this.createForm();
-}
-
-registrationUI.prototype = {
-
-
-}
-
-module.exports = registrationUI;
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Questions = __webpack_require__(4);
-var Player = __webpack_require__(3)
+var Questions = __webpack_require__(1);
+var Player = __webpack_require__(4)
 
 var currentPlayer;
 var questionsArray;
@@ -180,69 +164,7 @@ UI.prototype = {
 module.exports = UI;
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var UI = __webpack_require__(1);
-var registrationUI = __webpack_require__(0);
-
-
-var welcomeUI = function() {
-  this.createWelcomeText();
-  this.createPlayButton();
-  this.createRegisterButton();
-}
-
-welcomeUI.prototype = {
-  createWelcomeText: function() {
-    var welcomeText = document.createElement('p');
-    welcomeText.innerText = "This is a game";
-    var div = document.getElementById('main')
-    div.appendChild(welcomeText);
-  }, 
-
-  handleButtonClick: function() {
-    new UI();
-  },
-
-  handleRegisterButtonClick: function() {
-    new registrationUI();
-  },
-
-  createPlayButton: function() {
-    var playButton = document.createElement('button');
-    playButton.innerText = "PLAY";
-    var div = document.getElementById('main')
-    div.appendChild(playButton);
-    playButton.onclick = this.handleButtonClick;
-  }, 
-
-  createRegisterButton: function() {
-    var registerButton = document.createElement('button');
-    registerButton.innerText = "REGISTER";
-    var div = document.getElementById('main')
-    div.appendChild(registerButton);
-    registerButton.onclick = this.handleRegisterButtonClick;
-  }
-
-}
-
-module.exports = welcomeUI;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var Player = function(options){
-  this.name = options.name;
-  this.password = options.password;
-  this.scores = options.scores;
-};
-
-module.exports = Player;
-
-/***/ }),
-/* 4 */
+/* 1 */
 /***/ (function(module, exports) {
 
 var Questions = function() {
@@ -328,12 +250,12 @@ module.exports = Questions;
 
 
 /***/ }),
-/* 5 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var UI = __webpack_require__(1);
-var welcomeUI = __webpack_require__(2);
-var registrationUI = __webpack_require__(0);
+var UI = __webpack_require__(0);
+var welcomeUI = __webpack_require__(3);
+var registrationUI = __webpack_require__(5);
 
 var welcome = function() {
   new welcomeUI();
@@ -348,6 +270,177 @@ var app = function() {
 }
 
 window.onload = welcome;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var UI = __webpack_require__(0);
+var registrationUI = __webpack_require__(5);
+var leaderboardUI = __webpack_require__(6);
+
+
+var welcomeUI = function() {
+  this.createWelcomeText();
+  this.createPlayButton();
+  this.createRegisterButton();
+  this.createLeaderboardButton();
+}
+
+welcomeUI.prototype = {
+  createWelcomeText: function() {
+    var welcomeText = document.createElement('p');
+    welcomeText.innerText = "This is a game";
+    var div = document.getElementById('main')
+    div.appendChild(welcomeText);
+  }, 
+
+  handleButtonClick: function() {
+    new UI();
+  },
+
+  handleRegisterButtonClick: function() {
+    new registrationUI();
+  },
+
+  handleLeaderboardButtonClick: function(){
+    new leaderboardUI();
+  },
+
+  createPlayButton: function() {
+    var playButton = document.createElement('button');
+    playButton.innerText = "PLAY";
+    var div = document.getElementById('main')
+    div.appendChild(playButton);
+    playButton.onclick = this.handleButtonClick;
+  }, 
+
+  createRegisterButton: function() {
+    var registerButton = document.createElement('button');
+    registerButton.innerText = "REGISTER";
+    var div = document.getElementById('main')
+    div.appendChild(registerButton);
+    registerButton.onclick = this.handleRegisterButtonClick;
+  },
+
+  createLeaderboardButton: function(){
+    var leaderboardButton = document.createElement('button');
+    leaderboardButton.innerText = "LEADERBOARD";
+    var div = document.getElementById('main');
+    div.appendChild(leaderboardButton);
+    leaderboardButton.onclick = this.handleLeaderboardButtonClick;
+  }
+}
+
+module.exports = welcomeUI;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+var Player = function(options){
+  this.name = options.name;
+  this.password = options.password;
+  this.scores = options.scores;
+};
+
+module.exports = Player;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+
+var registrationUI = function() {
+  // this.createForm();
+}
+
+registrationUI.prototype = {
+
+
+}
+
+module.exports = registrationUI;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Players = __webpack_require__(7);
+
+var leaderboardUI = function(){
+  var players = new Players();
+  players.all(function(result){
+    this.render(result);
+  }.bind(this));
+};
+
+leaderboardUI.prototype = {
+  render: function(players){
+    var maindiv = document.getElementById('main');
+    var list = document.createElement('ol');
+    var sortedArray = players.sort(function(a, b){
+      return a.scores - b.scores;
+    }).reverse();
+    for(var player of sortedArray){
+      var li = document.createElement('li');
+      li.innerText = "NAME: " + player.name + " \n SCORES(total): " + player.scores + "";
+      list.appendChild(li);
+    }
+    maindiv.appendChild(list);
+  }
+}
+
+
+module.exports = leaderboardUI;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var Players = function(){};
+
+Players.prototype = {
+  makeRequest: function(url, callback){
+    var request = new XMLHttpRequest();
+    request.open('GET', url);
+    request.onload = callback;
+    request.send();
+  },
+
+  all: function(callback){
+    this.makeRequest('http://localhost:3000/api/players', function(){
+      if(this.status !== 200) return;
+      var jsonString = this.responseText;
+      var result = JSON.parse(jsonString);
+      callback(result);
+    });
+  },
+
+  makePostRequest: function(url, callback, entryData) {
+    var request = new XMLHttpRequest();
+    request.open("POST", url);//we request the POST connection
+    request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
+    request.onload = callback;
+    request.send(entryData);
+  },
+
+  makePutRequest: function(url, callback, entryData){
+    request.open("PUT", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send(entryData);
+  },
+
+  makeDeleteRequest: function(url, callback){
+    request.open("DELETE", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send();
+  },
+}
+
+module.exports = Players;
 
 /***/ })
 /******/ ]);
