@@ -1,9 +1,11 @@
 var UI = require('./ui.js');
+var registrationUI = require('./registrationUI.js');
 
 
 var welcomeUI = function() {
   this.createWelcomeText();
   this.createPlayButton();
+  this.createRegisterButton();
 }
 
 welcomeUI.prototype = {
@@ -18,12 +20,24 @@ welcomeUI.prototype = {
     new UI();
   },
 
+  handleRegisterButtonClick: function() {
+    new registrationUI();
+  },
+
   createPlayButton: function() {
     var playButton = document.createElement('button');
     playButton.innerText = "PLAY";
     var div = document.getElementById('main')
     div.appendChild(playButton);
     playButton.onclick = this.handleButtonClick;
+  }, 
+
+  createRegisterButton: function() {
+    var registerButton = document.createElement('button');
+    registerButton.innerText = "REGISTER";
+    var div = document.getElementById('main')
+    div.appendChild(registerButton);
+    registerButton.onclick = this.handleRegisterButtonClick;
   }
 
 }
