@@ -83,4 +83,23 @@ db.questions.insert([
 
 ]);
 
+db.players.insert([
+  
+  {
+    name: "NinaK",
+    password: "nina1993",
+    scores: 12
+  },
+
+  {
+    name: "JimmyJimmy",
+    password: "sand",
+    scores: 100
+
+  }
+
+  ]);
+
+
+
 db.questions.find();

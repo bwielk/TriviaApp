@@ -1,5 +1,5 @@
 var express = require('express');
-// var app = express();
+
 var Question = require('../client/src/models/question');
 var questionsRouter = express.Router();
 
