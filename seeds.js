@@ -3,13 +3,6 @@ use trivia;
 db.dropDatabase();
 
 db.questions.insert([
-  
-  // {
-  //   question: "What is 1 + 1?",
-  //   options: ["1", "3", "11", "2"],
-  //   correctAnswer: "2"
-  // },
-
   {
     questionString: "What show made the Olsen twins famous?",
     possibleAnswers: ["Family Matters", "Full House", "Friends", "Blossom"],
@@ -88,18 +81,29 @@ db.players.insert([
   {
     name: "NinaK",
     password: "nina1993",
-    scores: 12
+    scores: 70
   },
 
   {
     name: "JimmyJimmy",
-    password: "sand",
+    password: "Sandy",
     scores: 100
 
+  },
+
+  {
+    name: "BlaiseyBaby",
+    password: "pradaRulez",
+    scores: 60
+
+  },
+
+  {
+    name: "Coco",
+    password: "255",
+    scores: 50
+
   }
-
   ]);
-
-
 
 db.questions.find();
