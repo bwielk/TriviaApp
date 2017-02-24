@@ -17,7 +17,6 @@ Questions.prototype = {
     request.send(entryData);
   },
 
-  /////////////////////TO BE CHECKED/////////////////////////////////////////////////
   makePutRequest: function(url, callback, entryData){
     request.open("PUT", url);
     request.setRequestHeader("Content-type", "application/json");
@@ -40,20 +39,19 @@ Questions.prototype = {
         callback(result);
     });
   }
-};
-//   add: function(newQuestion, callback){
-//     var questionToAdd = JSON.stringify(newQuestion);
-//     this.makePostRequest('http://localhost:3000/api/questions', questionToAdd, callback);
-//   },
+  // add: function(newQuestion, callback){
+  //   var questionToAdd = JSON.stringify(newQuestion);
+  //   this.makePostRequest('http://localhost:3000/api/questions', questionToAdd, callback);
+  // },
 
-//   update: function(question, callback){
-//     var questionUpdate = JSON.stringify(question);
-//     this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
-//   },
+  // update: function(question, callback){
+  //   var questionUpdate = JSON.stringify(question);
+  //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
+  // },
 
-//   delete: function(question, callback){
-//     this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
-//   }
-// };
+  // delete: function(question, callback){
+  //   this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
+  // }
+}
 
 module.exports = Questions;

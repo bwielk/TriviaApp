@@ -22,6 +22,7 @@ questionsRouter.post('/', function(req, res){
   var newQuestion = new Question({
     questionString: req.body.questionString,
     correctAnswer: req.body.correctAnswer,
+    category: req.body.category,
     possibleAnswers: req.body.possibleAnswers//array?
   });
   query.add(newQuestion,function(results){ //NEW
@@ -33,6 +34,7 @@ questionsRouter.put('/:id', function(req, res){
   var updatedQuestion = new Question({
     questionString: req.body.questionString,
     correctAnswer: req.body.correctAnswer,
+    category: req.body.category,
     possibleAnswers: req.body.possibleAnswers //array?
   });
 
@@ -54,8 +56,5 @@ questionsRouter.delete('/:id', function(req, res){
     });  
   });
 });
-
-
-
 
 module.exports = questionsRouter;

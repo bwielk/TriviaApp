@@ -10,11 +10,13 @@ describe("QuestionSpec", function(){
     question1 = new Question({
       questionString: "What's your name?", 
       correctAnswer: "James", 
+      category: "general",
       possibleAnswers: ["James", "Nina", "Blaise", "Cookie"]
     });
     question2 = new Question({
       questionString: "What's your age?", 
       correctAnswer: "22", 
+      category: "general",
       possibleAnswers: ["23", "22", "24", "25"]
     });
   });
@@ -30,5 +32,9 @@ describe("QuestionSpec", function(){
   it("should have options", function(){
     is.equal("Nina", question1.possibleAnswers[1]);
   });
+
+  it("should have category", function(){
+    is.equal("general", question1.category);
+  })
 });
 
