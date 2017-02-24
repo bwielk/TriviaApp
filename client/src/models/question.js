@@ -1,7 +1,7 @@
-var Question = function(question, answer, options){
-  this.question = question;
-  this.answer = answer;
-  this.options = options;
+var Question = function(options){
+  this.questionString = options.questionString;
+  this.correctAnswer = options.correctAnswer;
+  this.possibleAnswers = options.possibleAnswers;
 };
 
 

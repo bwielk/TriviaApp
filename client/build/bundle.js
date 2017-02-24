@@ -63,26 +63,14 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var UI = __webpack_require__(1);
-
-var app = function() {
-  new UI();
-}
-
-window.onload = app;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Questions = __webpack_require__(2);
+var Questions = __webpack_require__(1);
 
 var UI = function() {
   var questions = new Questions();
@@ -118,7 +106,7 @@ UI.prototype = {
 module.exports = UI;
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports) {
 
 var Questions = function() {
@@ -132,6 +120,29 @@ Questions.prototype = {
     request.send();
   }, 
 
+  makePostRequest: function(url, callback, entryData) {
+    var request = new XMLHttpRequest();
+    request.open("POST", url);//we request the POST connection
+    request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
+    request.onload = callback;
+    request.send(entryData);
+  },
+
+  /////////////////////TO BE CHECKED/////////////////////////////////////////////////
+  makePutRequest: function(url, callback, entryData){
+    request.open("PUT", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send(entryData);
+  },
+
+  makeDeleteRequest: function(url, callback){
+    request.open("DELETE", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send();
+  },
+
   all: function(callback) {
     this.makeRequest('http://localhost:3000/api/questions', function() {
       if (this.status != 200) return;
@@ -141,9 +152,35 @@ Questions.prototype = {
     });
   }
 };
+//   add: function(newQuestion, callback){
+//     var questionToAdd = JSON.stringify(newQuestion);
+//     this.makePostRequest('http://localhost:3000/api/questions', questionToAdd, callback);
+//   },
+
+//   update: function(question, callback){
+//     var questionUpdate = JSON.stringify(question);
+//     this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
+//   },
+
+//   delete: function(question, callback){
+//     this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
+//   }
+// };
 
 module.exports = Questions;
 
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var UI = __webpack_require__(0);
+
+var app = function() {
+  new UI();
+}
+
+window.onload = app;
 
 /***/ })
 /******/ ]);

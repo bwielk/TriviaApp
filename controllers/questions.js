@@ -12,28 +12,51 @@ questionsRouter.get('/', function(req, res) {
   });
 });
 
-// questionsRouter.post('/', function(req, res){
-//   var newQuestion = new Question({
-//     question: req.body.question,
-//     answer: req.body.answer,
-//     options: req.body.options//array?
-//   });
-// });
+questionsRouter.get('/:id', function(req, res) {
+  query.all(function(results) {
+    console.log(results[req.params.id]);
+    res.json(results[req.params.id]);
+  });
+});
 
-// questionsRouter.put('/:id', function(req, res){
-//   var updatedQuestion = new Question({
-//     question: req.body.question,
-//     answer: req.body.answer,
-//     options: req.body.options //array?
-//   });
-//   questions[req.params.id] = updatedQuestion;
-//   res.json({data: questions});
-// });
+questionsRouter.post('/', function(req, res){
+  var newQuestion = new Question({
+    questionString: req.body.questionString,
+    correctAnswer: req.body.correctAnswer,
+    possibleAnswers: req.body.possibleAnswers//array?
+  });
+  console.log(newQuestion);
+  query.add(newQuestion,function(results){ //NEW
+    res.json(results);
+  });
+});
 
-// questionsRouter.delete('/:id', function(req, res){
-//   questions.splice(req.params.id, 1);
-//   res.json({data: questions});
-// });
+questionsRouter.put('/:id', function(req, res){
+  var updatedQuestion = new Question({
+    questionString: req.body.questionString,
+    correctAnswer: req.body.correctAnswer,
+    possibleAnswers: req.body.possibleAnswers //array?
+  });
+  console.log(updatedQuestion);
+
+  query.all(function(results) {
+    var questionToUpdate = results[req.params.id];
+    query.update( questionToUpdate, updatedQuestion, function(results2) {
+      res.json(results2);
+    });  
+  });
+
+});
+
+questionsRouter.delete('/:id', function(req, res){
+  // questions.splice(req.params.id, 1);
+  query.all(function(results) {
+    var questionObject = results[req.params.id];
+    query.delete( questionObject, function(results2) {
+      res.json(results2);
+    });  
+  });
+});
 
 
 

@@ -30,7 +30,7 @@ Questions.prototype = {
     request.setRequestHeader("Content-type", "application/json");
     request.onload = callback;
     request.send();
-  }
+  },
 
   all: function(callback) {
     this.makeRequest('http://localhost:3000/api/questions', function() {
@@ -39,8 +39,8 @@ Questions.prototype = {
         var result = JSON.parse(jsonString);
         callback(result);
     });
-  },
-
+  }
+};
 //   add: function(newQuestion, callback){
 //     var questionToAdd = JSON.stringify(newQuestion);
 //     this.makePostRequest('http://localhost:3000/api/questions', questionToAdd, callback);
