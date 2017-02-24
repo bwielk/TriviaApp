@@ -175,12 +175,27 @@ module.exports = Questions;
 /***/ (function(module, exports, __webpack_require__) {
 
 var UI = __webpack_require__(0);
+var welcomeUI = __webpack_require__(3);
+
+var welcome = function() {
+  new welcomeUI();
+}
 
 var app = function() {
   new UI();
 }
 
 window.onload = app;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var welcomeUI = function() {
+
+}
+
+module.exports = welcomeUI;
 
 /***/ })
 /******/ ]);
