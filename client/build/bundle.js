@@ -75,7 +75,9 @@ var Questions = __webpack_require__(1);
 var UI = function() {
   var questions = new Questions();
   questions.all(function(result) {
+    console.log(result[0]);
     this.render(result[0]);
+    console.log(result);
   }.bind(this));
 }
 
@@ -92,13 +94,15 @@ UI.prototype = {
   }, 
 
   render: function(question) {
+    console.log(question);
     var container = document.getElementById('question');
     var li = document.createElement('li');
-    this.appendText(li, question.question, "Question: ")
-    this.appendText(li, question.options[0], "A: ");
-    this.appendText(li, question.options[1], "B: ");
-    this.appendText(li, question.options[2], "C: ");
-    this.appendText(li, question.options[3], "D: ");
+    console.log(question);
+    this.appendText(li, question.questionString, "Question: ")
+    this.appendText(li, question.possibleAnswers[0], "A: ");
+    this.appendText(li, question.possibleAnswers[1], "B: ");
+    this.appendText(li, question.possibleAnswers[2], "C: ");
+    this.appendText(li, question.possibleAnswers[3], "D: ");
     container.appendChild(li);
   }
 }
@@ -109,76 +113,60 @@ module.exports = UI;
 /* 1 */
 /***/ (function(module, exports) {
 
-var Questions = function() {
-}
-
-Questions.prototype = {
-  makeRequest: function(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url);
-    request.onload = callback;
-    request.send();
-  }, 
-
-  makePostRequest: function(url, callback, entryData) {
-    var request = new XMLHttpRequest();
-    request.open("POST", url);//we request the POST connection
-    request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
-    request.onload = callback;
-    request.send(entryData);
-  },
-
-  makePutRequest: function(url, callback, entryData){
-    request.open("PUT", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send(entryData);
-  },
-
-  makeDeleteRequest: function(url, callback){
-    request.open("DELETE", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send();
-  },
-
-  all: function(callback) {
-    this.makeRequest('http://localhost:3000/api/questions', function() {
-      if (this.status != 200) return;
-        var jsonString = this.responseText;
-        var result = JSON.parse(jsonString);
-        callback(result);
-    });
-  }
-  // add: function(newQuestion, callback){
-  //   var questionToAdd = JSON.stringify(newQuestion);
-  //   this.makePostRequest('http://localhost:3000/api/questions', questionToAdd, callback);
-  // },
-
-  // update: function(question, callback){
-  //   var questionUpdate = JSON.stringify(question);
-  //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
-  // },
-
-  // delete: function(question, callback){
-  //   this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
-  // }
-}
-
-module.exports = Questions;
-
+throw new Error("Module parse failed: /Users/user/Documents/week13/trivial/TriviaApp/client/src/models/questions.js Unexpected token (12:0)\nYou may need an appropriate loader to handle this file type.\n|   }, \n| \n| <<<<<<< HEAD\n|   makePostRequest: function(url, callback, entryData) {\n|     var request = new XMLHttpRequest();");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var UI = __webpack_require__(0);
+var welcomeUI = __webpack_require__(3);
+
+var welcome = function() {
+  new welcomeUI();
+}
 
 var app = function() {
   new UI();
 }
 
-window.onload = app;
+window.onload = welcome;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var UI = __webpack_require__(0);
+
+
+var welcomeUI = function() {
+  this.createWelcomeText();
+  this.createPlayButton();
+}
+
+welcomeUI.prototype = {
+  createWelcomeText: function() {
+    var welcomeText = document.createElement('p');
+    welcomeText.innerText = "This is a game";
+    var div = document.getElementById('main')
+    div.appendChild(welcomeText);
+  }, 
+
+  handleButtonClick: function() {
+    new UI();
+  },
+
+  createPlayButton: function() {
+    var playButton = document.createElement('button');
+    playButton.innerText = "PLAY";
+    var div = document.getElementById('main')
+    div.appendChild(playButton);
+    playButton.onclick = this.handleButtonClick;
+  }
+
+}
+
+module.exports = welcomeUI;
 
 /***/ })
 /******/ ]);
