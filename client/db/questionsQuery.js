@@ -14,42 +14,42 @@ QuestionsQuery.prototype = {
     });
   },
 
-  add: function(questionToAdd, onQueryFinished){
-    MongoClient.connect(this.url, function(err, db){
-      if(db){
-        var questions = db.collection('questions');
-        questions.insert(questionToAdd);
-        questions.find().toArray(function(err, docs){
-          onQueryFinished(docs);
-        });
-      };
-    });
-  },
+  // add: function(questionToAdd, onQueryFinished){
+  //   MongoClient.connect(this.url, function(err, db){
+  //     if(db){
+  //       var questions = db.collection('questions');
+  //       questions.insert(questionToAdd);
+  //       questions.find().toArray(function(err, docs){
+  //         onQueryFinished(docs);
+  //       });
+  //     };
+  //   });
+  // },
 
-  update: function(questionToUpdate, onQueryFinished){
-    MongoClient.connect(this.url, function(err, db){
-      if(db){
-        var questions = db.collection('questions');
-        var toUpdate = questions.find(quesionToUpdate.id);
-        toUpdate = questions.insert(questionUpdated);
-        questions.find().toArray(function(err, docs){
-          onQueryFinished(docs);
-        });
-      }
-    });
-  },
+  // update: function(questionToUpdate, onQueryFinished){
+  //   MongoClient.connect(this.url, function(err, db){
+  //     if(db){
+  //       var questions = db.collection('questions');
+  //       var toUpdate = questions.find(quesionToUpdate.id);
+  //       toUpdate = questions.insert(questionUpdated);
+  //       questions.find().toArray(function(err, docs){
+  //         onQueryFinished(docs);
+  //       });
+  //     }
+  //   });
+  // },
 
-  delete: function(questionToDelete, onQueryFinished){
-    MongoClient.connect(this.url, function(eer,db){
-      if(db){
-        var questions = db.collection('questions');
-        questions.remove(questionToDelete);
-        questions.find().toArray(function(err, docs){
-          onQueryFinished(docs);
-        });
-      }
-    });
-  }
+  // delete: function(questionToDelete, onQueryFinished){
+  //   MongoClient.connect(this.url, function(eer,db){
+  //     if(db){
+  //       var questions = db.collection('questions');
+  //       questions.remove(questionToDelete);
+  //       questions.find().toArray(function(err, docs){
+  //         onQueryFinished(docs);
+  //       });
+  //     }
+  //   });
+  // }
 
 
 }

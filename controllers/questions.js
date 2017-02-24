@@ -12,28 +12,28 @@ questionsRouter.get('/', function(req, res) {
   });
 });
 
-questionsRouter.post('/', function(req, res){
-  var newQuestion = new Question({
-    question: req.body.question,
-    answer: req.body.answer,
-    options: req.body.options//array?
-  });
-});
+// questionsRouter.post('/', function(req, res){
+//   var newQuestion = new Question({
+//     question: req.body.question,
+//     answer: req.body.answer,
+//     options: req.body.options//array?
+//   });
+// });
 
-questionsRouter.put('/:id', function(req, res){
-  var updatedQuestion = new Question({
-    question: req.body.question,
-    answer: req.body.answer,
-    options: req.body.options //array?
-  });
-  questions[req.params.id] = updatedQuestion;
-  res.json({data: questions});
-});
+// questionsRouter.put('/:id', function(req, res){
+//   var updatedQuestion = new Question({
+//     question: req.body.question,
+//     answer: req.body.answer,
+//     options: req.body.options //array?
+//   });
+//   questions[req.params.id] = updatedQuestion;
+//   res.json({data: questions});
+// });
 
-questionsRouter.delete('/:id', function(req, res){
-  questions.splice(req.params.id, 1);
-  res.json({data: questions});
-});
+// questionsRouter.delete('/:id', function(req, res){
+//   questions.splice(req.params.id, 1);
+//   res.json({data: questions});
+// });
 
 
 
