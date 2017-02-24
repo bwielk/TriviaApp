@@ -3,9 +3,7 @@ var Questions = require('../models/questions');
 var UI = function() {
   var questions = new Questions();
   questions.all(function(result) {
-    console.log(result[0]);
     this.render(result[0]);
-    console.log(result);
   }.bind(this));
 }
 
