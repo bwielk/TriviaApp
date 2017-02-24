@@ -10,28 +10,39 @@ var UI = function() {
 }
 
 UI.prototype = {
-  createText: function(text, label) {
+  createText: function(text) {
     var p = document.createElement('p');
-    p.innerText = label + text;
+    p.innerText = text;
     return p;
   }, 
 
-  appendText: function(element, text, label) {
-    var pTag = this.createText(text, label);
+  appendText: function(element, text) {
+    var pTag = this.createText(text);
     element.appendChild(pTag);
   }, 
 
+  checkAnswer: function(selectedAnswer, correctAnswer) {
+    if (selectedAnswer === correctAnswer) {
+      console.log("correct");
+    } else {
+      console.log("incorrect");
+    }
+  },
+
   render: function(question) {
-    console.log(question);
-    var container = document.getElementById('question');
-    var li = document.createElement('li');
-    console.log(question);
-    this.appendText(li, question.questionString, "Question: ")
-    this.appendText(li, question.possibleAnswers[0], "A: ");
-    this.appendText(li, question.possibleAnswers[1], "B: ");
-    this.appendText(li, question.possibleAnswers[2], "C: ");
-    this.appendText(li, question.possibleAnswers[3], "D: ");
-    container.appendChild(li);
+    var containerDiv = document.getElementById('question');
+    var p = document.createElement('p');
+    this.appendText(p, question.questionString)
+    containerDiv.appendChild(p);
+
+    question.possibleAnswers.forEach(function(answer) {
+      var answerButton = document.createElement('button');
+      this.appendText(answerButton, answer);
+      containerDiv.appendChild(answerButton);
+      answerButton.addEventListener('click', function(){
+          this.checkAnswer(answer, question.correctAnswer);
+      }.bind(this));
+    }.bind(this));
   }
 }
 

@@ -63,14 +63,14 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Questions = __webpack_require__(1);
+var Questions = __webpack_require__(2);
 
 var UI = function() {
   var questions = new Questions();
@@ -82,28 +82,39 @@ var UI = function() {
 }
 
 UI.prototype = {
-  createText: function(text, label) {
+  createText: function(text) {
     var p = document.createElement('p');
-    p.innerText = label + text;
+    p.innerText = text;
     return p;
   }, 
 
-  appendText: function(element, text, label) {
-    var pTag = this.createText(text, label);
+  appendText: function(element, text) {
+    var pTag = this.createText(text);
     element.appendChild(pTag);
   }, 
 
+  checkAnswer: function(selectedAnswer, correctAnswer) {
+    if (selectedAnswer === correctAnswer) {
+      console.log("correct");
+    } else {
+      console.log("incorrect");
+    }
+  },
+
   render: function(question) {
-    console.log(question);
-    var container = document.getElementById('question');
-    var li = document.createElement('li');
-    console.log(question);
-    this.appendText(li, question.questionString, "Question: ")
-    this.appendText(li, question.possibleAnswers[0], "A: ");
-    this.appendText(li, question.possibleAnswers[1], "B: ");
-    this.appendText(li, question.possibleAnswers[2], "C: ");
-    this.appendText(li, question.possibleAnswers[3], "D: ");
-    container.appendChild(li);
+    var containerDiv = document.getElementById('question');
+    var p = document.createElement('p');
+    this.appendText(p, question.questionString)
+    containerDiv.appendChild(p);
+
+    question.possibleAnswers.forEach(function(answer) {
+      var answerButton = document.createElement('button');
+      this.appendText(answerButton, answer);
+      containerDiv.appendChild(answerButton);
+      answerButton.addEventListener('click', function(){
+          this.checkAnswer(answer, question.correctAnswer);
+      }.bind(this));
+    }.bind(this));
   }
 }
 
@@ -111,6 +122,42 @@ module.exports = UI;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var UI = __webpack_require__(0);
+
+
+var welcomeUI = function() {
+  this.createWelcomeText();
+  this.createPlayButton();
+}
+
+welcomeUI.prototype = {
+  createWelcomeText: function() {
+    var welcomeText = document.createElement('p');
+    welcomeText.innerText = "This is a game";
+    var div = document.getElementById('main')
+    div.appendChild(welcomeText);
+  }, 
+
+  handleButtonClick: function() {
+    new UI();
+  },
+
+  createPlayButton: function() {
+    var playButton = document.createElement('button');
+    playButton.innerText = "PLAY";
+    var div = document.getElementById('main')
+    div.appendChild(playButton);
+    playButton.onclick = this.handleButtonClick;
+  }
+
+}
+
+module.exports = welcomeUI;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 var Questions = function() {
@@ -196,11 +243,11 @@ module.exports = Questions;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var UI = __webpack_require__(0);
-var welcomeUI = __webpack_require__(3);
+var welcomeUI = __webpack_require__(1);
 
 var welcome = function() {
   new welcomeUI();
@@ -211,42 +258,6 @@ var app = function() {
 }
 
 window.onload = welcome;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var UI = __webpack_require__(0);
-
-
-var welcomeUI = function() {
-  this.createWelcomeText();
-  this.createPlayButton();
-}
-
-welcomeUI.prototype = {
-  createWelcomeText: function() {
-    var welcomeText = document.createElement('p');
-    welcomeText.innerText = "This is a game";
-    var div = document.getElementById('main')
-    div.appendChild(welcomeText);
-  }, 
-
-  handleButtonClick: function() {
-    new UI();
-  },
-
-  createPlayButton: function() {
-    var playButton = document.createElement('button');
-    playButton.innerText = "PLAY";
-    var div = document.getElementById('main')
-    div.appendChild(playButton);
-    playButton.onclick = this.handleButtonClick;
-  }
-
-}
-
-module.exports = welcomeUI;
 
 /***/ })
 /******/ ]);
