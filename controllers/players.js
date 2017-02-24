@@ -31,6 +31,31 @@ playersRouter.post('/', function(req, res){
   });
 });
 
+playersRouter.put('/:id', function(req, res){
+  var newPlayer = new Player({
+    name: req.body.name,
+    password: req.body.password,
+    scores: playerToUpdate.scores
+  });
+  query.all(function(results){
+    var playerToUpdate = results[req.params.id];
+    query.update(playerToUpdate, newPlayer, function(result){
+      res.json(result);
+    });
+  });
+});
+
+playersRouter.delete('/:id', function(req, res){
+  query.all(function(results){
+    var playerToDelete = results[req.params.id];
+    query.delete(playerToDelete, function(results2){
+      res.json(results2);
+    });
+  });
+});
+
+
+
 
 module.exports = playersRouter;
 

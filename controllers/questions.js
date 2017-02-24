@@ -23,9 +23,9 @@ questionsRouter.post('/', function(req, res){
     questionString: req.body.questionString,
     correctAnswer: req.body.correctAnswer,
     category: req.body.category,
-    possibleAnswers: req.body.possibleAnswers//array?
+    possibleAnswers: req.body.possibleAnswers
   });
-  query.add(newQuestion,function(results){ //NEW
+  query.add(newQuestion,function(results){
     res.json(results);
   });
 });
@@ -35,20 +35,17 @@ questionsRouter.put('/:id', function(req, res){
     questionString: req.body.questionString,
     correctAnswer: req.body.correctAnswer,
     category: req.body.category,
-    possibleAnswers: req.body.possibleAnswers //array?
+    possibleAnswers: req.body.possibleAnswers
   });
-
   query.all(function(results) {
     var questionToUpdate = results[req.params.id];
     query.update( questionToUpdate, updatedQuestion, function(results2) {
       res.json(results2);
     });  
   });
-
 });
 
 questionsRouter.delete('/:id', function(req, res){
-  // questions.splice(req.params.id, 1);
   query.all(function(results) {
     var questionObject = results[req.params.id];
     query.delete( questionObject, function(results2) {

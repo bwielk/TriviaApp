@@ -22,7 +22,28 @@ PlayersQuery.prototype = {
         onQueryFinished(docs);
       });
     });
+  },
+
+  update: function(playerToUpdate, updatedPlayer, onQueryFinished){
+    MongoClient.connect(this.url, function(err, db){
+      var players = db.collection('players');
+      players.update(playerToUpdate, {$set: updatedPlayer});
+      players.find().toArray(function(err, docs){
+        onQueryFinished(docs);
+      });
+    });
+  },
+
+  delete: function(playerToRemove, onQueryFinished){
+    MongoClient.connect(this.url, function(err, db){
+      var players = db.collection('players');
+      players.remove(playerToRemove, true);
+      players.find().toArray(function(err, docs){
+        onQueryFinished(docs);
+      });
+    });
   }
+  
 }
 
 module.exports = PlayersQuery;

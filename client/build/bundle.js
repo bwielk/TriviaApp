@@ -63,21 +63,19 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Questions = __webpack_require__(2);
+var Questions = __webpack_require__(1);
 
 var UI = function() {
   var questions = new Questions();
   questions.all(function(result) {
-    console.log(result[0]);
     this.render(result[0]);
-    console.log(result);
   }.bind(this));
 }
 
@@ -122,42 +120,6 @@ module.exports = UI;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var UI = __webpack_require__(0);
-
-
-var welcomeUI = function() {
-  this.createWelcomeText();
-  this.createPlayButton();
-}
-
-welcomeUI.prototype = {
-  createWelcomeText: function() {
-    var welcomeText = document.createElement('p');
-    welcomeText.innerText = "This is a game";
-    var div = document.getElementById('main')
-    div.appendChild(welcomeText);
-  }, 
-
-  handleButtonClick: function() {
-    new UI();
-  },
-
-  createPlayButton: function() {
-    var playButton = document.createElement('button');
-    playButton.innerText = "PLAY";
-    var div = document.getElementById('main')
-    div.appendChild(playButton);
-    playButton.onclick = this.handleButtonClick;
-  }
-
-}
-
-module.exports = welcomeUI;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports) {
 
 var Questions = function() {
@@ -243,11 +205,11 @@ module.exports = Questions;
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var UI = __webpack_require__(0);
-var welcomeUI = __webpack_require__(1);
+var welcomeUI = __webpack_require__(3);
 
 var welcome = function() {
   new welcomeUI();
@@ -258,6 +220,42 @@ var app = function() {
 }
 
 window.onload = welcome;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var UI = __webpack_require__(0);
+
+
+var welcomeUI = function() {
+  this.createWelcomeText();
+  this.createPlayButton();
+}
+
+welcomeUI.prototype = {
+  createWelcomeText: function() {
+    var welcomeText = document.createElement('p');
+    welcomeText.innerText = "This is a game";
+    var div = document.getElementById('main')
+    div.appendChild(welcomeText);
+  }, 
+
+  handleButtonClick: function() {
+    new UI();
+  },
+
+  createPlayButton: function() {
+    var playButton = document.createElement('button');
+    playButton.innerText = "PLAY";
+    var div = document.getElementById('main')
+    div.appendChild(playButton);
+    playButton.onclick = this.handleButtonClick;
+  }
+
+}
+
+module.exports = welcomeUI;
 
 /***/ })
 /******/ ]);
