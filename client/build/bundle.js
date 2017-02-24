@@ -63,17 +63,88 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 2:
+var UI = __webpack_require__(1);
+
+var app = function() {
+  new UI();
+}
+
+window.onload = app;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Questions = __webpack_require__(2);
+
+var UI = function() {
+  var questions = new Questions();
+  questions.all(function(result) {
+    this.render(result[0]);
+  }.bind(this));
+}
+
+UI.prototype = {
+  createText: function(text, label) {
+    var p = document.createElement('p');
+    p.innerText = label + text;
+    return p;
+  }, 
+
+  appendText: function(element, text, label) {
+    var pTag = this.createText(text, label);
+    element.appendChild(pTag);
+  }, 
+
+  render: function(question) {
+    var container = document.getElementById('question');
+    var li = document.createElement('li');
+    this.appendText(li, question.question, "Question: ")
+    this.appendText(li, question.options[0], "A: ");
+    this.appendText(li, question.options[1], "B: ");
+    this.appendText(li, question.options[2], "C: ");
+    this.appendText(li, question.options[3], "D: ");
+    container.appendChild(li);
+  }
+}
+
+module.exports = UI;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
+var Questions = function() {
+}
+
+Questions.prototype = {
+  makeRequest: function(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url);
+    request.onload = callback;
+    request.send();
+  }, 
+
+  all: function(callback) {
+    this.makeRequest('http://localhost:3000/api/questions', function() {
+      if (this.status != 200) return;
+        var jsonString = this.responseText;
+        var result = JSON.parse(jsonString);
+        callback(result);
+    });
+  }
+};
+
+module.exports = Questions;
 
 
 /***/ })
-
-/******/ });
+/******/ ]);
 //# sourceMappingURL=bundle.js.map
