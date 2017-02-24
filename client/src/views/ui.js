@@ -78,12 +78,15 @@ UI.prototype = {
   },
 
   render: function(question) {
-    var containerDiv = document.getElementById('question');
-    var p = document.createElement('p');
-    this.appendText(p, question.questionString)
-    containerDiv.appendChild(p);
-    this.renderButtons(question);
+    if (questionIndex < questionsArray.length) {
+      var containerDiv = document.getElementById('question');
+      var p = document.createElement('p');
+      this.appendText(p, question.questionString)
+      containerDiv.appendChild(p);
+      this.renderButtons(question);
+    }
   }
+
 }
 
 module.exports = UI;

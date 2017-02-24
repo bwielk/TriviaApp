@@ -63,15 +63,15 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Questions = __webpack_require__(2);
-var Player = __webpack_require__(4)
+var Questions = __webpack_require__(3);
+var Player = __webpack_require__(2)
 
 var currentPlayer;
 var questionsArray;
@@ -150,12 +150,15 @@ UI.prototype = {
   },
 
   render: function(question) {
-    var containerDiv = document.getElementById('question');
-    var p = document.createElement('p');
-    this.appendText(p, question.questionString)
-    containerDiv.appendChild(p);
-    this.renderButtons(question);
+    if (questionIndex < questionsArray.length) {
+      var containerDiv = document.getElementById('question');
+      var p = document.createElement('p');
+      this.appendText(p, question.questionString)
+      containerDiv.appendChild(p);
+      this.renderButtons(question);
+    }
   }
+
 }
 
 module.exports = UI;
@@ -198,6 +201,18 @@ module.exports = welcomeUI;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+var Player = function(options){
+  this.name = options.name;
+  this.password = options.password;
+  this.scores = options.scores;
+};
+
+module.exports = Player;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 var Questions = function() {
@@ -283,7 +298,7 @@ module.exports = Questions;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var UI = __webpack_require__(0);
@@ -298,18 +313,6 @@ var app = function() {
 }
 
 window.onload = welcome;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var Player = function(options){
-  this.name = options.name;
-  this.password = options.password;
-  this.scores = options.scores;
-};
-
-module.exports = Player;
 
 /***/ })
 /******/ ]);
