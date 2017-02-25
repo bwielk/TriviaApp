@@ -36,6 +36,7 @@ welcomeUI.prototype = {
   },
 
   handleAdminButtonClick: function(){
+    this.style.cssText = "display: none"
     new adminUI();
   },
 
