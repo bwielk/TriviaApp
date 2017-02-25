@@ -1,6 +1,7 @@
 var Players = require('../models/players');
 
 var leaderboardUI = function(){
+  this.removeContent("quiz");
   var players = new Players();
   players.all(function(result){
     this.render(result);
@@ -8,6 +9,13 @@ var leaderboardUI = function(){
 };
 
 leaderboardUI.prototype = {
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+        toClear.removeChild(toClear.firstChild);
+    }
+  }, 
+
   render: function(players){
     var maindiv = document.getElementById('main');
     var list = document.createElement('ol');

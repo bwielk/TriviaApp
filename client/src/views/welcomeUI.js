@@ -1,4 +1,4 @@
-var UI = require('./ui.js');
+var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
 
@@ -11,6 +11,7 @@ var welcomeUI = function() {
 }
 
 welcomeUI.prototype = {
+
   createWelcomeText: function() {
     var welcomeText = document.createElement('p');
     welcomeText.innerText = "This is a game";
@@ -19,15 +20,15 @@ welcomeUI.prototype = {
   }, 
 
   handleButtonClick: function() {
-    new UI();
-  },
-
-  handleRegisterButtonClick: function() {
-    new registrationUI();
+    new gameUI();
   },
 
   handleLeaderboardButtonClick: function(){
     new leaderboardUI();
+  },
+
+  handleRegisterButtonClick: function() {
+    new registrationUI();
   },
 
   createPlayButton: function() {

@@ -1,6 +1,10 @@
-var UI = require('./views/ui.js');
+var gameUI = require('./views/gameUI.js');
 var welcomeUI = require('./views/welcomeUI.js');
 var registrationUI = require('./views/registrationUI.js');
+
+var app = function() {
+  new gameUI();
+}
 
 var welcome = function() {
   new welcomeUI();
@@ -8,10 +12,6 @@ var welcome = function() {
 
 var registration = function() {
   new registrationUI();
-}
-
-var app = function() {
-  new UI();
 }
 
 window.onload = welcome;

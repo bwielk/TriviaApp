@@ -5,7 +5,7 @@ var currentPlayer;
 var questionsArray;
 var questionIndex;
 
-var UI = function() {
+var gameUI = function() {
   var questions = new Questions();
   questions.all(function(result) {
     questionsArray = result;
@@ -15,7 +15,7 @@ var UI = function() {
   this.setupPlayer();
 }
 
-UI.prototype = {
+gameUI.prototype = {
   createText: function(text) {
     var p = document.createElement('p');
     p.innerText = text;
@@ -89,4 +89,4 @@ UI.prototype = {
 
 }
 
-module.exports = UI;
+module.exports = gameUI;
