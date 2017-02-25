@@ -1,10 +1,18 @@
 var Questions = require('../models/questions.js');
 
 var adminUI = function(){
+  this.removeContent('main')
   this.adminForm();
 };
 
 adminUI.prototype = {
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+        toClear.removeChild(toClear.firstChild);
+    }
+  }, 
+
   createInput: function(form, type, name, value, size){
     var input = document.createElement('input');
     input.type = type;
