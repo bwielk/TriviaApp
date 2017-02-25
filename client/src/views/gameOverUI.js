@@ -1,9 +1,6 @@
 var leaderboardUI = require('./leaderboardUI.js');
-<<<<<<< HEAD
 var GameOverSound = require('../models/gameOverSound');
 
-=======
->>>>>>> 430deb8e265cbfb70814fa6e4f4bca8399068c33
 
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
