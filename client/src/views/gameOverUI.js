@@ -19,7 +19,7 @@ gameOverUI.prototype = {
     this.changeTitle();
     this.createOutcomeText();
     this.createLeaderboardButton();
-    setTimeout(GameOverSound, 400);
+    setTimeout(GameOverSound, 800);
   },
 
   showLeaderboard: function() {
