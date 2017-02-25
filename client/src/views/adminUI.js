@@ -56,14 +56,20 @@ adminUI.prototype = {
     var main = document.getElementById('main');
     for(var question of questions){
      var field = document.createElement('div');
-      field.cssText = "border: 1px solid black; background-color: grey;";
+      field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 200px; width: 300px; margin-bottom: 1%";
       var p1= document.createElement('p');
       p1.innerText = question.questionString;
       var list  = document.createElement('ul');
       list.style.cssText = "list-style: none";
+      correctAnswer = question.correctAnswer;
       for(var answer of question.possibleAnswers){
-        var li = document.createElement('li');
-        li.innerText = answer;
+        var li = document.createElement('li'); 
+        if(answer === correctAnswer){
+          li.innerText = answer;
+          li.style.cssText = "background-color: green";
+        }else{
+          li.innerText = answer;
+        };
         list.appendChild(li);
       }
       field.appendChild(p1);
