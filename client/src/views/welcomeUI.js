@@ -1,7 +1,7 @@
 var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
-var adminUI = require('./adminUI');
+var adminUI = require('./adminUI.js');
 
 
 var welcomeUI = function() {
@@ -68,7 +68,7 @@ welcomeUI.prototype = {
     adminButton.innerText = "ADMIN";
     var div = document.getElementById("main");
     div.appendChild(adminButton);
-    adminButton.onclick = this.handleAdminButton;
+    adminButton.onclick = this.handleAdminButtonClick;
   }
 }
 
