@@ -1,8 +1,10 @@
-var Question = function(question, answer, options){
-  this.question = question;
-  this.answer = answer;
-  this.options = options;
+var Question = function(options){
+  this.questionString = options.questionString;
+  this.correctAnswer = options.correctAnswer;
+  this.category = options.category;
+  this.possibleAnswers = options.possibleAnswers;
 };
 
 
 module.exports = Question;
+

@@ -12,7 +12,46 @@ QuestionsQuery.prototype = {
         onQueryFinished(docs);
       });
     });
+  },
+
+  add: function(questionToAdd, onQueryFinished){
+    MongoClient.connect(this.url, function(err, db){
+      if(db){
+        var questions = db.collection('questions');
+        questions.insert(questionToAdd);
+        questions.find().toArray(function(err, docs){
+          onQueryFinished(docs);
+        });
+      };
+    });
+  },
+
+  update: function(questionToUpdate, updatedQuestion, onQueryFinished){
+    MongoClient.connect(this.url, function(err, db){
+      if(db){
+        var questions = db.collection('questions');
+        console.log("in update funciton");
+        questions.update(questionToUpdate, {$set: updatedQuestion});
+        questions.find().toArray(function(err, docs){
+          onQueryFinished(docs);
+        });
+      }
+    });
+  },
+
+  delete: function(questionToRemove, onQueryFinished){
+    MongoClient.connect(this.url, function(err,db){
+      if(db){
+        var questions = db.collection('questions');
+        questions.remove(questionToRemove, true);
+        questions.find().toArray(function(err, docs){
+          onQueryFinished(docs);
+        });
+      }
+    });
   }
+
+
 }
 
 module.exports = QuestionsQuery;
