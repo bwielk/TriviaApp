@@ -1,7 +1,6 @@
 var leaderboardUI = require('./leaderboardUI.js');
 var GameOverSound = require('../models/gameOverSound');
 
-
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
   this.currentPlayer = JSON.parse(this.stringified);
@@ -19,7 +18,7 @@ gameOverUI.prototype = {
     this.changeTitle();
     this.createOutcomeText();
     this.createLeaderboardButton();
-    setTimeout(GameOverSound, 400);
+    setTimeout(GameOverSound, 800);
   },
 
   showLeaderboard: function() {
@@ -71,6 +70,8 @@ gameOverUI.prototype = {
     submit.value = "Save to leaderboard";
     form.appendChild(submit);
   }
+
+  
 }
 
 module.exports = gameOverUI;
