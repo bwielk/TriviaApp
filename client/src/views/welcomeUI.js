@@ -21,11 +21,13 @@ welcomeUI.prototype = {
     div.appendChild(welcomeText);
   }, 
 
-  handleButtonClick: function() {
+  handlePlayButtonClick: function() {
+    this.style.cssText = "display: none";
     new gameUI();
   },
 
   handleLeaderboardButtonClick: function(){
+    this.style.cssText = "display: none";
     new leaderboardUI();
   },
 
@@ -42,7 +44,7 @@ welcomeUI.prototype = {
     playButton.innerText = "PLAY";
     var div = document.getElementById('main')
     div.appendChild(playButton);
-    playButton.onclick = this.handleButtonClick;
+    playButton.onclick = this.handlePlayButtonClick;
   }, 
 
   createRegisterButton: function() {

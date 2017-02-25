@@ -2,6 +2,8 @@ var Players = require('../models/players');
 
 var leaderboardUI = function(){
   this.removeContent("quiz");
+  this.removeContent("main");
+  this.createGoBackButton();
   var players = new Players();
   players.all(function(result){
     this.render(result);
@@ -28,6 +30,18 @@ leaderboardUI.prototype = {
       list.appendChild(li);
     }
     maindiv.appendChild(list);
+  },
+
+  handleGoBackButtonClick: function(){
+    window.location = "/";
+  },
+
+  createGoBackButton: function(){
+    var container = document.getElementById("main");
+    var goBackButton = document.createElement("button");
+    goBackButton.innerText = "GO BACK";
+    container.appendChild(goBackButton);
+    goBackButton.onclick = this.handleGoBackButtonClick;
   }
 }
 
