@@ -42,7 +42,7 @@ db.questions.insert([
   {
     questionString: "What was the name of the handheld digital pet that enjoyed huge popularity in the 90s?",
     possibleAnswers: ["Pokemon", "Digimon", "Tamagotchi", "Transformers"],
-    categories: "TV",
+    category: "TV",
     correctAnswer: "Tamagotchi"
   },
 

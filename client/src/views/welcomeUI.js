@@ -1,8 +1,10 @@
 var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
+var adminUI = require('./adminUI.js');
 var adminUI = require('./adminUI');
-
+var PlaySound = require('../models/playSound');
+var adminAuthorisationUI = require('./adminAuthorisationUI.js');
 
 var welcomeUI = function() {
   this.createWelcomeText();
@@ -24,6 +26,8 @@ welcomeUI.prototype = {
   handlePlayButtonClick: function() {
     this.style.cssText = "display: none";
     new gameUI();
+    var playSound = new PlaySound();
+
   },
 
   handleLeaderboardButtonClick: function(){
@@ -36,8 +40,12 @@ welcomeUI.prototype = {
   },
 
   handleAdminButtonClick: function(){
+<<<<<<< HEAD
     this.style.cssText = "display: none"
     new adminUI();
+=======
+    new adminAuthorisationUI();
+>>>>>>> develop
   },
 
   createPlayButton: function() {
@@ -69,7 +77,7 @@ welcomeUI.prototype = {
     adminButton.innerText = "ADMIN";
     var div = document.getElementById("main");
     div.appendChild(adminButton);
-    adminButton.onclick = this.handleAdminButton;
+    adminButton.onclick = this.handleAdminButtonClick;
   }
 }
 

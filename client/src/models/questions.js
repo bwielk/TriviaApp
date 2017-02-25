@@ -1,7 +1,6 @@
 var Questions = function() {
 }
 
-
 Questions.prototype = {
   makeRequest: function(url, callback) {
     var request = new XMLHttpRequest();

@@ -53,6 +53,6 @@ registrationUI.prototype = {
     var submitButton = this.createSubmitButton(form, "submit", "SUBMIT");
     this.createGoBackButton();
   }
-};
+}
 
 module.exports = registrationUI;
