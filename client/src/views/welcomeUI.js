@@ -1,13 +1,10 @@
 var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
-<<<<<<< HEAD
 var adminUI = require('./adminUI.js');
-=======
 var adminUI = require('./adminUI');
 var PlaySound = require('../models/playSound');
 
->>>>>>> 5437cef46533ff4ed11b1763e6146bc927a8a477
 
 
 var welcomeUI = function() {
