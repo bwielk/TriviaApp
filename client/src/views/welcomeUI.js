@@ -2,6 +2,8 @@ var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
 var adminUI = require('./adminUI');
+var PlaySound = require('../models/playSound');
+
 
 
 var welcomeUI = function() {
@@ -24,6 +26,8 @@ welcomeUI.prototype = {
   handlePlayButtonClick: function() {
     this.style.cssText = "display: none";
     new gameUI();
+    var playSound = new PlaySound();
+
   },
 
   handleLeaderboardButtonClick: function(){
