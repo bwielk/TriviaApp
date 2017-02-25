@@ -4,8 +4,6 @@ var CorrectSound = require('../models/correctSound');
 var WrongSound = require('../models/wrongSound');
 var gameOverUI = require('./gameOverUI.js');
 
-///test comment
-
 var currentPlayer;
 var questionsArray;
 var questionIndex;
@@ -13,6 +11,8 @@ var questionIndex;
 
 var gameUI = function() {
   var questions = new Questions();
+  this.wrongAnswerButtons = [];
+  this.correctAnswerButton;
   questions.all(function(result) {
     questionsArray = result;
     questionIndex = 0;
@@ -36,19 +36,11 @@ gameUI.prototype = {
     currentPlayer = {
       name: "New Player", 
       score: 0, 
-      lives: 3
+      lives: 3, 
+      lifePreserver5050: true, 
+      lifePreserverGiveHint: true
     };
     this.savePlayer(currentPlayer);
-    // var currentSavedPlayer = localStorage.getItem("currentPlayer");
-    // if (!currentSavedPlayer) {
-    //   currentPlayer = {
-    //     name: "Test Player", 
-    //     score: 0
-    //   };
-    //   this.savePlayer(currentPlayer);
-    // } else {
-    //   currentPlayer = JSON.parse(currentSavedPlayer);
-    // }
   },
 
   appendText: function(element, text) {
@@ -93,14 +85,77 @@ gameUI.prototype = {
 
   renderButtons: function(question) {
     var containerDiv = document.getElementById('question');
+    this.wrongAnswerButtons = [];
     question.possibleAnswers.forEach(function(answer) {
       var answerButton = document.createElement('button');
       this.appendText(answerButton, answer);
       containerDiv.appendChild(answerButton);
+      if (answer === question.correctAnswer) {
+        this.correctAnswerButton = answerButton;
+      } else {
+        this.wrongAnswerButtons.push(answerButton);
+
+      }
       answerButton.addEventListener('click', function(){
-          this.checkAnswer(answer, question.correctAnswer);
+        this.checkAnswer(answer, question.correctAnswer);
       }.bind(this));
     }.bind(this));
+  },
+
+  removeTwoAnswers: function() {
+    if (this.wrongAnswerButtons.length === 3) {
+      var randomIndex = Math.floor(Math.random() * (3));
+      this.wrongAnswerButtons.splice(randomIndex, 1);
+      this.wrongAnswerButtons.forEach(function(answerButton) {
+
+        answerButton.disabled = true;
+
+      }.bind(this));
+      currentPlayer.lifePreserver5050 = false;
+      this.savePlayer(currentPlayer);
+    }
+  },
+
+  render5050LifePreserver: function() {
+    if (currentPlayer.lifePreserver5050) {
+      var containerDiv = document.getElementById('question');
+      var button5050 = document.createElement('button');
+      this.appendText(button5050, "50/50");
+      containerDiv.appendChild(button5050);
+      button5050.onclick = this.removeTwoAnswers.bind(this);
+    }
+  },
+
+  giveHint: function() {
+    if (this.wrongAnswerButtons.length === 3) {
+
+      var hintedButton;
+      var randomNumber0to4 = Math.floor(Math.random() * 5);
+
+      //give the correct answer 80% of the time
+      if (randomNumber0to4 === 4) {
+        var randomIndex = Math.floor(Math.random() * 3);
+        hintedButton = this.wrongAnswerButtons[randomIndex];
+      } else {
+        hintedButton = this.correctAnswerButton;
+      }
+
+      hintedButton.style.cssText = "font-weight: bold";
+      currentPlayer.lifePreserverGiveHint = false; 
+      console.log(currentPlayer);
+      this.savePlayer(currentPlayer);
+    }
+  },
+
+  renderHintLifePreserver: function() {
+    if (currentPlayer.lifePreserverGiveHint) {
+      console.log("test");
+      var containerDiv = document.getElementById('question');
+      var buttonHint = document.createElement('button');
+      this.appendText(buttonHint, "Get Hint");
+      containerDiv.appendChild(buttonHint);
+      buttonHint.onclick = this.giveHint.bind(this);
+    }
   },
 
   render: function(question) {
@@ -110,6 +165,8 @@ gameUI.prototype = {
       this.appendText(p, question.questionString)
       containerDiv.appendChild(p);
       this.renderButtons(question);
+      this.render5050LifePreserver();
+      this.renderHintLifePreserver();
     }
   }
 }
