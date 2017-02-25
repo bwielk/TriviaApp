@@ -1,7 +1,5 @@
 var leaderboardUI = require('./leaderboardUI.js');
 
-
-
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
   this.currentPlayer = JSON.parse(this.stringified);
