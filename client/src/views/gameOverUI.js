@@ -1,5 +1,5 @@
 var leaderboardUI = require('./leaderboardUI.js');
-
+var GameOverSound = require('../models/gameOverSound');
 
 
 var gameOverUI = function() {
@@ -19,6 +19,7 @@ gameOverUI.prototype = {
     this.changeTitle();
     this.createOutcomeText();
     this.createLeaderboardButton();
+    setTimeout(GameOverSound, 400);
   },
 
   showLeaderboard: function() {
