@@ -1,3 +1,6 @@
+var leaderboardUI = require('./leaderboardUI.js');
+
+
 
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
@@ -16,6 +19,10 @@ gameOverUI.prototype = {
     this.changeTitle();
     this.createOutcomeText();
     this.createLeaderboardButton();
+  },
+
+  showLeaderboard: function() {
+    new leaderboardUI();
   },
 
   changeTitle: function() {
@@ -37,12 +44,6 @@ gameOverUI.prototype = {
     this.container.appendChild(textField);
   },
 
-  submitForm: function(leaderboardForm) {
-    document.getElementById('nameID').value = this.currentPlayerName;
-    document.getElementById('scoresID').value = this.currentPlayerScore;
-    document.leaderBoardForm.submit();
-  },
-
   createForm: function() {
     var form = document.createElement('form');
     form.action = "/api/players/";
@@ -51,9 +52,9 @@ gameOverUI.prototype = {
     return form;
   },
 
-  addInput: function(form, inputName, inputValue) {
+  addInput: function(form, inputType, inputName, inputValue) {
     var input = document.createElement("input");
-    input.type = "hidden";
+    input.type = inputType;
     input.name = inputName;
     input.value = inputValue;
     form.appendChild(input);
@@ -61,8 +62,8 @@ gameOverUI.prototype = {
 
   createLeaderboardButton: function() {
     var form = this.createForm();
-    this.addInput(form, "name", this.currentPlayerName);
-    this.addInput(form, "scores", this.currentPlayerScore);
+    this.addInput(form, "text", "name", "Input Name");
+    this.addInput(form, "hidden", "scores", this.currentPlayerScore);
 
     var submit = document.createElement("input");
     submit.type = "submit";
