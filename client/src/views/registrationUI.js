@@ -39,7 +39,7 @@ registrationUI.prototype = {
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
     container.appendChild(goBackButton);
-    goBackButton.onclick = handleGoBackButtonClick;
+    goBackButton.onclick = this.handleGoBackButtonClick;
   },
 
   createForm: function() {

@@ -111,7 +111,7 @@ registrationUI.prototype = {
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
     container.appendChild(goBackButton);
-    goBackButton.onclick = handleGoBackButtonClick;
+    goBackButton.onclick = this.handleGoBackButtonClick;
   },
 
   createForm: function() {
@@ -136,6 +136,7 @@ module.exports = registrationUI;
 var gameUI = __webpack_require__(5);
 var registrationUI = __webpack_require__(0);
 var leaderboardUI = __webpack_require__(6);
+var adminUI = __webpack_require__(8);
 
 
 var welcomeUI = function() {
@@ -143,6 +144,7 @@ var welcomeUI = function() {
   this.createPlayButton();
   this.createRegisterButton();
   this.createLeaderboardButton();
+  this.createAdminButton();
 }
 
 welcomeUI.prototype = {
@@ -164,6 +166,10 @@ welcomeUI.prototype = {
 
   handleRegisterButtonClick: function() {
     new registrationUI();
+  },
+
+  handleAdminButtonClick: function(){
+    new adminUI();
   },
 
   createPlayButton: function() {
@@ -188,6 +194,14 @@ welcomeUI.prototype = {
     var div = document.getElementById('main');
     div.appendChild(leaderboardButton);
     leaderboardButton.onclick = this.handleLeaderboardButtonClick;
+  },
+
+  createAdminButton: function(){
+    var adminButton = document.createElement('button');
+    adminButton.innerText = "ADMIN";
+    var div = document.getElementById("main");
+    div.appendChild(adminButton);
+    adminButton.onclick = this.handleAdminButton;
   }
 }
 
@@ -496,6 +510,14 @@ var registration = function() {
 }
 
 window.onload = welcome;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Questions = __webpack_require__(4);
+
+var adminUI = function(){};
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,7 @@
 var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
+var adminUI = require('./adminUI');
 
 
 var welcomeUI = function() {
@@ -8,6 +9,7 @@ var welcomeUI = function() {
   this.createPlayButton();
   this.createRegisterButton();
   this.createLeaderboardButton();
+  this.createAdminButton();
 }
 
 welcomeUI.prototype = {
@@ -29,6 +31,10 @@ welcomeUI.prototype = {
 
   handleRegisterButtonClick: function() {
     new registrationUI();
+  },
+
+  handleAdminButtonClick: function(){
+    new adminUI();
   },
 
   createPlayButton: function() {
@@ -53,6 +59,14 @@ welcomeUI.prototype = {
     var div = document.getElementById('main');
     div.appendChild(leaderboardButton);
     leaderboardButton.onclick = this.handleLeaderboardButtonClick;
+  },
+
+  createAdminButton: function(){
+    var adminButton = document.createElement('button');
+    adminButton.innerText = "ADMIN";
+    var div = document.getElementById("main");
+    div.appendChild(adminButton);
+    adminButton.onclick = this.handleAdminButton;
   }
 }
 
