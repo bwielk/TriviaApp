@@ -22,7 +22,7 @@ playersRouter.post('/', function(req, res){
   var newPlayer = new Player({
     name: req.body.name,
     password: req.body.password,
-    scores: 0
+    scores: req.body.scores
   });
   console.log("PLAYER:", newPlayer);
   query.add(newPlayer, function(results){ //add method from playersQuery
