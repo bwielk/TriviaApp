@@ -49,7 +49,7 @@ adminUI.prototype = {
   adminForm: function(){
     var div = document.getElementById('main');
     var form = document.createElement('form');
-    form.action = "/api/players";
+    form.action = "/api/questions";
     form.method = "post";
     this.createInput(form, "text", "question", "Your question: ", "50");
     this.createInput(form, "text", "A", "A:", "20");
