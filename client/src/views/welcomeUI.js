@@ -4,7 +4,7 @@ var leaderboardUI = require('./leaderboardUI.js');
 var adminUI = require('./adminUI.js');
 var adminUI = require('./adminUI');
 var PlaySound = require('../models/playSound');
-var adminAuthorisationUI = require('../models/adminAuthorisationUI');
+var adminAuthorisationUI = require('./adminAuthorisationUI');
 
 var welcomeUI = function() {
   this.createWelcomeText();
