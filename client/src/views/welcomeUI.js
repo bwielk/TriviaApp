@@ -4,8 +4,7 @@ var leaderboardUI = require('./leaderboardUI.js');
 var adminUI = require('./adminUI.js');
 var adminUI = require('./adminUI');
 var PlaySound = require('../models/playSound');
-
-
+var adminAuthorisationUI = require('./adminAuthorisationUI.js');
 
 var welcomeUI = function() {
   this.createWelcomeText();
@@ -41,7 +40,7 @@ welcomeUI.prototype = {
   },
 
   handleAdminButtonClick: function(){
-    new adminUI();
+    new adminAuthorisationUI();
   },
 
   createPlayButton: function() {
