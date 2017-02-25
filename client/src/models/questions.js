@@ -1,6 +1,7 @@
 var Questions = function() {
 }
 
+
 Questions.prototype = {
   makeRequest: function(url, callback) {
     var request = new XMLHttpRequest();
@@ -75,6 +76,8 @@ Questions.prototype = {
   // delete: function(question, callback){
   //   this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
   // }
+
+  ///////////////////
 }
 
 module.exports = Questions;
