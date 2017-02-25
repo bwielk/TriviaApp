@@ -86,7 +86,6 @@ gameUI.prototype = {
       this.renderButtons(question);
     }
   }
-
 }
 
 module.exports = gameUI;

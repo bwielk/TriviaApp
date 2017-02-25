@@ -1,3 +1,4 @@
+var welcomeUI = require('./welcomeUI.js');
 
 var registrationUI = function() {
   this.removeContent("question");
@@ -29,6 +30,18 @@ registrationUI.prototype = {
     return input;
   },
 
+  handleGoBackButtonClick: function(){
+    window.location = "/";
+  },
+
+  createGoBackButton: function(){
+    var container = document.getElementById("main");
+    var goBackButton = document.createElement("button");
+    goBackButton.innerText = "GO BACK";
+    container.appendChild(goBackButton);
+    goBackButton.onclick = handleGoBackButtonClick;
+  },
+
   createForm: function() {
     var container = document.getElementById("main");
     var form = document.createElement("form");
@@ -38,8 +51,8 @@ registrationUI.prototype = {
     this.createInputField(form, "text", "name", "Name");
     this.createInputField(form, "text", "password", "Password");
     var submitButton = this.createSubmitButton(form, "submit", "SUBMIT");
+    this.createGoBackButton();
   }
-
-}
+};
 
 module.exports = registrationUI;
