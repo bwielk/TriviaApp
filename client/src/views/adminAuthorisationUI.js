@@ -11,27 +11,27 @@ adminAuthorisationUI.prototype = {
   removeContent: function(htmlElementId) {
     var toClear = document.getElementById(htmlElementId);
     while (toClear.firstChild) {
-        toClear.removeChild(toClear.firstChild);
+      toClear.removeChild(toClear.firstChild);
     }
   },
 
-  checkPassword: function(div, password, admin){
+  checkPassword: function(info, div, password, admin){
     if(password.value === admin.password){
       new adminUI();
     }else{
-      var info = document.createElement('p');
-      info.style.textCss = "color: red";
       info.innerText = "THE PASSWORD IS INCORRECT! TRY AGAIN";
+      info.style.cssText = "color: red";
       div.appendChild(info);
-    };
+     }
   },
 
   createEnterButton: function(div, inputField, admin){
     var button = document.createElement('button');
+    var info = document.createElement('p');
     button.innerText = "GO";
     div.appendChild(button);
     button.addEventListener('click', function(){
-      this.checkPassword(div, inputField, admin)}.bind(this));
+      this.checkPassword(info, div, inputField, admin)}.bind(this));
   },
 
   createAuthForm: function(){
