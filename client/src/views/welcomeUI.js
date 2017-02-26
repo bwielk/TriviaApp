@@ -40,8 +40,8 @@ welcomeUI.prototype = {
   },
 
   handleAdminButtonClick: function(){
-    this.style.cssText = "display: none"
-    new adminAuthorisationUI();
+   new adminAuthorisationUI();
+
   },
 
   createPlayButton: function() {

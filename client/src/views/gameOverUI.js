@@ -1,5 +1,9 @@
 var leaderboardUI = require('./leaderboardUI.js');
 var GameOverSound = require('../models/gameOverSound');
+var gameUI = require('./gameUI.js');
+var PlaySound = require('../models/playSound');
+
+
 
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
@@ -18,6 +22,7 @@ gameOverUI.prototype = {
     this.changeTitle();
     this.createOutcomeText();
     this.createLeaderboardButton();
+    this.createStartNewGameButton();
     setTimeout(GameOverSound, 800);
   },
 
@@ -69,9 +74,21 @@ gameOverUI.prototype = {
     submit.type = "submit";
     submit.value = "Save to leaderboard";
     form.appendChild(submit);
-  }
+  },
 
-  
+  handleNewGameButtonClick: function() {
+    location.reload();
+
+  },
+
+ createStartNewGameButton: function(){
+   var startNewGameButton = document.createElement('button');
+   startNewGameButton.innerText = "Start New Game";
+   var div = document.getElementById('main');
+   div.appendChild(startNewGameButton);
+   startNewGameButton.onclick = this.handleNewGameButtonClick;
+ },
+
 }
 
 module.exports = gameOverUI;

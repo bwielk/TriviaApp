@@ -60,6 +60,16 @@ adminUI.prototype = {
     this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
     this.createInput(form, "category", "text", "category", "Category", "20");
 
+    var allAnswers = function(){
+      var values = [];
+      var arr = document.getElementsByClassName('option');
+      console.log(arr);
+      for(var element of arr){
+        values.push(e.target.option.value);
+      }
+      return values;
+    }
+
     form.onsubmit = function(e){
 
       e.preventDefault();
