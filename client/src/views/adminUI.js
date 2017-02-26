@@ -30,23 +30,25 @@ adminUI.prototype = {
     form.appendChild(input);
   },
 
-  createSubmitButton: function(form, type, value){
+  createSubmitButton: function(form, name, type, value){
     var newline = document.createElement('br');
     var submit = document.createElement('input');
+    submit.name
     submit.type = type;
     submit.value =  value;
     form.appendChild(newline);
     form.appendChild(submit);
   },
 
-  // createDeleteButton: function(form, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //  var newline = document.createElement('br');
-  //  var submit = document.createElement('input');
-  //  submit.type = type;
-  //  submit.value = value;
-  //  form.appendChild(newline);
-  //  form.appendChild(submit);
-  // },
+  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   var newline = document.createElement('br');
+   var submit = document.createElement('input');
+   submit.name = name;
+   submit.type = type;
+   submit.value = value;
+   form.appendChild(newline);
+   form.appendChild(submit);
+  },
 
   adminForm: function(){
     var div = document.getElementById('main');
@@ -93,11 +95,13 @@ adminUI.prototype = {
 
   getQuestions: function(questions){
     var main = document.getElementById('main');
+    var index = 0;
     for(var question of questions){
-      // var deleteForm = document.createElement('form'); ///!!!!!
-      // var id = questions.indexOf(questions);///!!!!
+      var deleteForm = document.createElement('form');
+      deleteForm.action = "/api/questions/" + index;
+      console.log(deleteForm.action);
       // deleteForm.action = "/api/questions/" + id + "";////!!!!!
-      // deleteForm.method = "delete";//// !!!!!
+      deleteForm.method = "delete";//// !!!!!
       var field = document.createElement('div');
       field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
       var p1= document.createElement('p');
@@ -118,13 +122,16 @@ adminUI.prototype = {
         var ctg = document.createElement('p');
         ctg.innerText = "CATEGORY: " + category;
       };
-      // var deleteButton = this.createDeleteButton(deleteForm, "submit", "DELETE"); ////!!!!
-      // field.appendChild(deleteForm); //!!!!!!
+
+      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
+
+      field.appendChild(deleteForm); //!!!!!!
 
       field.appendChild(p1);
       field.appendChild(list);
       field.appendChild(ctg);
       main.appendChild(field);
+      index++;
     }
   }
 }

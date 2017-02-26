@@ -46,6 +46,7 @@ questionsRouter.put('/:id', function(req, res){
 });
 
 questionsRouter.delete('/:id', function(req, res){
+  console.log('TEST');
   query.all(function(results) {
     var questionObject = results[req.params.id];
     query.delete( questionObject, function(results2) {
