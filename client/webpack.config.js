@@ -1,12 +1,5 @@
 config = {
-  // entry: "./src/app.js",
-  // output: {
-    //   filename: "bundle.js",
-    //   path: "./build"
-    // },
-
-
-    entry: {
+   entry: {
       welcome: "./src/js/app.js",
       leaderboard: "./src/js/leaderboardApp.js"
     },
@@ -14,7 +7,6 @@ config = {
       path: "./build",
       filename: "[name]-bundle.js"
     },
-
 
     devtool: "source-map"
   };

@@ -1,7 +1,7 @@
-var gameUI = require('../views/gameUI.js');
+var welcomeUI = require('../views/welcomeUI.js');
 
 var app = function() {
-  new gameUI();
+  new welcomeUI();
 }
 
 window.onload = app;
