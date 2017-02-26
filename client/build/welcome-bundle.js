@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -170,6 +170,236 @@ module.exports = Players;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Questions = __webpack_require__(5);
+var Question = __webpack_require__(10);
+
+var adminUI = function(){
+  this.removeContent('main')
+  this.adminForm();
+  var questions = new Questions();
+  questions.all(function(result){
+    this.getQuestions(result);
+  }.bind(this));
+};
+
+adminUI.prototype = {
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+      toClear.removeChild(toClear.firstChild);
+    }
+  }, 
+
+  createInput: function(form, className, type, name, value, size){
+    var input = document.createElement('input');
+    var newline = document.createElement('br');
+    input.class = className;
+    input.type = type;
+    input.name = name;
+    input.placeholder = value;
+    input.size = size;
+    form.appendChild(newline);
+    form.appendChild(input);
+  },
+
+  createSubmitButton: function(form, name, type, value){
+    var newline = document.createElement('br');
+    var submit = document.createElement('input');
+    submit.name
+    submit.type = type;
+    submit.value =  value;
+    form.appendChild(newline);
+    form.appendChild(submit);
+  },
+
+  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   var newline = document.createElement('br');
+   var submit = document.createElement('input');
+   submit.name = name;
+   submit.type = type;
+   submit.value = value;
+   form.appendChild(newline);
+   form.appendChild(submit);
+  },
+
+  adminForm: function(){
+    var div = document.getElementById('main');
+    var form = document.createElement('form');
+    // form.action = "/api/players";
+    this.createInput(form, "question", "text", "question", "Your question: ", "50");
+    this.createInput(form, "option", "text", "A", "A:", "20");
+    this.createInput(form, "option", "text", "B", "B:", "20");
+    this.createInput(form, "option","text", "C", "C:", "20");
+    this.createInput(form, "option", "text", "D", "D:", "20");
+    this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
+    this.createInput(form, "category", "text", "category", "Category", "20");
+
+    var allAnswers = function(){
+      var values = [];
+      var arr = document.getElementsByClassName('option');
+      console.log(arr);
+      for(var element of arr){
+        values.push(e.target.option.value);
+      }
+      return values;
+    }
+
+    form.onsubmit = function(e){
+
+      e.preventDefault();
+      var newQuestion = new Question({
+        questionString: e.target.question.value,
+        possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
+        correctAnswer: e.target.correct.value,
+        category: e.target.category.value
+      })
+
+      var allQuestions = new Questions();
+      allQuestions.add(newQuestion, function(data){
+        console.log(data);
+      })
+    }
+
+    var newline = document.createElement('br');
+    var submitButton = this.createSubmitButton(form, "submit", "SAVE");
+    div.appendChild(form);
+  },
+
+  getQuestions: function(questions){
+    var main = document.getElementById('main');
+    var index = 0;
+    for(var question of questions){
+      var deleteForm = document.createElement('form');
+      deleteForm.action = "/api/questions/" + index;
+      console.log(deleteForm.action);
+      // deleteForm.action = "/api/questions/" + id + "";////!!!!!
+      deleteForm.method = "delete";//// !!!!!
+      var field = document.createElement('div');
+      field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
+      var p1= document.createElement('p');
+      p1.innerText = question.questionString;
+      var list  = document.createElement('ul');
+      list.style.cssText = "list-style: none";
+      var correctAnswer = question.correctAnswer;
+      var category = question.category;
+      for(var answer of question.possibleAnswers){
+        var li = document.createElement('li'); 
+        if(answer === correctAnswer){
+          li.innerText = answer;
+          li.style.cssText = "background-color: green";
+        }else{
+          li.innerText = answer;
+        };
+        list.appendChild(li);
+        var ctg = document.createElement('p');
+        ctg.innerText = "CATEGORY: " + category;
+      };
+
+      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
+
+      field.appendChild(deleteForm); //!!!!!!
+
+      field.appendChild(p1);
+      field.appendChild(list);
+      field.appendChild(ctg);
+      main.appendChild(field);
+      index++;
+    }
+  }
+}
+
+
+module.exports = adminUI;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var gameUI = __webpack_require__(14);
+var registrationUI = __webpack_require__(15);
+var leaderboardUI = __webpack_require__(0);
+var adminUI = __webpack_require__(2);
+var adminUI = __webpack_require__(2);
+var PlaySound = __webpack_require__(9);
+var adminAuthorisationUI = __webpack_require__(12);
+
+var welcomeUI = function() {
+  this.createWelcomeText();
+  this.createPlayButton();
+  this.createRegisterButton();
+  this.createLeaderboardButton();
+  this.createAdminButton();
+}
+
+welcomeUI.prototype = {
+
+  createWelcomeText: function() {
+    var welcomeText = document.createElement('p');
+    welcomeText.innerText = "This is a game";
+    var div = document.getElementById('main')
+    div.appendChild(welcomeText);
+  }, 
+
+  handlePlayButtonClick: function() {
+    this.style.cssText = "display: none";
+    new gameUI();
+    var playSound = new PlaySound();
+
+  },
+
+  handleLeaderboardButtonClick: function(){
+    this.style.cssText = "display: none";
+    new leaderboardUI();
+  },
+
+  handleRegisterButtonClick: function() {
+    new registrationUI();
+  },
+
+  handleAdminButtonClick: function(){
+   new adminAuthorisationUI();
+
+  },
+
+  createPlayButton: function() {
+    var playButton = document.createElement('button');
+    playButton.innerText = "PLAY";
+    var div = document.getElementById('main')
+    div.appendChild(playButton);
+    playButton.onclick = this.handlePlayButtonClick;
+  }, 
+
+  createRegisterButton: function() {
+    var registerButton = document.createElement('button');
+    registerButton.innerText = "REGISTER";
+    var div = document.getElementById('main')
+    div.appendChild(registerButton);
+    registerButton.onclick = this.handleRegisterButtonClick;
+  },
+
+  createLeaderboardButton: function(){
+    var leaderboardButton = document.createElement('button');
+    leaderboardButton.innerText = "LEADERBOARD";
+    var div = document.getElementById('main');
+    div.appendChild(leaderboardButton);
+    leaderboardButton.onclick = this.handleLeaderboardButtonClick;
+  },
+
+  createAdminButton: function(){
+    var adminButton = document.createElement('button');
+    adminButton.innerText = "ADMIN";
+    var div = document.getElementById("main");
+    div.appendChild(adminButton);
+    adminButton.onclick = this.handleAdminButtonClick;
+  }
+}
+
+module.exports = welcomeUI;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 var Player = function(options){
@@ -181,18 +411,346 @@ var Player = function(options){
 module.exports = Player;
 
 /***/ }),
-/* 3 */
+/* 5 */
+/***/ (function(module, exports) {
+
+var Questions = function() {
+}
+
+Questions.prototype = {
+  makeRequest: function(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url);
+    request.onload = callback;
+    request.send();
+  }, 
+
+  makePostRequest: function(url, callback, entryData) {
+    var request = new XMLHttpRequest();
+    request.open("POST", url);//we request the POST connection
+    request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
+    request.onload = callback;
+    request.send(entryData);
+  },
+
+  makePutRequest: function(url, callback, entryData){
+    request.open("PUT", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send(entryData);
+  },
+
+  // makePostRequest: function(url, callback, entryData) {
+  //   var request = new XMLHttpRequest();
+  //   request.open("POST", url);//we request the POST connection
+  //   request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
+  //   request.onload = callback;
+  //   request.send(entryData);
+  // },
+
+  // /////////////////////TO BE CHECKED/////////////////////////////////////////////////
+  // makePutRequest: function(url, callback, entryData){
+  //   request.open("PUT", url);
+  //   request.setRequestHeader("Content-type", "application/json");
+  //   request.onload = callback;
+  //   request.send(entryData);
+  // },
+
+  makeDeleteRequest: function(url, callback){
+    var request = new XMLHttpRequest();
+    request.open("DELETE", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send();
+  },
+
+  all: function(callback) {
+    this.makeRequest('http://localhost:3000/api/questions', function() {
+      if (this.status != 200) return;
+        var jsonString = this.responseText;
+        var result = JSON.parse(jsonString);
+        callback(result);
+    });
+  },
+
+  add: function(newQuestion, callback){
+    var questionToAdd = JSON.stringify(newQuestion);
+    this.makePostRequest('http://localhost:3000/api/questions', callback, questionToAdd);
+  },
+
+  // update: function(question, callback){
+  //   var questionUpdate = JSON.stringify(question);
+  //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
+  // },
+
+  delete: function(question, callback){
+    this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
+  }
+
+  ///////////////////
+}
+
+module.exports = Questions;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var Admin = function(){
+  this.password = "123abc";
+}
+
+module.exports = Admin;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var CorrectSound = function(){
+
+  var correctSound = new Audio('https://www.soundjay.com/button/sounds/button-3.mp3');
+  correctSound.play();
+};
+
+  
+
+module.exports = CorrectSound;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+var GameOverSound = function(){
+
+  var gameOverSound = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
+  gameOverSound.play();
+};
+
+  
+
+module.exports = GameOverSound;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+var PlaySound = function(){
+
+  var playSound = new Audio('https://www.soundjay.com/misc/sounds/dream-harp-06.mp3');
+  playSound.play();
+};
+
+
+module.exports = PlaySound;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+var Question = function(options){
+  this.questionString = options.questionString;
+  this.correctAnswer = options.correctAnswer;
+  this.category = options.category;
+  this.possibleAnswers = options.possibleAnswers;
+};
+
+
+module.exports = Question;
+
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+var WrongSound = function(){
+
+  var wrongSound = new Audio('https://www.soundjay.com/button/sounds/beep-05.mp3');
+  wrongSound.play();
+};
+
+module.exports = WrongSound;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Admin = __webpack_require__(6);
+var adminUI = __webpack_require__(2);
+
+var adminAuthorisationUI = function(){
+  this.removeContent('main');
+  this.createAuthForm();
+}
+
+adminAuthorisationUI.prototype = {
+
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+      toClear.removeChild(toClear.firstChild);
+    }
+  },
+
+  checkPassword: function(info, div, password, admin){
+    if(password.value === admin.password){
+      new adminUI();
+    }else{
+      info.innerText = "THE PASSWORD IS INCORRECT! TRY AGAIN";
+      info.style.cssText = "color: red";
+      div.appendChild(info);
+     }
+  },
+
+  createEnterButton: function(div, inputField, admin){
+    var button = document.createElement('button');
+    var info = document.createElement('p');
+    button.innerText = "GO";
+    div.appendChild(button);
+    button.addEventListener('click', function(){
+      this.checkPassword(info, div, inputField, admin)}.bind(this));
+  },
+
+  createAuthForm: function(){
+    var admin = new Admin();
+    var div = document.getElementById('main');
+    var gobackbutton = this.createGoBackButton(div);
+    var p = document.createElement('p');
+    p.innerText = "ENTER THE ADMIN PASSWORD";
+    var password = document.createElement('input');
+    password.type = "password";
+    password.size = "30";
+    div.appendChild(password);
+    this.createEnterButton(div, password, admin);
+    div.appendChild(p);
+  },
+
+  handleGoBackButtonClick: function(){
+    window.location = "/";
+  },
+
+  createGoBackButton: function(container){
+    var goBackButton = document.createElement("button");
+    goBackButton.innerText = "GO BACK";
+    container.appendChild(goBackButton);
+    goBackButton.onclick = this.handleGoBackButtonClick;
+  }
+};
+
+
+module.exports = adminAuthorisationUI;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var leaderboardUI = __webpack_require__(0);
+var GameOverSound = __webpack_require__(8);
+
+
+
+var gameOverUI = function() {
+  this.stringified = localStorage.getItem("currentPlayer");
+  this.currentPlayer = JSON.parse(this.stringified);
+  this.currentPlayerName = this.currentPlayer.name;
+  this.currentPlayerScore = this.currentPlayer.score;
+  this.container = document.getElementById('main');
+  this.setup(); 
+}
+
+gameOverUI.prototype = {
+
+  setup: function() {
+    this.removeContent("main");
+    this.removeContent("question");
+    this.changeTitle();
+    this.createOutcomeText();
+    this.createLeaderboardButton();
+    this.createStartNewGameButton();
+    setTimeout(GameOverSound, 800);
+  },
+
+  showLeaderboard: function() {
+    new leaderboardUI();
+  },
+
+  changeTitle: function() {
+    var title = document.getElementsByTagName('title');
+    title.innerText = "GAME OVER";
+  },
+
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+        toClear.removeChild(toClear.firstChild);
+    }
+  }, 
+
+  createOutcomeText: function() {
+    var textField = document.createElement('h2');
+    console.log(this.currentPlayer);
+    textField.innerText = "You score " + this.currentPlayerScore;
+    this.container.appendChild(textField);
+  },
+
+  createForm: function() {
+    var form = document.createElement('form');
+    form.action = "/api/players/";
+    form.method = "post";
+    this.container.appendChild(form);
+    return form;
+  },
+
+  addInput: function(form, inputType, inputName, inputValue) {
+    var input = document.createElement("input");
+    input.type = inputType;
+    input.name = inputName;
+    input.value = inputValue;
+    form.appendChild(input);
+  },
+
+  createLeaderboardButton: function() {
+    var form = this.createForm();
+    this.addInput(form, "text", "name", "Input Name");
+    this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+
+    var submit = document.createElement("input");
+    submit.type = "submit";
+    submit.value = "Save to leaderboard";
+    form.appendChild(submit);
+  },
+
+  handleNewGameButtonClick: function() {
+    location.reload();
+
+  },
+
+ createStartNewGameButton: function(){
+   var startNewGameButton = document.createElement('button');
+   startNewGameButton.innerText = "Start New Game";
+   var div = document.getElementById('main');
+   div.appendChild(startNewGameButton);
+   startNewGameButton.onclick = this.handleNewGameButtonClick;
+ },
+
+}
+
+module.exports = gameOverUI;
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Questions = __webpack_require__(6);
+var Questions = __webpack_require__(5);
 
-var Player = __webpack_require__(2)
+var Player = __webpack_require__(4)
 
-var Player = __webpack_require__(2);
-var CorrectSound = __webpack_require__(4);
-var WrongSound = __webpack_require__(7);
-var gameOverUI = __webpack_require__(8);
+var Player = __webpack_require__(4);
+var CorrectSound = __webpack_require__(7);
+var WrongSound = __webpack_require__(11);
+var gameOverUI = __webpack_require__(13);
 
 
 var currentPlayer;
@@ -365,581 +923,10 @@ gameUI.prototype = {
 module.exports = gameUI;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var CorrectSound = function(){
-
-  var correctSound = new Audio('https://www.soundjay.com/button/sounds/button-3.mp3');
-  correctSound.play();
-};
-
-  
-
-module.exports = CorrectSound;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-var GameOverSound = function(){
-
-  var gameOverSound = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
-  gameOverSound.play();
-};
-
-  
-
-module.exports = GameOverSound;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-var Questions = function() {
-}
-
-Questions.prototype = {
-  makeRequest: function(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url);
-    request.onload = callback;
-    request.send();
-  }, 
-
-  makePostRequest: function(url, callback, entryData) {
-    var request = new XMLHttpRequest();
-    request.open("POST", url);//we request the POST connection
-    request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
-    request.onload = callback;
-    request.send(entryData);
-  },
-
-  makePutRequest: function(url, callback, entryData){
-    request.open("PUT", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send(entryData);
-  },
-
-  // makePostRequest: function(url, callback, entryData) {
-  //   var request = new XMLHttpRequest();
-  //   request.open("POST", url);//we request the POST connection
-  //   request.setRequestHeader("Content-type", "application/json");//hey api, the POSTed file is in JSON
-  //   request.onload = callback;
-  //   request.send(entryData);
-  // },
-
-  // /////////////////////TO BE CHECKED/////////////////////////////////////////////////
-  // makePutRequest: function(url, callback, entryData){
-  //   request.open("PUT", url);
-  //   request.setRequestHeader("Content-type", "application/json");
-  //   request.onload = callback;
-  //   request.send(entryData);
-  // },
-
-  makeDeleteRequest: function(url, callback){
-    var request = new XMLHttpRequest();
-    request.open("DELETE", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send();
-  },
-
-  all: function(callback) {
-    this.makeRequest('http://localhost:3000/api/questions', function() {
-      if (this.status != 200) return;
-        var jsonString = this.responseText;
-        var result = JSON.parse(jsonString);
-        callback(result);
-    });
-  },
-
-  add: function(newQuestion, callback){
-    var questionToAdd = JSON.stringify(newQuestion);
-    this.makePostRequest('http://localhost:3000/api/questions', callback, questionToAdd);
-  },
-
-  // update: function(question, callback){
-  //   var questionUpdate = JSON.stringify(question);
-  //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
-  // },
-
-  delete: function(question, callback){
-    this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
-  }
-
-  ///////////////////
-}
-
-module.exports = Questions;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-var WrongSound = function(){
-
-  var wrongSound = new Audio('https://www.soundjay.com/button/sounds/beep-05.mp3');
-  wrongSound.play();
-};
-
-module.exports = WrongSound;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var leaderboardUI = __webpack_require__(0);
-var GameOverSound = __webpack_require__(5);
-
-
-
-var gameOverUI = function() {
-  this.stringified = localStorage.getItem("currentPlayer");
-  this.currentPlayer = JSON.parse(this.stringified);
-  this.currentPlayerName = this.currentPlayer.name;
-  this.currentPlayerScore = this.currentPlayer.score;
-  this.container = document.getElementById('main');
-  this.setup(); 
-}
-
-gameOverUI.prototype = {
-
-  setup: function() {
-    this.removeContent("main");
-    this.removeContent("question");
-    this.changeTitle();
-    this.createOutcomeText();
-    this.createLeaderboardButton();
-    this.createStartNewGameButton();
-    setTimeout(GameOverSound, 800);
-  },
-
-  showLeaderboard: function() {
-    new leaderboardUI();
-  },
-
-  changeTitle: function() {
-    var title = document.getElementsByTagName('title');
-    title.innerText = "GAME OVER";
-  },
-
-  removeContent: function(htmlElementId) {
-    var toClear = document.getElementById(htmlElementId);
-    while (toClear.firstChild) {
-        toClear.removeChild(toClear.firstChild);
-    }
-  }, 
-
-  createOutcomeText: function() {
-    var textField = document.createElement('h2');
-    console.log(this.currentPlayer);
-    textField.innerText = "You score " + this.currentPlayerScore;
-    this.container.appendChild(textField);
-  },
-
-  createForm: function() {
-    var form = document.createElement('form');
-    form.action = "/api/players/";
-    form.method = "post";
-    this.container.appendChild(form);
-    return form;
-  },
-
-  addInput: function(form, inputType, inputName, inputValue) {
-    var input = document.createElement("input");
-    input.type = inputType;
-    input.name = inputName;
-    input.value = inputValue;
-    form.appendChild(input);
-  },
-
-  createLeaderboardButton: function() {
-    var form = this.createForm();
-    this.addInput(form, "text", "name", "Input Name");
-    this.addInput(form, "hidden", "scores", this.currentPlayerScore);
-
-    var submit = document.createElement("input");
-    submit.type = "submit";
-    submit.value = "Save to leaderboard";
-    form.appendChild(submit);
-  },
-
-  handleNewGameButtonClick: function() {
-    location.reload();
-
-  },
-
- createStartNewGameButton: function(){
-   var startNewGameButton = document.createElement('button');
-   startNewGameButton.innerText = "Start New Game";
-   var div = document.getElementById('main');
-   div.appendChild(startNewGameButton);
-   startNewGameButton.onclick = this.handleNewGameButtonClick;
- },
-
-}
-
-module.exports = gameOverUI;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var welcomeUI = __webpack_require__(12);
-
-var app = function() {
-  new welcomeUI();
-}
-
-window.onload = app;
-
-/***/ }),
-/* 10 */,
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Questions = __webpack_require__(6);
-var Question = __webpack_require__(15);
-
-var adminUI = function(){
-  this.removeContent('main')
-  this.adminForm();
-  var questions = new Questions();
-  questions.all(function(result){
-    this.getQuestions(result);
-  }.bind(this));
-};
-
-adminUI.prototype = {
-  removeContent: function(htmlElementId) {
-    var toClear = document.getElementById(htmlElementId);
-    while (toClear.firstChild) {
-      toClear.removeChild(toClear.firstChild);
-    }
-  }, 
-
-  createInput: function(form, className, type, name, value, size){
-    var input = document.createElement('input');
-    var newline = document.createElement('br');
-    input.class = className;
-    input.type = type;
-    input.name = name;
-    input.placeholder = value;
-    input.size = size;
-    form.appendChild(newline);
-    form.appendChild(input);
-  },
-
-  createSubmitButton: function(form, name, type, value){
-    var newline = document.createElement('br');
-    var submit = document.createElement('input');
-    submit.name
-    submit.type = type;
-    submit.value =  value;
-    form.appendChild(newline);
-    form.appendChild(submit);
-  },
-
-  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   var newline = document.createElement('br');
-   var submit = document.createElement('input');
-   submit.name = name;
-   submit.type = type;
-   submit.value = value;
-   form.appendChild(newline);
-   form.appendChild(submit);
-  },
-
-  adminForm: function(){
-    var div = document.getElementById('main');
-    var form = document.createElement('form');
-    // form.action = "/api/players";
-    this.createInput(form, "question", "text", "question", "Your question: ", "50");
-    this.createInput(form, "option", "text", "A", "A:", "20");
-    this.createInput(form, "option", "text", "B", "B:", "20");
-    this.createInput(form, "option","text", "C", "C:", "20");
-    this.createInput(form, "option", "text", "D", "D:", "20");
-    this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
-    this.createInput(form, "category", "text", "category", "Category", "20");
-
-    var allAnswers = function(){
-      var values = [];
-      var arr = document.getElementsByClassName('option');
-      console.log(arr);
-      for(var element of arr){
-        values.push(e.target.option.value);
-      }
-      return values;
-    }
-
-    form.onsubmit = function(e){
-
-      e.preventDefault();
-      var newQuestion = new Question({
-        questionString: e.target.question.value,
-        possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
-        correctAnswer: e.target.correct.value,
-        category: e.target.category.value
-      })
-
-      var allQuestions = new Questions();
-      allQuestions.add(newQuestion, function(data){
-        console.log(data);
-      })
-    }
-
-    var newline = document.createElement('br');
-    var submitButton = this.createSubmitButton(form, "submit", "SAVE");
-    div.appendChild(form);
-  },
-
-  getQuestions: function(questions){
-    var main = document.getElementById('main');
-    var index = 0;
-    for(var question of questions){
-      var deleteForm = document.createElement('form');
-      deleteForm.action = "/api/questions/" + index;
-      console.log(deleteForm.action);
-      // deleteForm.action = "/api/questions/" + id + "";////!!!!!
-      deleteForm.method = "delete";//// !!!!!
-      var field = document.createElement('div');
-      field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
-      var p1= document.createElement('p');
-      p1.innerText = question.questionString;
-      var list  = document.createElement('ul');
-      list.style.cssText = "list-style: none";
-      var correctAnswer = question.correctAnswer;
-      var category = question.category;
-      for(var answer of question.possibleAnswers){
-        var li = document.createElement('li'); 
-        if(answer === correctAnswer){
-          li.innerText = answer;
-          li.style.cssText = "background-color: green";
-        }else{
-          li.innerText = answer;
-        };
-        list.appendChild(li);
-        var ctg = document.createElement('p');
-        ctg.innerText = "CATEGORY: " + category;
-      };
-
-      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
-
-      field.appendChild(deleteForm); //!!!!!!
-
-      field.appendChild(p1);
-      field.appendChild(list);
-      field.appendChild(ctg);
-      main.appendChild(field);
-      index++;
-    }
-  }
-}
-
-
-module.exports = adminUI;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var gameUI = __webpack_require__(3);
-var registrationUI = __webpack_require__(17);
-var leaderboardUI = __webpack_require__(0);
-var adminUI = __webpack_require__(11);
-var adminUI = __webpack_require__(11);
-var PlaySound = __webpack_require__(14);
-var adminAuthorisationUI = __webpack_require__(16);
-
-var welcomeUI = function() {
-  this.createWelcomeText();
-  this.createPlayButton();
-  this.createRegisterButton();
-  this.createLeaderboardButton();
-  this.createAdminButton();
-}
-
-welcomeUI.prototype = {
-
-  createWelcomeText: function() {
-    var welcomeText = document.createElement('p');
-    welcomeText.innerText = "This is a game";
-    var div = document.getElementById('main')
-    div.appendChild(welcomeText);
-  }, 
-
-  handlePlayButtonClick: function() {
-    this.style.cssText = "display: none";
-    new gameUI();
-    var playSound = new PlaySound();
-
-  },
-
-  handleLeaderboardButtonClick: function(){
-    this.style.cssText = "display: none";
-    new leaderboardUI();
-  },
-
-  handleRegisterButtonClick: function() {
-    new registrationUI();
-  },
-
-  handleAdminButtonClick: function(){
-   new adminAuthorisationUI();
-
-  },
-
-  createPlayButton: function() {
-    var playButton = document.createElement('button');
-    playButton.innerText = "PLAY";
-    var div = document.getElementById('main')
-    div.appendChild(playButton);
-    playButton.onclick = this.handlePlayButtonClick;
-  }, 
-
-  createRegisterButton: function() {
-    var registerButton = document.createElement('button');
-    registerButton.innerText = "REGISTER";
-    var div = document.getElementById('main')
-    div.appendChild(registerButton);
-    registerButton.onclick = this.handleRegisterButtonClick;
-  },
-
-  createLeaderboardButton: function(){
-    var leaderboardButton = document.createElement('button');
-    leaderboardButton.innerText = "LEADERBOARD";
-    var div = document.getElementById('main');
-    div.appendChild(leaderboardButton);
-    leaderboardButton.onclick = this.handleLeaderboardButtonClick;
-  },
-
-  createAdminButton: function(){
-    var adminButton = document.createElement('button');
-    adminButton.innerText = "ADMIN";
-    var div = document.getElementById("main");
-    div.appendChild(adminButton);
-    adminButton.onclick = this.handleAdminButtonClick;
-  }
-}
-
-module.exports = welcomeUI;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-var Admin = function(){
-  this.password = "123abc";
-}
-
-module.exports = Admin;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-var PlaySound = function(){
-
-  var playSound = new Audio('https://www.soundjay.com/misc/sounds/dream-harp-06.mp3');
-  playSound.play();
-};
-
-
-module.exports = PlaySound;
-
-/***/ }),
 /* 15 */
-/***/ (function(module, exports) {
-
-var Question = function(options){
-  this.questionString = options.questionString;
-  this.correctAnswer = options.correctAnswer;
-  this.category = options.category;
-  this.possibleAnswers = options.possibleAnswers;
-};
-
-
-module.exports = Question;
-
-
-
-/***/ }),
-/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Admin = __webpack_require__(13);
-var adminUI = __webpack_require__(11);
-
-var adminAuthorisationUI = function(){
-  this.removeContent('main');
-  this.createAuthForm();
-}
-
-adminAuthorisationUI.prototype = {
-
-  removeContent: function(htmlElementId) {
-    var toClear = document.getElementById(htmlElementId);
-    while (toClear.firstChild) {
-      toClear.removeChild(toClear.firstChild);
-    }
-  },
-
-  checkPassword: function(info, div, password, admin){
-    if(password.value === admin.password){
-      new adminUI();
-    }else{
-      info.innerText = "THE PASSWORD IS INCORRECT! TRY AGAIN";
-      info.style.cssText = "color: red";
-      div.appendChild(info);
-     }
-  },
-
-  createEnterButton: function(div, inputField, admin){
-    var button = document.createElement('button');
-    var info = document.createElement('p');
-    button.innerText = "GO";
-    div.appendChild(button);
-    button.addEventListener('click', function(){
-      this.checkPassword(info, div, inputField, admin)}.bind(this));
-  },
-
-  createAuthForm: function(){
-    var admin = new Admin();
-    var div = document.getElementById('main');
-    var gobackbutton = this.createGoBackButton(div);
-    var p = document.createElement('p');
-    p.innerText = "ENTER THE ADMIN PASSWORD";
-    var password = document.createElement('input');
-    password.type = "password";
-    password.size = "30";
-    div.appendChild(password);
-    this.createEnterButton(div, password, admin);
-    div.appendChild(p);
-  },
-
-  handleGoBackButtonClick: function(){
-    window.location = "/";
-  },
-
-  createGoBackButton: function(container){
-    var goBackButton = document.createElement("button");
-    goBackButton.innerText = "GO BACK";
-    container.appendChild(goBackButton);
-    goBackButton.onclick = this.handleGoBackButtonClick;
-  }
-};
-
-
-module.exports = adminAuthorisationUI;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var welcomeUI = __webpack_require__(12);
+var welcomeUI = __webpack_require__(3);
 
 var registrationUI = function() {
   this.removeContent("question");
@@ -997,6 +984,18 @@ registrationUI.prototype = {
 }
 
 module.exports = registrationUI;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var welcomeUI = __webpack_require__(3);
+
+var app = function() {
+  new welcomeUI();
+}
+
+window.onload = app;
 
 /***/ })
 /******/ ]);
