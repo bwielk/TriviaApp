@@ -176,7 +176,7 @@ module.exports = Players;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var registrationUI = __webpack_require__(0);
+var leaderboardUI = __webpack_require__(0);
 
 var leaderboard = function() {
   new leaderboardUI();

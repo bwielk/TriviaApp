@@ -1,5 +1,5 @@
 
-var registrationUI = require('../views/leaderboardUI.js');
+var leaderboardUI = require('../views/leaderboardUI.js');
 
 var leaderboard = function() {
   new leaderboardUI();
