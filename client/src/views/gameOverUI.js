@@ -1,7 +1,5 @@
 var leaderboardUI = require('./leaderboardUI.js');
 var GameOverSound = require('../models/gameOverSound');
-var gameUI = require('./gameUI.js');
-var PlaySound = require('../models/playSound');
 
 
 
