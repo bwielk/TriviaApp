@@ -1,12 +1,9 @@
 var Questions = require('../models/questions');
-<<<<<<< HEAD
 var Player = require('../models/player')
-=======
 var Player = require('../models/player');
 var CorrectSound = require('../models/correctSound');
 var WrongSound = require('../models/wrongSound');
 var gameOverUI = require('./gameOverUI.js');
->>>>>>> develop
 
 var currentPlayer;
 var questionsArray;

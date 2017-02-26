@@ -1,46 +1,7 @@
 var Questions = require('../models/questions.js');
+var Question = require('../models/question.js');
 
 var adminUI = function(){
-<<<<<<< HEAD
-  this.createForm();
-}
-
-adminUI.prototype = {
-  createForm: function(){
-    var div = document.getElementById('main');
-    var adminForm = document.createElement('form');
-
-    var questionInput = document.createElement('question');
-    questionInput.setAttribute("name", "questionString");
-    questionInput.setAttribute("value", "QUESTION");
-    adminForm.appendChild(questionInput);
-
-    var optionA = document.createElement('optionA');
-    optionA.setAttribute("name", "possibleAnswers");
-    optionA.setAttribute("value", "A");
-    adminForm.appendChild(optionA);
-
-    var optionB = document.createElement('optionB');
-    optionB.setAttribute("name", "possibleAnswers");
-    optionB.setAttribute("value", "B");
-    adminForm.appendChild(optionB);
-
-    var optionC = document.createElement('optionC');
-    optionC.setAttribute("name", "possbileAnswers");
-    optionC.setAttribute("value", "C");
-    adminForm.appendChild(optionC);
-
-    var optionD = document.createElement('optionD');
-    optionD.setAttribute("name", "possibleAnswers");
-    optionD.setAttribute("value", "D");
-    adminForm.appendChild(optionD);
-
-    div.appendChild(adminForm);
-  }
-}
-
-module.exports = adminUI;
-=======
   this.removeContent('main')
   this.adminForm();
   var questions = new Questions();
@@ -57,9 +18,10 @@ adminUI.prototype = {
     }
   }, 
 
-  createInput: function(form, type, name, value, size){
+  createInput: function(form, className, type, name, value, size){
     var input = document.createElement('input');
     var newline = document.createElement('br');
+    input.class = className;
     input.type = type;
     input.name = name;
     input.placeholder = value;
@@ -89,13 +51,31 @@ adminUI.prototype = {
   adminForm: function(){
     var div = document.getElementById('main');
     var form = document.createElement('form');
-    form.action = "/api/questions";
-    form.method = "post";
-    this.createInput(form, "text", "question", "Your question: ", "50");
-    this.createInput(form, "text", "A", "A:", "20");
-    this.createInput(form, "text", "B", "B:", "20");
-    this.createInput(form, "text", "C", "C:", "20");
-    this.createInput(form, "text", "D", "D:", "20");
+    // form.action = "/api/players";
+    this.createInput(form, "question", "text", "question", "Your question: ", "50");
+    this.createInput(form, "option", "text", "A", "A:", "20");
+    this.createInput(form, "option", "text", "B", "B:", "20");
+    this.createInput(form, "option","text", "C", "C:", "20");
+    this.createInput(form, "option", "text", "D", "D:", "20");
+    this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
+    this.createInput(form, "category", "text", "category", "Category", "20");
+
+    form.onsubmit = function(e){
+
+      e.preventDefault();
+      var newQuestion = new Question({
+        questionString: e.target.question.value,
+        possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
+        correctAnswer: e.target.correct.value,
+        category: e.target.category.value
+      })
+
+      var allQuestions = new Questions();
+      allQuestions.add(newQuestion, function(data){
+        console.log(data);
+      })
+    }
+
     var newline = document.createElement('br');
     var submitButton = this.createSubmitButton(form, "submit", "SAVE");
     div.appendChild(form);
@@ -108,7 +88,7 @@ adminUI.prototype = {
       // var id = questions.indexOf(questions);///!!!!
       // deleteForm.action = "/api/questions/" + id + "";////!!!!!
       // deleteForm.method = "delete";//// !!!!!
-     var field = document.createElement('div');
+      var field = document.createElement('div');
       field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
       var p1= document.createElement('p');
       p1.innerText = question.questionString;
@@ -137,9 +117,7 @@ adminUI.prototype = {
       main.appendChild(field);
     }
   }
-
 }
 
 
-  module.exports = adminUI;
->>>>>>> develop
+module.exports = adminUI;

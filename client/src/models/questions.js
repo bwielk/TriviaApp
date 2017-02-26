@@ -61,11 +61,12 @@ Questions.prototype = {
         var result = JSON.parse(jsonString);
         callback(result);
     });
-  }
-  // add: function(newQuestion, callback){
-  //   var questionToAdd = JSON.stringify(newQuestion);
-  //   this.makePostRequest('http://localhost:3000/api/questions', questionToAdd, callback);
-  // },
+  },
+  
+  add: function(newQuestion, callback){
+    var questionToAdd = JSON.stringify(newQuestion);
+    this.makePostRequest('http://localhost:3000/api/questions', callback, questionToAdd);
+  },
 
   // update: function(question, callback){
   //   var questionUpdate = JSON.stringify(question);
