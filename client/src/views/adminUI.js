@@ -39,18 +39,19 @@ adminUI.prototype = {
     form.appendChild(submit);
   },
 
-  // createDeleteButton: function(form, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //  var newline = document.createElement('br');
-  //  var submit = document.createElement('input');
-  //  submit.type = type;
-  //  submit.value = value;
-  //  form.appendChild(newline);
-  //  form.appendChild(submit);
-  // },
+  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   var newline = document.createElement('br');
+   var submit = document.createElement('input');
+   submit.type = type;
+   submit.name = name;
+   submit.value = value;
+   form.appendChild(newline);
+   form.appendChild(submit);
+ },
 
-  adminForm: function(){
-    var div = document.getElementById('main');
-    var form = document.createElement('form');
+ adminForm: function(){
+  var div = document.getElementById('main');
+  var form = document.createElement('form');
     // form.action = "/api/players";
     this.createInput(form, "question", "text", "question", "Your question: ", "50");
     this.createInput(form, "option", "text", "A", "A:", "20");
@@ -59,16 +60,6 @@ adminUI.prototype = {
     this.createInput(form, "option", "text", "D", "D:", "20");
     this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
     this.createInput(form, "category", "text", "category", "Category", "20");
-
-    var allAnswers = function(){
-      var values = [];
-      var arr = document.getElementsByClassName('option');
-      console.log(arr);
-      for(var element of arr){
-        values.push(e.target.option.value);
-      }
-      return values;
-    }
 
     form.onsubmit = function(e){
 
@@ -93,11 +84,8 @@ adminUI.prototype = {
 
   getQuestions: function(questions){
     var main = document.getElementById('main');
+    var index = 0;
     for(var question of questions){
-      // var deleteForm = document.createElement('form'); ///!!!!!
-      // var id = questions.indexOf(questions);///!!!!
-      // deleteForm.action = "/api/questions/" + id + "";////!!!!!
-      // deleteForm.method = "delete";//// !!!!!
       var field = document.createElement('div');
       field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
       var p1= document.createElement('p');
@@ -118,13 +106,27 @@ adminUI.prototype = {
         var ctg = document.createElement('p');
         ctg.innerText = "CATEGORY: " + category;
       };
-      // var deleteButton = this.createDeleteButton(deleteForm, "submit", "DELETE"); ////!!!!
-      // field.appendChild(deleteForm); //!!!!!!
+      var deleteForm = document.createElement('form');
+      // deleteForm.action = '/:id';
+      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
+
+      deleteForm.onsubmit = function(e){
+
+        e.preventDefault();
+         var allQuestions = new Questions();
+         allQuestions.delete(allQuestions[this.name], function(data){
+           console.log(data);
+           console.log(this);
+         });
+      }
+
+      field.appendChild(deleteForm); //!!!!!!
 
       field.appendChild(p1);
       field.appendChild(list);
       field.appendChild(ctg);
       main.appendChild(field);
+      index++;
     }
   }
 }

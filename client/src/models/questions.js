@@ -24,13 +24,6 @@ Questions.prototype = {
     request.send(entryData);
   },
 
-  makeDeleteRequest: function(url, callback){
-    request.open("DELETE", url);
-    request.setRequestHeader("Content-type", "application/json");
-    request.onload = callback;
-    request.send();
-  },
-
   // makePostRequest: function(url, callback, entryData) {
   //   var request = new XMLHttpRequest();
   //   request.open("POST", url);//we request the POST connection
@@ -47,12 +40,13 @@ Questions.prototype = {
   //   request.send(entryData);
   // },
 
-  // makeDeleteRequest: function(url, callback){
-  //   request.open("DELETE", url);
-  //   request.setRequestHeader("Content-type", "application/json");
-  //   request.onload = callback;
-  //   request.send();
-  // },
+  makeDeleteRequest: function(url, callback){
+    var request = new XMLHttpRequest();
+    request.open("DELETE", url);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = callback;
+    request.send();
+  },
 
   all: function(callback) {
     this.makeRequest('http://localhost:3000/api/questions', function() {
@@ -62,7 +56,7 @@ Questions.prototype = {
         callback(result);
     });
   },
-  
+
   add: function(newQuestion, callback){
     var questionToAdd = JSON.stringify(newQuestion);
     this.makePostRequest('http://localhost:3000/api/questions', callback, questionToAdd);
@@ -73,9 +67,9 @@ Questions.prototype = {
   //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
   // },
 
-  // delete: function(question, callback){
-  //   this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
-  // }
+  delete: function(question, callback){
+    this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
+  }
 
   ///////////////////
 }
