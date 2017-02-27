@@ -1,8 +1,6 @@
 var leaderboardUI = require('./leaderboardUI.js');
 var GameOverSound = require('../models/gameOverSound');
 
-
-
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
   this.currentPlayer = JSON.parse(this.stringified);
@@ -82,20 +80,16 @@ gameOverUI.prototype = {
       var nameInput = document.getElementById("nameInput");
       var scoresInput = document.getElementById("scoresInput");
       var params = "name="+nameInput.value+"&scores="+scoresInput.value;
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", url, true);
-
-      //Send the proper header information along with the request
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-      xhr.send(params);
+      var request = new XMLHttpRequest();
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      request.send(params);
       new leaderboardUI();
     };
   },
 
   handleNewGameButtonClick: function() {
     location.reload();
-
   },
 
  createStartNewGameButton: function(){
