@@ -14,6 +14,9 @@ var gameOverUI = require('./gameOverUI.js');
 var currentPlayer;
 var questionsArray;
 var questionIndex;
+var timerBar;
+var timer;
+var timerInterval;
 
 
 var gameUI = function() {
@@ -68,23 +71,31 @@ gameUI.prototype = {
     localStorage.setItem("currentPlayer", dataToSave);
   },
 
-  checkAnswer: function(selectedAnswer, correctAnswer) {
+  checkAnswer: function(selectedAnswer, correctAnswer, answerButton) {
+    this.correctAnswerButton.style.cssText = "background-color: green;";
     if (selectedAnswer === correctAnswer) {
       console.log("correct");
-      currentPlayer.score += 1;
+      currentPlayer.score += timer;
       this.savePlayer(currentPlayer);
       var correctSound = new CorrectSound();
     } else {
+      this.wrongAnswerButtons.forEach(function(button) {
+        console.log(button.innerText);
+        console.log(correctAnswer);
+          answerButton.style.cssText = "background-color: red;";
+      });
       var wrongSound = new WrongSound();
       currentPlayer.lives -= 1;
       this.savePlayer(currentPlayer);
       console.log("incorrect");
     }
+    setTimeout(this.endOfQuestion.bind(this), 1000);
+  },
 
+  endOfQuestion: function() {
     if (currentPlayer.lives == 0) {
       this.endGame();
     } else {
-
       questionIndex += 1;
       this.removeQuestion();
       this.render(questionsArray[questionIndex]);
@@ -109,10 +120,10 @@ gameUI.prototype = {
         this.correctAnswerButton = answerButton;
       } else {
         this.wrongAnswerButtons.push(answerButton);
-
       }
       answerButton.addEventListener('click', function(){
-        this.checkAnswer(answer, question.correctAnswer);
+        // console.log(answerButton);
+        this.checkAnswer(answer, question.correctAnswer, answerButton);
       }.bind(this));
     }.bind(this));
   },
@@ -175,6 +186,43 @@ gameUI.prototype = {
     }
   },
 
+  timeOut: function() {
+    questionIndex += 1;
+    this.removeQuestion();
+    this.render(questionsArray[questionIndex]);
+  },
+
+  moveTimer: function() {
+    if (timer > 0) {
+      timer -= 0.5;
+      timerBar.style.width = timer + '%';
+      if (timer < 50) {
+        timerBar.style.backgroundColor = 'orange';
+      }
+      if (timer < 25) {
+        timerBar.style.backgroundColor = 'red';
+      }
+    } else if (timer === 0) {
+      currentPlayer.lives -= 1;
+      setTimeout(this.endOfQuestion.bind(this), 1000);
+      clearInterval(timerInterval);
+    }
+  },
+
+  renderTimerBar: function() {
+    timer = 100;
+    console.log("rendering progress bar");
+    var containerDiv = document.getElementById('question');
+    var progressBarBackground = document.createElement('div');
+    timerBar = document.createElement('div');
+    progressBarBackground.appendChild(timerBar);
+    containerDiv.appendChild(progressBarBackground);
+    progressBarBackground.style.cssText = "background-color: grey; width: 100%; height: 20px";
+    timerBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
+    clearInterval(timerInterval);
+    timerInterval = setInterval(this.moveTimer.bind(this), 50);
+  },
+
   render: function(question) {
     if (questionIndex < questionsArray.length) {
       var containerDiv = document.getElementById('question');
@@ -184,6 +232,7 @@ gameUI.prototype = {
       this.renderButtons(question);
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
+      this.renderTimerBar();
     }
   }
 }

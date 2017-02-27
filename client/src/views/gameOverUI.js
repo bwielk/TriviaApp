@@ -1,8 +1,6 @@
 var leaderboardUI = require('./leaderboardUI.js');
 var GameOverSound = require('../models/gameOverSound');
 
-
-
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
   this.currentPlayer = JSON.parse(this.stringified);
@@ -61,22 +59,37 @@ gameOverUI.prototype = {
     input.name = inputName;
     input.value = inputValue;
     form.appendChild(input);
+    return input;
   },
 
   createLeaderboardButton: function() {
     var form = this.createForm();
-    this.addInput(form, "text", "name", "Input Name");
-    this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+    var nameInput = this.addInput(form, "text", "name", "Input Name");
+    nameInput.id = "nameInput";
+    var scoresInput = this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+    scoresInput.id = "scoresInput";
 
     var submit = document.createElement("input");
     submit.type = "submit";
     submit.value = "Save to leaderboard";
     form.appendChild(submit);
+
+    form.onsubmit = function(event) {
+      event.preventDefault();
+      var url = "/api/players";
+      var nameInput = document.getElementById("nameInput");
+      var scoresInput = document.getElementById("scoresInput");
+      var params = "name="+nameInput.value+"&scores="+scoresInput.value;
+      var request = new XMLHttpRequest();
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      request.send(params);
+      new leaderboardUI();
+    };
   },
 
   handleNewGameButtonClick: function() {
     location.reload();
-
   },
 
  createStartNewGameButton: function(){

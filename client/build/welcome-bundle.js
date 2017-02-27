@@ -667,8 +667,6 @@ module.exports = adminAuthorisationUI;
 var leaderboardUI = __webpack_require__(0);
 var GameOverSound = __webpack_require__(8);
 
-
-
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
   this.currentPlayer = JSON.parse(this.stringified);
@@ -727,22 +725,37 @@ gameOverUI.prototype = {
     input.name = inputName;
     input.value = inputValue;
     form.appendChild(input);
+    return input;
   },
 
   createLeaderboardButton: function() {
     var form = this.createForm();
-    this.addInput(form, "text", "name", "Input Name");
-    this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+    var nameInput = this.addInput(form, "text", "name", "Input Name");
+    nameInput.id = "nameInput";
+    var scoresInput = this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+    scoresInput.id = "scoresInput";
 
     var submit = document.createElement("input");
     submit.type = "submit";
     submit.value = "Save to leaderboard";
     form.appendChild(submit);
+
+    form.onsubmit = function(event) {
+      event.preventDefault();
+      var url = "/api/players";
+      var nameInput = document.getElementById("nameInput");
+      var scoresInput = document.getElementById("scoresInput");
+      var params = "name="+nameInput.value+"&scores="+scoresInput.value;
+      var request = new XMLHttpRequest();
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      request.send(params);
+      new leaderboardUI();
+    };
   },
 
   handleNewGameButtonClick: function() {
     location.reload();
-
   },
 
  createStartNewGameButton: function(){
@@ -777,6 +790,9 @@ var gameOverUI = __webpack_require__(13);
 var currentPlayer;
 var questionsArray;
 var questionIndex;
+var timerBar;
+var timer;
+var timerInterval;
 
 
 var gameUI = function() {
@@ -831,23 +847,31 @@ gameUI.prototype = {
     localStorage.setItem("currentPlayer", dataToSave);
   },
 
-  checkAnswer: function(selectedAnswer, correctAnswer) {
+  checkAnswer: function(selectedAnswer, correctAnswer, answerButton) {
+    this.correctAnswerButton.style.cssText = "background-color: green;";
     if (selectedAnswer === correctAnswer) {
       console.log("correct");
-      currentPlayer.score += 1;
+      currentPlayer.score += timer;
       this.savePlayer(currentPlayer);
       var correctSound = new CorrectSound();
     } else {
+      this.wrongAnswerButtons.forEach(function(button) {
+        console.log(button.innerText);
+        console.log(correctAnswer);
+          answerButton.style.cssText = "background-color: red;";
+      });
       var wrongSound = new WrongSound();
       currentPlayer.lives -= 1;
       this.savePlayer(currentPlayer);
       console.log("incorrect");
     }
+    setTimeout(this.endOfQuestion.bind(this), 1000);
+  },
 
+  endOfQuestion: function() {
     if (currentPlayer.lives == 0) {
       this.endGame();
     } else {
-
       questionIndex += 1;
       this.removeQuestion();
       this.render(questionsArray[questionIndex]);
@@ -872,10 +896,10 @@ gameUI.prototype = {
         this.correctAnswerButton = answerButton;
       } else {
         this.wrongAnswerButtons.push(answerButton);
-
       }
       answerButton.addEventListener('click', function(){
-        this.checkAnswer(answer, question.correctAnswer);
+        // console.log(answerButton);
+        this.checkAnswer(answer, question.correctAnswer, answerButton);
       }.bind(this));
     }.bind(this));
   },
@@ -938,6 +962,43 @@ gameUI.prototype = {
     }
   },
 
+  timeOut: function() {
+    questionIndex += 1;
+    this.removeQuestion();
+    this.render(questionsArray[questionIndex]);
+  },
+
+  moveTimer: function() {
+    if (timer > 0) {
+      timer -= 0.5;
+      timerBar.style.width = timer + '%';
+      if (timer < 50) {
+        timerBar.style.backgroundColor = 'orange';
+      }
+      if (timer < 25) {
+        timerBar.style.backgroundColor = 'red';
+      }
+    } else if (timer === 0) {
+      currentPlayer.lives -= 1;
+      setTimeout(this.endOfQuestion.bind(this), 1000);
+      clearInterval(timerInterval);
+    }
+  },
+
+  renderTimerBar: function() {
+    timer = 100;
+    console.log("rendering progress bar");
+    var containerDiv = document.getElementById('question');
+    var progressBarBackground = document.createElement('div');
+    timerBar = document.createElement('div');
+    progressBarBackground.appendChild(timerBar);
+    containerDiv.appendChild(progressBarBackground);
+    progressBarBackground.style.cssText = "background-color: grey; width: 100%; height: 20px";
+    timerBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
+    clearInterval(timerInterval);
+    timerInterval = setInterval(this.moveTimer.bind(this), 50);
+  },
+
   render: function(question) {
     if (questionIndex < questionsArray.length) {
       var containerDiv = document.getElementById('question');
@@ -947,6 +1008,7 @@ gameUI.prototype = {
       this.renderButtons(question);
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
+      this.renderTimerBar();
     }
   }
 }
