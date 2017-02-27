@@ -40,3 +40,27 @@ body{
 body div {
   border: 2px solid yellow;
 }
+
+#buttonUI{
+  font-family: Orbitron; 
+  padding: 1% 2%;
+  font-size: 101%;
+  background-color: rgb(138, 138, 92);
+  border-color: rgb(138, 138, 92);
+  font-weight: bold;
+  color: #36454f
+
+}
+
+#welcome_content{
+  width:400px;
+  background-color: rgb(138, 138, 92);
+  padding: 1% 1%;
+  border-radius: 20px;
+  border: 8px solid black;
+  font-family: Orbitron;
+  color: #36454f;
+  font-size: 100%;
+  text-align: center;
+  margin: auto;
+}

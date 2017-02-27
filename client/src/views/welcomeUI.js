@@ -45,7 +45,7 @@ welcomeUI.prototype = {
 
   createPlayButton: function() {
     var playButton = document.createElement('button');
-    playButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%";
+    playButton.id = "buttonUI"
     playButton.innerText = "PLAY";
     var div = document.getElementById('buttons');
     div.appendChild(playButton);
@@ -54,7 +54,7 @@ welcomeUI.prototype = {
 
   createRegisterButton: function() {
     var registerButton = document.createElement('button');
-    registerButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%; background-color: rgb(138, 138, 92";
+    registerButton.id = "buttonUI";
     registerButton.innerText = "REGISTER";
     var div = document.getElementById('buttons');
     div.appendChild(registerButton);
@@ -63,7 +63,7 @@ welcomeUI.prototype = {
 
   createLeaderboardButton: function(){
     var leaderboardButton = document.createElement('button');
-    leaderboardButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%";
+    leaderboardButton.id = "buttonUI";
     leaderboardButton.innerText = "LEADERBOARD";
     var div = document.getElementById('buttons');
     div.appendChild(leaderboardButton);
@@ -72,7 +72,7 @@ welcomeUI.prototype = {
 
   createAdminButton: function(){
     var adminButton = document.createElement('button');
-    adminButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%";
+   adminButton.id = "buttonUI";
     adminButton.innerText = "ADMIN";
     var div = document.getElementById('buttons');
     div.appendChild(adminButton);
