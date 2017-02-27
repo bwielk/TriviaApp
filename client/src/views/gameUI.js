@@ -14,8 +14,9 @@ var gameOverUI = require('./gameOverUI.js');
 var currentPlayer;
 var questionsArray;
 var questionIndex;
-var progressBar;
+var timerBar;
 var timer;
+var timerInterval;
 
 
 var gameUI = function() {
@@ -65,7 +66,7 @@ gameUI.prototype = {
   checkAnswer: function(selectedAnswer, correctAnswer) {
     if (selectedAnswer === correctAnswer) {
       console.log("correct");
-      currentPlayer.score += 1;
+      currentPlayer.score += timer;
       this.savePlayer(currentPlayer);
       var correctSound = new CorrectSound();
     } else {
@@ -74,11 +75,13 @@ gameUI.prototype = {
       this.savePlayer(currentPlayer);
       console.log("incorrect");
     }
+    setTimeout(this.endOfQuestion.bind(this), 1000);
+  },
 
+  endOfQuestion: function() {
     if (currentPlayer.lives == 0) {
       this.endGame();
     } else {
-
       questionIndex += 1;
       this.removeQuestion();
       this.render(questionsArray[questionIndex]);
@@ -178,31 +181,32 @@ gameUI.prototype = {
   moveTimer: function() {
     if (timer > 0) {
       timer -= 0.5;
-      progressBar.style.width = timer + '%';
+      timerBar.style.width = timer + '%';
       if (timer < 50) {
-        progressBar.style.backgroundColor = 'orange';
+        timerBar.style.backgroundColor = 'orange';
       }
       if (timer < 25) {
-        progressBar.style.backgroundColor = 'red';
+        timerBar.style.backgroundColor = 'red';
       }
-      // if (timer <= 0) {
-        //   console.log(this);
-        //   this.timeOut();
-        // }
-      }
-    },
+    } else if (timer === 0) {
+      currentPlayer.lives -= 1;
+      setTimeout(this.endOfQuestion.bind(this), 1000);
+      clearInterval(timerInterval);
+    }
+  },
 
-  renderProgressBar: function() {
+  renderTimerBar: function() {
     timer = 100;
     console.log("rendering progress bar");
     var containerDiv = document.getElementById('question');
     var progressBarBackground = document.createElement('div');
-    progressBar = document.createElement('div');
-    progressBarBackground.appendChild(progressBar);
+    timerBar = document.createElement('div');
+    progressBarBackground.appendChild(timerBar);
     containerDiv.appendChild(progressBarBackground);
     progressBarBackground.style.cssText = "background-color: grey; width: 100%; height: 20px";
-    progressBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
-    setInterval(this.moveTimer, 50);
+    timerBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
+    clearInterval(timerInterval);
+    timerInterval = setInterval(this.moveTimer.bind(this), 50);
   },
 
   render: function(question) {
@@ -214,7 +218,7 @@ gameUI.prototype = {
       this.renderButtons(question);
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
-      this.renderProgressBar();
+      this.renderTimerBar();
     }
   }
 }
