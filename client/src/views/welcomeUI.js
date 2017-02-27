@@ -1,8 +1,7 @@
 var gameUI = require('./gameUI.js');
 var registrationUI = require('./registrationUI.js');
 var leaderboardUI = require('./leaderboardUI.js');
-var adminUI = require('./adminUI.js');
-var adminUI = require('./adminUI');
+// var adminUI = require('./adminUI.js');
 var PlaySound = require('../models/playSound');
 var adminAuthorisationUI = require('./adminAuthorisationUI.js');
 
