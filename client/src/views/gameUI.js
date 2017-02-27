@@ -63,13 +63,19 @@ gameUI.prototype = {
     localStorage.setItem("currentPlayer", dataToSave);
   },
 
-  checkAnswer: function(selectedAnswer, correctAnswer) {
+  checkAnswer: function(selectedAnswer, correctAnswer, answerButton) {
+    this.correctAnswerButton.style.cssText = "background-color: green;";
     if (selectedAnswer === correctAnswer) {
       console.log("correct");
       currentPlayer.score += timer;
       this.savePlayer(currentPlayer);
       var correctSound = new CorrectSound();
     } else {
+      this.wrongAnswerButtons.forEach(function(button) {
+        console.log(button.innerText);
+        console.log(correctAnswer);
+          answerButton.style.cssText = "background-color: red;";
+      });
       var wrongSound = new WrongSound();
       currentPlayer.lives -= 1;
       this.savePlayer(currentPlayer);
@@ -106,10 +112,10 @@ gameUI.prototype = {
         this.correctAnswerButton = answerButton;
       } else {
         this.wrongAnswerButtons.push(answerButton);
-
       }
       answerButton.addEventListener('click', function(){
-        this.checkAnswer(answer, question.correctAnswer);
+        // console.log(answerButton);
+        this.checkAnswer(answer, question.correctAnswer, answerButton);
       }.bind(this));
     }.bind(this));
   },
