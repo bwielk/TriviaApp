@@ -2,7 +2,12 @@ var Admin = require('../models/admin.js');
 var adminUI = require('./adminUI');
 
 var adminAuthorisationUI = function(){
-  this.removeContent('main');
+  var welcome = document.getElementById('welcome_content');
+  document.getElementById('question').style = "display: inline";
+  welcome.style = "display:none";
+  var buttons = document.getElementById('buttons');
+  buttons.style = "display:none";
+  this.setBackground("TV");
   this.createAuthForm();
 }
 
@@ -13,6 +18,10 @@ adminAuthorisationUI.prototype = {
     while (toClear.firstChild) {
       toClear.removeChild(toClear.firstChild);
     }
+  },
+
+  setBackground: function(name){
+    document.body.style.backgroundImage = "url('./" + name + ".jpg')";
   },
 
   checkPassword: function(info, div, password, admin){
@@ -36,7 +45,7 @@ adminAuthorisationUI.prototype = {
 
   createAuthForm: function(){
     var admin = new Admin();
-    var div = document.getElementById('main');
+    var div = document.getElementById('question');
     var gobackbutton = this.createGoBackButton(div);
     var p = document.createElement('p');
     p.innerText = "ENTER THE ADMIN PASSWORD";

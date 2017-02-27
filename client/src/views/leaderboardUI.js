@@ -1,8 +1,8 @@
 var Players = require('../models/players');
 
 var leaderboardUI = function(){
-  this.removeContent("quiz");
-  this.removeContent("main");
+  this.removeContent("buttons");
+  this.removeContent("quiz_field");
   this.createGoBackButton();
   var players = new Players();
   players.all(function(result){
@@ -19,7 +19,7 @@ leaderboardUI.prototype = {
   }, 
 
   render: function(players){
-    var maindiv = document.getElementById('main');
+    var maindiv = document.getElementById('quiz_field');
     var list = document.createElement('ol');
     var sortedArray = players.sort(function(a, b){
       return a.scores - b.scores;
@@ -37,7 +37,7 @@ leaderboardUI.prototype = {
   },
 
   createGoBackButton: function(){
-    var container = document.getElementById("main");
+    var container = document.getElementById("quiz_field");
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
     container.appendChild(goBackButton);

@@ -6,11 +6,14 @@ var PlaySound = require('../models/playSound');
 var adminAuthorisationUI = require('./adminAuthorisationUI.js');
 
 var welcomeUI = function() {
+  document.getElementById('question').style = "display: none";
+  document.getElementById('choices').style = "display: none";
   this.createWelcomeText();
   this.createPlayButton();
   this.createRegisterButton();
   this.createLeaderboardButton();
   this.createAdminButton();
+  
 }
 
 welcomeUI.prototype = {
@@ -49,7 +52,8 @@ welcomeUI.prototype = {
 
   createPlayButton: function() {
     var playButton = document.createElement('button');
-    playButton.id = "buttonUI"
+    playButton.id = "buttonPlay";
+    playButton.className = "buttonUI";
     playButton.innerText = "PLAY";
     var div = document.getElementById('buttons');
     div.appendChild(playButton);
@@ -58,7 +62,8 @@ welcomeUI.prototype = {
 
   createRegisterButton: function() {
     var registerButton = document.createElement('button');
-    registerButton.id = "buttonUI";
+    registerButton.className = "buttonUI";
+    registerButton.id = "buttonRegister";
     registerButton.innerText = "REGISTER";
     var div = document.getElementById('buttons');
     div.appendChild(registerButton);
@@ -67,7 +72,8 @@ welcomeUI.prototype = {
 
   createLeaderboardButton: function(){
     var leaderboardButton = document.createElement('button');
-    leaderboardButton.id = "buttonUI";
+    leaderboardButton.className = "buttonUI";
+    leaderboardButton.id = "buttonLeader";
     leaderboardButton.innerText = "LEADERBOARD";
     var div = document.getElementById('buttons');
     div.appendChild(leaderboardButton);
@@ -76,7 +82,8 @@ welcomeUI.prototype = {
 
   createAdminButton: function(){
     var adminButton = document.createElement('button');
-   adminButton.id = "buttonUI";
+   adminButton.className = "buttonUI";
+   adminButton.id = "buttonAdmin";
     adminButton.innerText = "ADMIN";
     var div = document.getElementById('buttons');
     div.appendChild(adminButton);

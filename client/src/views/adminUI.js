@@ -3,7 +3,10 @@ var Question = require('../models/question.js');
 var adminUI = require('./adminUI');
 
 var adminUI = function(){
-  this.removeContent('main')  
+  document.getElementById('question').style = "display: inline";
+  this.removeContent('question');
+  document.body.style.backgroundImage = "url('')";
+  document.body.style.backgroundColor = "rgb(138, 138, 92)";
   this.adminForm();
   var questions = new Questions();
   questions.all(function(result){
@@ -19,6 +22,18 @@ adminUI.prototype = {
     }
   }, 
 
+  handleGoBackButtonClick: function(){
+    window.location = "/";
+  },
+
+  createGoBackButton: function(container){
+    var goBackButton = document.createElement("button");
+    goBackButton.innerText = "GO BACK";
+    goBackButton.id = "buttonUI";
+    container.appendChild(goBackButton);
+    goBackButton.onclick = this.handleGoBackButtonClick;
+  },
+
   createInput: function(form, className, type, name, value, size){
     var input = document.createElement('input');
     var newline = document.createElement('br');
@@ -27,6 +42,7 @@ adminUI.prototype = {
     input.name = name;
     input.placeholder = value;
     input.size = size;
+    input.id = "adminInput";
     form.appendChild(newline);
     form.appendChild(input);
   },
@@ -61,11 +77,13 @@ adminUI.prototype = {
 },
 
 adminForm: function(){
-  var div = document.getElementById('main');
+  var div = document.getElementById('question');
+  // var div = document.getElementById('quiz_field');
+  var goBack = this.createGoBackButton(div);
   var form = document.createElement('form');
     // form.action = "/api/players";
 
-    this.createInput(form, "question", "text", "question", "Your question: ", "50");
+    this.createInput(form, "question", "textarea", "question", "Your question: ", "50");
     this.createInput(form, "option", "text", "A", "A:", "20");
     this.createInput(form, "option", "text", "B", "B:", "20");
     this.createInput(form, "option","text", "C", "C:", "20");
@@ -104,7 +122,7 @@ adminForm: function(){
   },
 
   getQuestions: function(questions){
-    var main = document.getElementById('main');
+    var main = document.getElementById('quiz_field');
     var index = 0;
     for(var question of questions){
       var deleteForm = document.createElement('form');
