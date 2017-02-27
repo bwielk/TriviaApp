@@ -192,7 +192,7 @@ welcomeUI.prototype = {
   createWelcomeText: function() {
     var welcomeText = document.createElement('p');
     welcomeText.innerText = "This is a game";
-    var div = document.getElementById('main')
+    var div = document.getElementById('welcome_content')
     div.appendChild(welcomeText);
   }, 
 
@@ -219,32 +219,36 @@ welcomeUI.prototype = {
 
   createPlayButton: function() {
     var playButton = document.createElement('button');
+    playButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%";
     playButton.innerText = "PLAY";
-    var div = document.getElementById('main')
+    var div = document.getElementById('buttons');
     div.appendChild(playButton);
     playButton.onclick = this.handlePlayButtonClick;
   }, 
 
   createRegisterButton: function() {
     var registerButton = document.createElement('button');
+    registerButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%; background-color: rgb(138, 138, 92";
     registerButton.innerText = "REGISTER";
-    var div = document.getElementById('main')
+    var div = document.getElementById('buttons');
     div.appendChild(registerButton);
     registerButton.onclick = this.handleRegisterButtonClick;
   },
 
   createLeaderboardButton: function(){
     var leaderboardButton = document.createElement('button');
+    leaderboardButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%";
     leaderboardButton.innerText = "LEADERBOARD";
-    var div = document.getElementById('main');
+    var div = document.getElementById('buttons');
     div.appendChild(leaderboardButton);
     leaderboardButton.onclick = this.handleLeaderboardButtonClick;
   },
 
   createAdminButton: function(){
     var adminButton = document.createElement('button');
+    adminButton.style.cssText = "font-family: Orbitron; padding: 1% 2%; font-size: 101%";
     adminButton.innerText = "ADMIN";
-    var div = document.getElementById("main");
+    var div = document.getElementById('buttons');
     div.appendChild(adminButton);
     adminButton.onclick = this.handleAdminButtonClick;
   }
@@ -761,6 +765,8 @@ var Player = __webpack_require__(3)
 var Player = __webpack_require__(3);
 var CorrectSound = __webpack_require__(7);
 var WrongSound = __webpack_require__(11);
+var FiftySound = __webpack_require__(18);
+var HintSound = __webpack_require__(19);
 var gameOverUI = __webpack_require__(13);
 
 
@@ -871,6 +877,7 @@ gameUI.prototype = {
         answerButton.disabled = true;
 
       }.bind(this));
+      var fiftySound = new FiftySound();
       currentPlayer.lifePreserver5050 = false;
       this.savePlayer(currentPlayer);
     }
@@ -901,6 +908,7 @@ gameUI.prototype = {
       }
 
       hintedButton.style.cssText = "font-weight: bold";
+      var hintSound = new HintSound();
       currentPlayer.lifePreserverGiveHint = false; 
       console.log(currentPlayer);
       this.savePlayer(currentPlayer);
@@ -1007,6 +1015,36 @@ var app = function() {
 }
 
 window.onload = app;
+
+/***/ }),
+/* 17 */,
+/* 18 */
+/***/ (function(module, exports) {
+
+var FiftySound = function(){
+
+  var fiftySound = new Audio('https://www.soundjay.com/misc/sounds/paper-rip-4.mp3');
+  fiftySound.play();
+};
+
+  
+
+module.exports = FiftySound;
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+var HintSound = function(){
+
+  var hintSound = new Audio('https://www.soundjay.com/misc/sounds/magic-chime-02.mp3');
+  hintSound.play();
+};
+
+  
+
+module.exports = HintSound;
 
 /***/ })
 /******/ ]);

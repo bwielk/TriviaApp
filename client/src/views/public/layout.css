@@ -7,9 +7,36 @@ html, body{
 body{
   background-image: url('./various.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #container{
   width: 960px;
   margin: 0px auto;
+}
+
+#header{
+  width: 500px;
+  margin: auto;
+  padding: 0;
+  margin-top: 5%;
+}
+
+#header h1{
+  width:400px;
+  background-color: rgb(138, 138, 92);
+  padding: 2% 2%;
+  border-radius: 20px;
+  border: 8px solid black;
+  font-family: Orbitron;
+  color: #36454f;
+  font-size: 160%;
+  text-align: center;
+  margin: auto;
+  margin-top: 2%;
+}
+
+
+body div {
+  border: 2px solid yellow;
 }

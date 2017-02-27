@@ -6,6 +6,8 @@ var Player = require('../models/player')
 var Player = require('../models/player');
 var CorrectSound = require('../models/correctSound');
 var WrongSound = require('../models/wrongSound');
+var FiftySound = require('../models/fiftySound');
+var HintSound = require('../models/hintSound');
 var gameOverUI = require('./gameOverUI.js');
 
 
@@ -116,6 +118,7 @@ gameUI.prototype = {
         answerButton.disabled = true;
 
       }.bind(this));
+      var fiftySound = new FiftySound();
       currentPlayer.lifePreserver5050 = false;
       this.savePlayer(currentPlayer);
     }
@@ -146,6 +149,7 @@ gameUI.prototype = {
       }
 
       hintedButton.style.cssText = "font-weight: bold";
+      var hintSound = new HintSound();
       currentPlayer.lifePreserverGiveHint = false; 
       console.log(currentPlayer);
       this.savePlayer(currentPlayer);
