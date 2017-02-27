@@ -35,6 +35,22 @@
       -webkit-animation-name: fadeInLeft;
       animation-name: fadeInLeft;
     }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale3d(.3, .3, .3);
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .zoomIn {
+      animation-name: zoomIn;
+
+    }
   </style>
 
   <title>Quiz Stuff</title>
@@ -47,7 +63,7 @@
   </script>
 </head>
 <body>
-<div class="animated fadeInLeft" id="main-wrapper">
+<div class="animated fadeInLeft zoomIn" id="main-wrapper">
   <div id = "div1" style="width:800px;height:800px;display:none;background-color:ivory;">
   
   <h1>Hello world</h1>
