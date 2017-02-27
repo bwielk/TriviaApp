@@ -1,10 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style type="text/css">
+    .animated {
+      -webkit-animation-duration: 3s;
+      animation-duration: 3s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+
+    @keyframes fadeInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @-webkit-keyframes fadeInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .fadeInLeft {
+      -webkit-animation-name: fadeInLeft;
+      animation-name: fadeInLeft;
+    }
+  </style>
+
   <title>Quiz Stuff</title>
-  <script src='bundle.js'></script>
+  <script src='bundle.js'></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("#div1").fadeIn(3000);
+  });  
+  </script>
 </head>
 <body>
+<div class="animated fadeInLeft" id="main-wrapper">
+  <div id = "div1" style="width:800px;height:800px;display:none;background-color:ivory;">
+  
   <h1>Hello world</h1>
   <ul id="quiz">
   </ul>
@@ -13,5 +58,6 @@
     
   </div>
   <iframe src="https://embed.spotify.com/?uri=https://open.spotify.com/user/spotify/playlist/2uAichKSjJSyrmal8Kb3W9&view=coverart" width="400" height="80" frameborder="0" allowtransparency="true"></iframe>
+  </div>
 </body>
 </html>
