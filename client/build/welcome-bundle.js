@@ -750,6 +750,8 @@ var Player = __webpack_require__(4)
 var Player = __webpack_require__(4);
 var CorrectSound = __webpack_require__(7);
 var WrongSound = __webpack_require__(11);
+var FiftySound = __webpack_require__(18);
+var HintSound = __webpack_require__(19);
 var gameOverUI = __webpack_require__(13);
 
 
@@ -860,6 +862,7 @@ gameUI.prototype = {
         answerButton.disabled = true;
 
       }.bind(this));
+      var fiftySound = new FiftySound();
       currentPlayer.lifePreserver5050 = false;
       this.savePlayer(currentPlayer);
     }
@@ -890,6 +893,7 @@ gameUI.prototype = {
       }
 
       hintedButton.style.cssText = "font-weight: bold";
+      var hintSound = new HintSound();
       currentPlayer.lifePreserverGiveHint = false; 
       console.log(currentPlayer);
       this.savePlayer(currentPlayer);
@@ -996,6 +1000,36 @@ var app = function() {
 }
 
 window.onload = app;
+
+/***/ }),
+/* 17 */,
+/* 18 */
+/***/ (function(module, exports) {
+
+var FiftySound = function(){
+
+  var fiftySound = new Audio('https://www.soundjay.com/misc/sounds/paper-rip-4.mp3');
+  fiftySound.play();
+};
+
+  
+
+module.exports = FiftySound;
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+var HintSound = function(){
+
+  var hintSound = new Audio('https://www.soundjay.com/misc/sounds/magic-chime-02.mp3');
+  hintSound.play();
+};
+
+  
+
+module.exports = HintSound;
 
 /***/ })
 /******/ ]);
