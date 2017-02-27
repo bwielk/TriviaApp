@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -173,7 +173,7 @@ module.exports = Players;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Questions = __webpack_require__(5);
-var Question = __webpack_require__(10);
+var Question = __webpack_require__(12);
 
 var adminUI = function(){
   this.removeContent('main')
@@ -317,13 +317,13 @@ module.exports = adminUI;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var gameUI = __webpack_require__(14);
-var registrationUI = __webpack_require__(15);
+var gameUI = __webpack_require__(16);
+var registrationUI = __webpack_require__(17);
 var leaderboardUI = __webpack_require__(0);
 var adminUI = __webpack_require__(2);
 var adminUI = __webpack_require__(2);
-var PlaySound = __webpack_require__(9);
-var adminAuthorisationUI = __webpack_require__(12);
+var PlaySound = __webpack_require__(11);
+var adminAuthorisationUI = __webpack_require__(14);
 
 var welcomeUI = function() {
   this.createWelcomeText();
@@ -521,6 +521,21 @@ module.exports = CorrectSound;
 /* 8 */
 /***/ (function(module, exports) {
 
+var FiftySound = function(){
+
+  var fiftySound = new Audio('https://www.soundjay.com/misc/sounds/paper-rip-4.mp3');
+  fiftySound.play();
+};
+
+  
+
+module.exports = FiftySound;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
 var GameOverSound = function(){
 
   var gameOverSound = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
@@ -532,7 +547,21 @@ var GameOverSound = function(){
 module.exports = GameOverSound;
 
 /***/ }),
-/* 9 */
+/* 10 */
+/***/ (function(module, exports) {
+
+var HintSound = function(){
+
+  var hintSound = new Audio('https://www.soundjay.com/misc/sounds/magic-chime-02.mp3');
+  hintSound.play();
+};
+
+  
+
+module.exports = HintSound;
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 var PlaySound = function(){
@@ -545,7 +574,7 @@ var PlaySound = function(){
 module.exports = PlaySound;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 var Question = function(options){
@@ -561,7 +590,7 @@ module.exports = Question;
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 var WrongSound = function(){
@@ -573,7 +602,7 @@ var WrongSound = function(){
 module.exports = WrongSound;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Admin = __webpack_require__(6);
@@ -642,11 +671,11 @@ adminAuthorisationUI.prototype = {
 module.exports = adminAuthorisationUI;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var leaderboardUI = __webpack_require__(0);
-var GameOverSound = __webpack_require__(8);
+var GameOverSound = __webpack_require__(9);
 
 
 
@@ -739,7 +768,7 @@ gameOverUI.prototype = {
 module.exports = gameOverUI;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -749,15 +778,17 @@ var Player = __webpack_require__(4)
 
 var Player = __webpack_require__(4);
 var CorrectSound = __webpack_require__(7);
-var WrongSound = __webpack_require__(11);
-var FiftySound = __webpack_require__(18);
-var HintSound = __webpack_require__(19);
-var gameOverUI = __webpack_require__(13);
+var WrongSound = __webpack_require__(13);
+var FiftySound = __webpack_require__(8);
+var HintSound = __webpack_require__(10);
+var gameOverUI = __webpack_require__(15);
 
 
 var currentPlayer;
 var questionsArray;
 var questionIndex;
+var progressBar;
+var timer;
 
 
 var gameUI = function() {
@@ -911,6 +942,42 @@ gameUI.prototype = {
     }
   },
 
+  timeOut: function() {
+    questionIndex += 1;
+    this.removeQuestion();
+    this.render(questionsArray[questionIndex]);
+  },
+
+  moveTimer: function() {
+    if (timer > 0) {
+      timer -= 0.5;
+      progressBar.style.width = timer + '%';
+      if (timer < 50) {
+        progressBar.style.backgroundColor = 'orange';
+      }
+      if (timer < 25) {
+        progressBar.style.backgroundColor = 'red';
+      }
+      // if (timer <= 0) {
+        //   console.log(this);
+        //   this.timeOut();
+        // }
+      }
+    },
+
+  renderProgressBar: function() {
+    timer = 100;
+    console.log("rendering progress bar");
+    var containerDiv = document.getElementById('question');
+    var progressBarBackground = document.createElement('div');
+    progressBar = document.createElement('div');
+    progressBarBackground.appendChild(progressBar);
+    containerDiv.appendChild(progressBarBackground);
+    progressBarBackground.style.cssText = "background-color: grey; width: 100%; height: 20px";
+    progressBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
+    setInterval(this.moveTimer, 50);
+  },
+
   render: function(question) {
     if (questionIndex < questionsArray.length) {
       var containerDiv = document.getElementById('question');
@@ -920,6 +987,7 @@ gameUI.prototype = {
       this.renderButtons(question);
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
+      this.renderProgressBar();
     }
   }
 }
@@ -927,7 +995,7 @@ gameUI.prototype = {
 module.exports = gameUI;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var welcomeUI = __webpack_require__(3);
@@ -990,7 +1058,7 @@ registrationUI.prototype = {
 module.exports = registrationUI;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var welcomeUI = __webpack_require__(3);
@@ -1000,36 +1068,6 @@ var app = function() {
 }
 
 window.onload = app;
-
-/***/ }),
-/* 17 */,
-/* 18 */
-/***/ (function(module, exports) {
-
-var FiftySound = function(){
-
-  var fiftySound = new Audio('https://www.soundjay.com/misc/sounds/paper-rip-4.mp3');
-  fiftySound.play();
-};
-
-  
-
-module.exports = FiftySound;
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-var HintSound = function(){
-
-  var hintSound = new Audio('https://www.soundjay.com/misc/sounds/magic-chime-02.mp3');
-  hintSound.play();
-};
-
-  
-
-module.exports = HintSound;
 
 /***/ })
 /******/ ]);

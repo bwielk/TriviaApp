@@ -14,6 +14,8 @@ var gameOverUI = require('./gameOverUI.js');
 var currentPlayer;
 var questionsArray;
 var questionIndex;
+var progressBar;
+var timer;
 
 
 var gameUI = function() {
@@ -167,6 +169,42 @@ gameUI.prototype = {
     }
   },
 
+  timeOut: function() {
+    questionIndex += 1;
+    this.removeQuestion();
+    this.render(questionsArray[questionIndex]);
+  },
+
+  moveTimer: function() {
+    if (timer > 0) {
+      timer -= 0.5;
+      progressBar.style.width = timer + '%';
+      if (timer < 50) {
+        progressBar.style.backgroundColor = 'orange';
+      }
+      if (timer < 25) {
+        progressBar.style.backgroundColor = 'red';
+      }
+      // if (timer <= 0) {
+        //   console.log(this);
+        //   this.timeOut();
+        // }
+      }
+    },
+
+  renderProgressBar: function() {
+    timer = 100;
+    console.log("rendering progress bar");
+    var containerDiv = document.getElementById('question');
+    var progressBarBackground = document.createElement('div');
+    progressBar = document.createElement('div');
+    progressBarBackground.appendChild(progressBar);
+    containerDiv.appendChild(progressBarBackground);
+    progressBarBackground.style.cssText = "background-color: grey; width: 100%; height: 20px";
+    progressBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
+    setInterval(this.moveTimer, 50);
+  },
+
   render: function(question) {
     if (questionIndex < questionsArray.length) {
       var containerDiv = document.getElementById('question');
@@ -176,6 +214,7 @@ gameUI.prototype = {
       this.renderButtons(question);
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
+      this.renderProgressBar();
     }
   }
 }
