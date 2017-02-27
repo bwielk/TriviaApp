@@ -6,14 +6,14 @@ var gameOverUI = function() {
   this.currentPlayer = JSON.parse(this.stringified);
   this.currentPlayerName = this.currentPlayer.name;
   this.currentPlayerScore = this.currentPlayer.score;
-  this.container = document.getElementById('main');
-  this.setup(); 
+  this.container = document.getElementById('quiz_field');
+  this.setup();
 }
 
 gameOverUI.prototype = {
 
   setup: function() {
-    this.removeContent("main");
+    // this.removeContent("quiz_field");
     this.removeContent("question");
     this.changeTitle();
     this.createOutcomeText();
@@ -95,10 +95,10 @@ gameOverUI.prototype = {
  createStartNewGameButton: function(){
    var startNewGameButton = document.createElement('button');
    startNewGameButton.innerText = "Start New Game";
-   var div = document.getElementById('main');
+   var div = document.getElementById('container');
    div.appendChild(startNewGameButton);
    startNewGameButton.onclick = this.handleNewGameButtonClick;
- },
+ }
 
 }
 

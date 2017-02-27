@@ -70,6 +70,40 @@ body div {
   margin: auto;
 }
 
+#optionsField{
+  width:400px;
+  background-color: rgb(138, 138, 92);
+  padding: 1% 1%;
+  border-radius: 20px;
+  border: 8px solid black;
+  font-family: Orbitron;
+  color: #36454f;
+  font-size: 100%;
+  text-align: center;
+  margin: auto;
+}
+
+#buttonGameHints{
+  font-family: Orbitron; 
+  padding: 0% 0.5%;
+  font-size: 101%;
+  background-color: rgb(138, 138, 92);
+  border-color: rgb(138, 138, 92);
+  font-weight: bold;
+  color: #36454f
+}
+
+#buttonOptions{
+  font-family: Orbitron; 
+  font-size: 101%;
+  background-color: rgb(138, 158, 52);
+  border-color: rgb(138, 138, 92);
+  font-weight: bold;
+  color: #36454f;
+  display: block;
+  width: 250px;
+}
+
 iframe {
   margin: 0% 29%;
 }
