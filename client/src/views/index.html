@@ -1,79 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style type="text/css">
-    .animated {
-      -webkit-animation-duration: 3s;
-      animation-duration: 3s;
-      -webkit-animation-fill-mode: both;
-      animation-fill-mode: both;
-    }
-
-    @keyframes fadeInLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @-webkit-keyframes fadeInLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .fadeInLeft {
-      -webkit-animation-name: fadeInLeft;
-      animation-name: fadeInLeft;
-    }
-
-    @keyframes zoomIn {
-      from {
-        opacity: 0;
-        transform: scale3d(.3, .3, .3);
-      }
-
-      50% {
-        opacity: 1;
-      }
-    }
-
-    .zoomIn {
-      animation-name: zoomIn;
-
-    }
-  </style>
 
   <title>Quiz Stuff</title>
-  <script src='bundle.js'></script> 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script>
-  $(document).ready(function(){
-    $("#div1").fadeIn(3000);
-  });  
-  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Orbitron|Press+Start+2P" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="layout.css">
+  <script src='welcome-bundle.js'></script>
+  <script src='bundle.js'></script>
 </head>
 <body>
-<div class="animated fadeInLeft zoomIn" id="main-wrapper">
-  <div id = "div1" style="width:800px;height:800px;display:none;background-color:ivory;">
-  
-  <h1>Hello world</h1>
-  <ul id="quiz">
-  </ul>
-  <div id="main"></div>
-  <div id="question">
-    
-  </div>
-  <iframe src="https://embed.spotify.com/?uri=https://open.spotify.com/user/spotify/playlist/2uAichKSjJSyrmal8Kb3W9&view=coverart" width="400" height="80" frameborder="0" allowtransparency="true"></iframe>
+  <div class="animated zoomIn" id ="container">
+    <div id = "header">
+      <h1>Welcome back in the 90's</h1>
+    </div>
+    <div id = "quiz_field">
+      <ul id="quiz">
+      </ul>
+      <div id="main">
+        <div id ="buttons">
+        </div>
+        <div id ="welcome_content">
+        WELCOME GREETING
+        </div>
+        <div id = "game">
+        GAME
+        <div id="question">
+        QUESTION
+        </div>
+        <div id = "options">
+        POSSIBLE CHOICES
+        </div>
+        </div>
+      </div>
+    </div>
+    <iframe src="https://embed.spotify.com/?uri=https://open.spotify.com/user/spotify/playlist/2uAichKSjJSyrmal8Kb3W9&view=coverart" width="400" height="80" frameborder="0" allowtransparency="true"></iframe>
   </div>
 </body>
 </html>

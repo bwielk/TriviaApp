@@ -21,6 +21,7 @@ var timerInterval;
 
 var gameUI = function() {
   var questions = new Questions();
+  this.removeContent('welcome_content');
   this.wrongAnswerButtons = [];
   this.correctAnswerButton;
   questions.all(function(result) {
@@ -37,6 +38,13 @@ gameUI.prototype = {
     p.innerText = text;
     return p;
   },
+
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+        toClear.removeChild(toClear.firstChild);
+    }
+  }, 
 
   endGame: function() {
     new gameOverUI();

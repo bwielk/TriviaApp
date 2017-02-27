@@ -67,8 +67,9 @@ Questions.prototype = {
   //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
   // },
 
-  delete: function(question, callback){
-    this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
+  delete: function(questionID, callback){
+    console.log("Question ID", questionID);
+    this.makeDeleteRequest("http://localhost:3000/api/questions/" + questionID, callback);
   }
 
   ///////////////////

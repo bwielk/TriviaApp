@@ -11,7 +11,8 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/client/src/views/index.html'));
 });
 
-app.use(express.static('client/build'));
+app.use(express.static('client/build'));//loads everything in the build (bundles etc)
+app.use(express.static('client/src/views/public'));//loads css, html and other statics placed somewhere else
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

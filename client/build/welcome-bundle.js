@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -172,158 +172,12 @@ module.exports = Players;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Questions = __webpack_require__(5);
-var Question = __webpack_require__(12);
-
-var adminUI = function(){
-  this.removeContent('main')
-  this.adminForm();
-  var questions = new Questions();
-  questions.all(function(result){
-    this.getQuestions(result);
-  }.bind(this));
-};
-
-adminUI.prototype = {
-  removeContent: function(htmlElementId) {
-    var toClear = document.getElementById(htmlElementId);
-    while (toClear.firstChild) {
-      toClear.removeChild(toClear.firstChild);
-    }
-  }, 
-
-  createInput: function(form, className, type, name, value, size){
-    var input = document.createElement('input');
-    var newline = document.createElement('br');
-    input.class = className;
-    input.type = type;
-    input.name = name;
-    input.placeholder = value;
-    input.size = size;
-    form.appendChild(newline);
-    form.appendChild(input);
-  },
-
-  createSubmitButton: function(form, name, type, value){
-    var newline = document.createElement('br');
-    var submit = document.createElement('input');
-    submit.name
-    submit.type = type;
-    submit.value =  value;
-    form.appendChild(newline);
-    form.appendChild(submit);
-  },
-
-  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   var newline = document.createElement('br');
-   var submit = document.createElement('input');
-   submit.name = name;
-   submit.type = type;
-   submit.value = value;
-   form.appendChild(newline);
-   form.appendChild(submit);
-  },
-
-  adminForm: function(){
-    var div = document.getElementById('main');
-    var form = document.createElement('form');
-    // form.action = "/api/players";
-    this.createInput(form, "question", "text", "question", "Your question: ", "50");
-    this.createInput(form, "option", "text", "A", "A:", "20");
-    this.createInput(form, "option", "text", "B", "B:", "20");
-    this.createInput(form, "option","text", "C", "C:", "20");
-    this.createInput(form, "option", "text", "D", "D:", "20");
-    this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
-    this.createInput(form, "category", "text", "category", "Category", "20");
-
-    var allAnswers = function(){
-      var values = [];
-      var arr = document.getElementsByClassName('option');
-      console.log(arr);
-      for(var element of arr){
-        values.push(e.target.option.value);
-      }
-      return values;
-    }
-
-    form.onsubmit = function(e){
-
-      e.preventDefault();
-      var newQuestion = new Question({
-        questionString: e.target.question.value,
-        possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
-        correctAnswer: e.target.correct.value,
-        category: e.target.category.value
-      })
-
-      var allQuestions = new Questions();
-      allQuestions.add(newQuestion, function(data){
-        console.log(data);
-      })
-    }
-
-    var newline = document.createElement('br');
-    var submitButton = this.createSubmitButton(form, "submit", "SAVE");
-    div.appendChild(form);
-  },
-
-  getQuestions: function(questions){
-    var main = document.getElementById('main');
-    var index = 0;
-    for(var question of questions){
-      var deleteForm = document.createElement('form');
-      deleteForm.action = "/api/questions/" + index;
-      console.log(deleteForm.action);
-      // deleteForm.action = "/api/questions/" + id + "";////!!!!!
-      deleteForm.method = "delete";//// !!!!!
-      var field = document.createElement('div');
-      field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
-      var p1= document.createElement('p');
-      p1.innerText = question.questionString;
-      var list  = document.createElement('ul');
-      list.style.cssText = "list-style: none";
-      var correctAnswer = question.correctAnswer;
-      var category = question.category;
-      for(var answer of question.possibleAnswers){
-        var li = document.createElement('li'); 
-        if(answer === correctAnswer){
-          li.innerText = answer;
-          li.style.cssText = "background-color: green";
-        }else{
-          li.innerText = answer;
-        };
-        list.appendChild(li);
-        var ctg = document.createElement('p');
-        ctg.innerText = "CATEGORY: " + category;
-      };
-
-      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
-
-      field.appendChild(deleteForm); //!!!!!!
-
-      field.appendChild(p1);
-      field.appendChild(list);
-      field.appendChild(ctg);
-      main.appendChild(field);
-      index++;
-    }
-  }
-}
-
-
-module.exports = adminUI;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var gameUI = __webpack_require__(16);
-var registrationUI = __webpack_require__(17);
+var gameUI = __webpack_require__(14);
+var registrationUI = __webpack_require__(15);
 var leaderboardUI = __webpack_require__(0);
-var adminUI = __webpack_require__(2);
-var adminUI = __webpack_require__(2);
-var PlaySound = __webpack_require__(11);
-var adminAuthorisationUI = __webpack_require__(14);
+// var adminUI = require('./adminUI.js');
+var PlaySound = __webpack_require__(9);
+var adminAuthorisationUI = __webpack_require__(12);
 
 var welcomeUI = function() {
   this.createWelcomeText();
@@ -337,8 +191,8 @@ welcomeUI.prototype = {
 
   createWelcomeText: function() {
     var welcomeText = document.createElement('p');
-    welcomeText.innerText = "This is a game";
-    var div = document.getElementById('main')
+    welcomeText.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+    var div = document.getElementById('welcome_content')
     div.appendChild(welcomeText);
   }, 
 
@@ -363,34 +217,42 @@ welcomeUI.prototype = {
 
   },
 
+  changeColour: function(object, color){
+    object.cssText = "color:" + color;
+  },
+
   createPlayButton: function() {
     var playButton = document.createElement('button');
+    playButton.id = "buttonUI"
     playButton.innerText = "PLAY";
-    var div = document.getElementById('main')
+    var div = document.getElementById('buttons');
     div.appendChild(playButton);
     playButton.onclick = this.handlePlayButtonClick;
   }, 
 
   createRegisterButton: function() {
     var registerButton = document.createElement('button');
+    registerButton.id = "buttonUI";
     registerButton.innerText = "REGISTER";
-    var div = document.getElementById('main')
+    var div = document.getElementById('buttons');
     div.appendChild(registerButton);
     registerButton.onclick = this.handleRegisterButtonClick;
   },
 
   createLeaderboardButton: function(){
     var leaderboardButton = document.createElement('button');
+    leaderboardButton.id = "buttonUI";
     leaderboardButton.innerText = "LEADERBOARD";
-    var div = document.getElementById('main');
+    var div = document.getElementById('buttons');
     div.appendChild(leaderboardButton);
     leaderboardButton.onclick = this.handleLeaderboardButtonClick;
   },
 
   createAdminButton: function(){
     var adminButton = document.createElement('button');
+   adminButton.id = "buttonUI";
     adminButton.innerText = "ADMIN";
-    var div = document.getElementById("main");
+    var div = document.getElementById('buttons');
     div.appendChild(adminButton);
     adminButton.onclick = this.handleAdminButtonClick;
   }
@@ -399,7 +261,7 @@ welcomeUI.prototype = {
 module.exports = welcomeUI;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 var Player = function(options){
@@ -411,7 +273,7 @@ var Player = function(options){
 module.exports = Player;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 var Questions = function() {
@@ -483,8 +345,9 @@ Questions.prototype = {
   //   this.makePutRequest('http//localhost:3000/api/questions', questionUpdate, callback);
   // },
 
-  delete: function(question, callback){
-    this.makeDeleteRequest("http//localhost:3000/api/questions", question, callback);
+  delete: function(questionID, callback){
+    console.log("Question ID", questionID);
+    this.makeDeleteRequest("http://localhost:3000/api/questions/" + questionID, callback);
   }
 
   ///////////////////
@@ -492,6 +355,162 @@ Questions.prototype = {
 
 module.exports = Questions;
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Questions = __webpack_require__(4);
+var Question = __webpack_require__(10);
+var adminUI = __webpack_require__(5);
+
+var adminUI = function(){
+  this.removeContent('main')  
+  this.adminForm();
+  var questions = new Questions();
+  questions.all(function(result){
+    this.getQuestions(result);
+  }.bind(this));
+};
+
+adminUI.prototype = {
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+      toClear.removeChild(toClear.firstChild);
+    }
+  }, 
+
+  createInput: function(form, className, type, name, value, size){
+    var input = document.createElement('input');
+    var newline = document.createElement('br');
+    input.class = className;
+    input.type = type;
+    input.name = name;
+    input.placeholder = value;
+    input.size = size;
+    form.appendChild(newline);
+    form.appendChild(input);
+  },
+
+  createSubmitButton: function(form, type, value){
+    var newline = document.createElement('br');
+    var submit = document.createElement('input');
+    submit.type = type;
+    submit.value = value;
+    form.appendChild(newline);
+    form.appendChild(submit);
+  },
+
+  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   var questions = new Questions();
+   var newline = document.createElement('br');
+   var submit = document.createElement('input');
+   // var self = this;
+   submit.name = name;
+   submit.type = type;
+   submit.value = value;
+   submit.onclick = function(e) {
+    e.preventDefault();
+    questions.delete(name, function(){
+      new adminUI;
+      // console.log(self)
+      // self.getQuestions();
+    });
+  };
+  form.appendChild(newline);
+  form.appendChild(submit);
+},
+
+adminForm: function(){
+  var div = document.getElementById('main');
+  var form = document.createElement('form');
+    // form.action = "/api/players";
+
+    this.createInput(form, "question", "text", "question", "Your question: ", "50");
+    this.createInput(form, "option", "text", "A", "A:", "20");
+    this.createInput(form, "option", "text", "B", "B:", "20");
+    this.createInput(form, "option","text", "C", "C:", "20");
+    this.createInput(form, "option", "text", "D", "D:", "20");
+    this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
+    this.createInput(form, "category", "text", "category", "Category", "20");
+
+    // var allAnswers = function(){
+    //   var values = [];
+    //   var arr = document.getElementsByClassName('option');
+    //   console.log(arr);
+    //   for(var element of arr){
+    //     values.push(e.target.option.value);
+    //   }
+    //   return values;
+    // },
+
+    form.onsubmit = function(e){
+
+      e.preventDefault();
+      var newQuestion = new Question({
+        questionString: e.target.question.value,
+        possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
+        correctAnswer: e.target.correct.value,
+        category: e.target.category.value
+      });
+
+      var allQuestions = new Questions();
+      allQuestions.add(newQuestion, function(data){
+        new adminUI;
+      });
+    }
+
+    var submitButton = this.createSubmitButton(form, 'submit', 'SAVE');
+    div.appendChild(form);
+  },
+
+  getQuestions: function(questions){
+    var main = document.getElementById('main');
+    var index = 0;
+    for(var question of questions){
+      var deleteForm = document.createElement('form');
+      deleteForm.action = "/api/questions/" + index;
+
+      // console.log(deleteForm);
+      // deleteForm.action = "/api/questions/" + id + "";////!!!!!
+      deleteForm.method = "delete";//// !!!!!
+      var field = document.createElement('div');
+      field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
+      var p1= document.createElement('p');
+      p1.innerText = question.questionString;
+      var list  = document.createElement('ul');
+      list.style.cssText = "list-style: none";
+      var correctAnswer = question.correctAnswer;
+      var category = question.category;
+      for(var answer of question.possibleAnswers){
+        var li = document.createElement('li'); 
+        if(answer === correctAnswer){
+          li.innerText = answer;
+          li.style.cssText = "background-color: green";
+        }else{
+          li.innerText = answer;
+        };
+        list.appendChild(li);
+        var ctg = document.createElement('p');
+        ctg.innerText = "CATEGORY: " + category;
+      };
+
+      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
+
+      field.appendChild(deleteForm); //!!!!!!
+
+      field.appendChild(p1);
+      field.appendChild(list);
+      field.appendChild(ctg);
+      main.appendChild(field);
+      index++;
+    }
+  }
+}
+
+
+module.exports = adminUI;
 
 /***/ }),
 /* 6 */
@@ -521,21 +540,6 @@ module.exports = CorrectSound;
 /* 8 */
 /***/ (function(module, exports) {
 
-var FiftySound = function(){
-
-  var fiftySound = new Audio('https://www.soundjay.com/misc/sounds/paper-rip-4.mp3');
-  fiftySound.play();
-};
-
-  
-
-module.exports = FiftySound;
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
 var GameOverSound = function(){
 
   var gameOverSound = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
@@ -547,21 +551,7 @@ var GameOverSound = function(){
 module.exports = GameOverSound;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-var HintSound = function(){
-
-  var hintSound = new Audio('https://www.soundjay.com/misc/sounds/magic-chime-02.mp3');
-  hintSound.play();
-};
-
-  
-
-module.exports = HintSound;
-
-/***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports) {
 
 var PlaySound = function(){
@@ -574,7 +564,7 @@ var PlaySound = function(){
 module.exports = PlaySound;
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports) {
 
 var Question = function(options){
@@ -590,7 +580,7 @@ module.exports = Question;
 
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports) {
 
 var WrongSound = function(){
@@ -602,11 +592,11 @@ var WrongSound = function(){
 module.exports = WrongSound;
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Admin = __webpack_require__(6);
-var adminUI = __webpack_require__(2);
+var adminUI = __webpack_require__(5);
 
 var adminAuthorisationUI = function(){
   this.removeContent('main');
@@ -671,13 +661,11 @@ adminAuthorisationUI.prototype = {
 module.exports = adminAuthorisationUI;
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var leaderboardUI = __webpack_require__(0);
-var GameOverSound = __webpack_require__(9);
-
-
+var GameOverSound = __webpack_require__(8);
 
 var gameOverUI = function() {
   this.stringified = localStorage.getItem("currentPlayer");
@@ -737,22 +725,37 @@ gameOverUI.prototype = {
     input.name = inputName;
     input.value = inputValue;
     form.appendChild(input);
+    return input;
   },
 
   createLeaderboardButton: function() {
     var form = this.createForm();
-    this.addInput(form, "text", "name", "Input Name");
-    this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+    var nameInput = this.addInput(form, "text", "name", "Input Name");
+    nameInput.id = "nameInput";
+    var scoresInput = this.addInput(form, "hidden", "scores", this.currentPlayerScore);
+    scoresInput.id = "scoresInput";
 
     var submit = document.createElement("input");
     submit.type = "submit";
     submit.value = "Save to leaderboard";
     form.appendChild(submit);
+
+    form.onsubmit = function(event) {
+      event.preventDefault();
+      var url = "/api/players";
+      var nameInput = document.getElementById("nameInput");
+      var scoresInput = document.getElementById("scoresInput");
+      var params = "name="+nameInput.value+"&scores="+scoresInput.value;
+      var request = new XMLHttpRequest();
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      request.send(params);
+      new leaderboardUI();
+    };
   },
 
   handleNewGameButtonClick: function() {
     location.reload();
-
   },
 
  createStartNewGameButton: function(){
@@ -768,31 +771,33 @@ gameOverUI.prototype = {
 module.exports = gameOverUI;
 
 /***/ }),
-/* 16 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Questions = __webpack_require__(5);
+var Questions = __webpack_require__(4);
 
-var Player = __webpack_require__(4)
+var Player = __webpack_require__(3)
 
-var Player = __webpack_require__(4);
+var Player = __webpack_require__(3);
 var CorrectSound = __webpack_require__(7);
-var WrongSound = __webpack_require__(13);
-var FiftySound = __webpack_require__(8);
-var HintSound = __webpack_require__(10);
-var gameOverUI = __webpack_require__(15);
+var WrongSound = __webpack_require__(11);
+var FiftySound = __webpack_require__(18);
+var HintSound = __webpack_require__(19);
+var gameOverUI = __webpack_require__(13);
 
 
 var currentPlayer;
 var questionsArray;
 var questionIndex;
-var progressBar;
+var timerBar;
 var timer;
+var timerInterval;
 
 
 var gameUI = function() {
   var questions = new Questions();
+  this.removeContent('welcome_content');
   this.wrongAnswerButtons = [];
   this.correctAnswerButton;
   questions.all(function(result) {
@@ -809,6 +814,13 @@ gameUI.prototype = {
     p.innerText = text;
     return p;
   },
+
+  removeContent: function(htmlElementId) {
+    var toClear = document.getElementById(htmlElementId);
+    while (toClear.firstChild) {
+        toClear.removeChild(toClear.firstChild);
+    }
+  }, 
 
   endGame: function() {
     new gameOverUI();
@@ -835,23 +847,31 @@ gameUI.prototype = {
     localStorage.setItem("currentPlayer", dataToSave);
   },
 
-  checkAnswer: function(selectedAnswer, correctAnswer) {
+  checkAnswer: function(selectedAnswer, correctAnswer, answerButton) {
+    this.correctAnswerButton.style.cssText = "background-color: green;";
     if (selectedAnswer === correctAnswer) {
       console.log("correct");
-      currentPlayer.score += 1;
+      currentPlayer.score += timer;
       this.savePlayer(currentPlayer);
       var correctSound = new CorrectSound();
     } else {
+      this.wrongAnswerButtons.forEach(function(button) {
+        console.log(button.innerText);
+        console.log(correctAnswer);
+          answerButton.style.cssText = "background-color: red;";
+      });
       var wrongSound = new WrongSound();
       currentPlayer.lives -= 1;
       this.savePlayer(currentPlayer);
       console.log("incorrect");
     }
+    setTimeout(this.endOfQuestion.bind(this), 1000);
+  },
 
+  endOfQuestion: function() {
     if (currentPlayer.lives == 0) {
       this.endGame();
     } else {
-
       questionIndex += 1;
       this.removeQuestion();
       this.render(questionsArray[questionIndex]);
@@ -876,10 +896,10 @@ gameUI.prototype = {
         this.correctAnswerButton = answerButton;
       } else {
         this.wrongAnswerButtons.push(answerButton);
-
       }
       answerButton.addEventListener('click', function(){
-        this.checkAnswer(answer, question.correctAnswer);
+        // console.log(answerButton);
+        this.checkAnswer(answer, question.correctAnswer, answerButton);
       }.bind(this));
     }.bind(this));
   },
@@ -951,31 +971,32 @@ gameUI.prototype = {
   moveTimer: function() {
     if (timer > 0) {
       timer -= 0.5;
-      progressBar.style.width = timer + '%';
+      timerBar.style.width = timer + '%';
       if (timer < 50) {
-        progressBar.style.backgroundColor = 'orange';
+        timerBar.style.backgroundColor = 'orange';
       }
       if (timer < 25) {
-        progressBar.style.backgroundColor = 'red';
+        timerBar.style.backgroundColor = 'red';
       }
-      // if (timer <= 0) {
-        //   console.log(this);
-        //   this.timeOut();
-        // }
-      }
-    },
+    } else if (timer === 0) {
+      currentPlayer.lives -= 1;
+      setTimeout(this.endOfQuestion.bind(this), 1000);
+      clearInterval(timerInterval);
+    }
+  },
 
-  renderProgressBar: function() {
+  renderTimerBar: function() {
     timer = 100;
     console.log("rendering progress bar");
     var containerDiv = document.getElementById('question');
     var progressBarBackground = document.createElement('div');
-    progressBar = document.createElement('div');
-    progressBarBackground.appendChild(progressBar);
+    timerBar = document.createElement('div');
+    progressBarBackground.appendChild(timerBar);
     containerDiv.appendChild(progressBarBackground);
     progressBarBackground.style.cssText = "background-color: grey; width: 100%; height: 20px";
-    progressBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
-    setInterval(this.moveTimer, 50);
+    timerBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
+    clearInterval(timerInterval);
+    timerInterval = setInterval(this.moveTimer.bind(this), 50);
   },
 
   render: function(question) {
@@ -987,7 +1008,7 @@ gameUI.prototype = {
       this.renderButtons(question);
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
-      this.renderProgressBar();
+      this.renderTimerBar();
     }
   }
 }
@@ -995,10 +1016,10 @@ gameUI.prototype = {
 module.exports = gameUI;
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var welcomeUI = __webpack_require__(3);
+var welcomeUI = __webpack_require__(2);
 
 var registrationUI = function() {
   this.removeContent("question");
@@ -1058,16 +1079,46 @@ registrationUI.prototype = {
 module.exports = registrationUI;
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var welcomeUI = __webpack_require__(3);
+var welcomeUI = __webpack_require__(2);
 
 var app = function() {
   new welcomeUI();
 }
 
 window.onload = app;
+
+/***/ }),
+/* 17 */,
+/* 18 */
+/***/ (function(module, exports) {
+
+var FiftySound = function(){
+
+  var fiftySound = new Audio('https://www.soundjay.com/misc/sounds/paper-rip-4.mp3');
+  fiftySound.play();
+};
+
+  
+
+module.exports = FiftySound;
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+var HintSound = function(){
+
+  var hintSound = new Audio('https://www.soundjay.com/misc/sounds/magic-chime-02.mp3');
+  hintSound.play();
+};
+
+  
+
+module.exports = HintSound;
 
 /***/ })
 /******/ ]);
