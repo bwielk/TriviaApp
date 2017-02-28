@@ -141,9 +141,9 @@ adminForm: function(){
     allQuestions.add(newQuestion, function(data){
       console.log(data);
     });
+    this.setup();
 
-
-  }
+  }.bind(this);
 },
 
 getQuestions: function(questions){
