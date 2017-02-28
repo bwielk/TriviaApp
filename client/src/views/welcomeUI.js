@@ -20,7 +20,7 @@ welcomeUI.prototype = {
 
   createWelcomeText: function() {
     var welcomeText = document.createElement('p');
-    welcomeText.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+    welcomeText.innerText = "Dude! How's it hangin'? Welcome back to the 90s, a time when your radical young mind was like a totally bodacious sponge. Your mind might heinously withered these days, but at least you have memories of the greatest decade ever. Take this test to see if those all night raves, hooch and destroyed your recollections. So quit clowinin'. There's the play button! let's bounce!";
     var div = document.getElementById('welcome_content');
     div.appendChild(welcomeText);
   }, 
