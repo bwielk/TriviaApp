@@ -27,7 +27,8 @@ leaderboardUI.prototype = {
     }).reverse();
     for(var player of sortedArray){
       var li = document.createElement('li');
-      li.innerText = "NAME: " + player.name + " \n SCORES(total): " + player.scores + "";
+      li.innerText = "NAME   : " + player.name + " \n SCORE   : " + player.scores + "";
+      li.style.cssText = "font-weight: bold; margin-bottom: 2%; color:black";
       list.appendChild(li);
     }
     maindiv.appendChild(list);
@@ -42,6 +43,7 @@ leaderboardUI.prototype = {
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
     goBackButton.className = "buttonUI";
+    goBackButton.style.cssText = "background-color: powderBlue";
     container.appendChild(goBackButton);
     goBackButton.onclick = this.handleGoBackButtonClick;
   }

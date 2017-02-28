@@ -1,17 +1,21 @@
 var Questions = require('../models/questions.js');
 var Question = require('../models/question.js');
 var adminUI = require('./adminUI');
+var deletedUI = require('./deletedUI');
+var addedUI = require('./addedUI');
 
 var adminUI = function(){
-  this.removeContent('question');
   document.body.style.backgroundImage = "url('')";
   document.body.style.backgroundColor = "rgb(138, 138, 92)";
+  document.getElementById('question').style = "display: none";
+  document.getElementById('passwordField').style = "display: none";
+  this.removeContent('quiz_field');
   this.adminForm();
   var questions = new Questions();
   questions.all(function(result){
     this.getQuestions(result);
   }.bind(this));
-  document.getElementById('question').style = "display: inline";
+  // this.getQuestions(questions);
 };
 
 adminUI.prototype = {
@@ -63,38 +67,45 @@ adminUI.prototype = {
    var questions = new Questions();
    var newline = document.createElement('br');
    var submit = document.createElement('input');
-   // var self = this;
+   var self = this;
    submit.name = name;
    submit.type = type;
    submit.value = value;
    submit.className = "buttonUI";
    submit.onclick = function(e) {
+    console.log("in onclick",this);
     e.preventDefault();
     questions.delete(name, function(){
-      new adminUI;
-      // console.log(self)
-      // self.getQuestions();
-    });
-  };
+      console.log("in delete", this);
+      this.removeContent('quiz_field');
+      questions = new Questions();
+      this.adminForm();
+      questions.all(function(result){
+        this.getQuestions(result);
+      }.bind(this));      
+      // new deletedUI;
+       // console.log(self)
+     }.bind(this));
+  }.bind(this);
   form.appendChild(newline);
   form.appendChild(submit);
 },
 
-adminForm: function(){
-  var div = document.getElementById('question');
+ adminForm: function(){
+  var div = document.getElementById('quiz_field');
   // var div = document.getElementById('quiz_field');
- 
+  var formField = document.createElement('div');
+  formField.id = 'adminField';
   var form = document.createElement('form');
-    // form.action = "/api/players";
-    var goBack = this.createGoBackButton(div);
+    // form.action = "/api/players"
 
-    this.createInput(form, "question", "textarea", "question", "Your question: ", "50");
-    this.createInput(form, "option", "text", "A", "A:", "20");
-    this.createInput(form, "option", "text", "B", "B:", "20");
-    this.createInput(form, "option","text", "C", "C:", "20");
-    this.createInput(form, "option", "text", "D", "D:", "20");
-    this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
-    this.createInput(form, "category", "text", "category", "Category", "20");
+    this.createInput(formField, "question", "textarea", "question", "Your question: ", "50");
+    this.createInput(formField, "option", "text", "A", "A:", "20");
+    this.createInput(formField, "option", "text", "B", "B:", "20");
+    this.createInput(formField, "option","text", "C", "C:", "20");
+    this.createInput(formField, "option", "text", "D", "D:", "20");
+    this.createInput(formField, "correct", "text", "correct", "Correct Answer", "20");
+    this.createInput(formField, "category", "text", "category", "Category", "20");
 
     // var allAnswers = function(){
     //   var values = [];
@@ -118,12 +129,13 @@ adminForm: function(){
 
       var allQuestions = new Questions();
       allQuestions.add(newQuestion, function(data){
-        new adminUI;
+        new addedUI();
       });
     }
 
-    var submitButton = this.createSubmitButton(form, 'submit', 'SAVE');
-    div.appendChild(form);
+    var goBack = this.createGoBackButton(formField);
+    var submitButton = this.createSubmitButton(formField, 'submit', 'SAVE');
+    div.appendChild(formField);
   },
 
   getQuestions: function(questions){
