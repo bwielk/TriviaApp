@@ -105,11 +105,17 @@ gameUI.prototype = {
       this.savePlayer(currentPlayer);
       console.log("incorrect");
     }
+    this.correctAnswerButton.disabled = true;
+    var wrng = this.wrongAnswerButtons;
+    for(var i = 0; i < wrng.length; i++) {
+        wrng[i].disabled = true;
+    }
+   
     setTimeout(this.endOfQuestion.bind(this), 1000);
   },
 
   endOfQuestion: function() {
-    if (currentPlayer.lives == 0) {
+    if (currentPlayer.lives <= 0) {
       this.endGame();
     } else {
       questionIndex += 1;
@@ -259,7 +265,9 @@ gameUI.prototype = {
       this.renderHintLifePreserver();
       this.renderButtons(question);
     }
-  }
+  },
+
+
 }
 
 module.exports = gameUI;
