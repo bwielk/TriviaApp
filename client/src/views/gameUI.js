@@ -247,6 +247,8 @@ gameUI.prototype = {
   render: function(question) {   
     if (questionIndex < questionsArray.length) {
       var containerDiv = document.getElementById('question');
+      containerDiv.style.display = "inline";
+      console.log(containerDiv);
       var p = document.createElement('p');
 
       this.appendText(p, question.questionString);

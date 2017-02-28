@@ -45,7 +45,6 @@ adminAuthorisationUI.prototype = {
   createAuthForm: function(){
     var admin = new Admin();
     var div = document.getElementById('question');
-    div.id = "welcome_content";
     var gobackbutton = this.createGoBackButton(div);
     var p = document.createElement('p');
     p.innerText = "ENTER THE ADMIN PASSWORD";
