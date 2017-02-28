@@ -2,9 +2,8 @@ var Admin = require('../models/admin.js');
 var adminUI = require('./adminUI');
 
 var adminAuthorisationUI = function(){
-  var welcome = document.getElementById('welcome_content');
+  document.getElementById('welcome_content').style = "display:none";
   document.getElementById('question').style = "display: inline";
-  welcome.style = "display:none";
   var buttons = document.getElementById('buttons');
   buttons.style = "display:none";
   this.setBackground("TV");
@@ -46,6 +45,7 @@ adminAuthorisationUI.prototype = {
   createAuthForm: function(){
     var admin = new Admin();
     var div = document.getElementById('question');
+    div.id = "welcome_content";
     var gobackbutton = this.createGoBackButton(div);
     var p = document.createElement('p');
     p.innerText = "ENTER THE ADMIN PASSWORD";

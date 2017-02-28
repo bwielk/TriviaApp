@@ -20,6 +20,7 @@ leaderboardUI.prototype = {
 
   render: function(players){
     var maindiv = document.getElementById('quiz_field');
+    maindiv.id = "welcome_content";
     var list = document.createElement('ol');
     var sortedArray = players.sort(function(a, b){
       return a.scores - b.scores;
@@ -40,6 +41,7 @@ leaderboardUI.prototype = {
     var container = document.getElementById("quiz_field");
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
+    goBackButton.className = "buttonUI";
     container.appendChild(goBackButton);
     goBackButton.onclick = this.handleGoBackButtonClick;
   }
