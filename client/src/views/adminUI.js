@@ -76,15 +76,12 @@ adminUI.prototype = {
     console.log("in onclick",this);
     e.preventDefault();
     questions.delete(name, function(){
-      console.log("in delete", this);
       this.removeContent('quiz_field');
-      questions = new Questions();
+      var questions = new Questions();
       this.adminForm();
       questions.all(function(result){
         this.getQuestions(result);
       }.bind(this));      
-      // new deletedUI;
-       // console.log(self)
      }.bind(this));
   }.bind(this);
   form.appendChild(newline);
@@ -99,7 +96,16 @@ adminUI.prototype = {
   var form = document.createElement('form');
     // form.action = "/api/players"
 
-    this.createInput(formField, "question", "textarea", "question", "Your question: ", "50");
+    // this.createInput(formField, "question", "textarea", "question", "Your question: ", "50");
+    var questionField = document.createElement('textarea');
+    questionField.name = "question";
+    questionField.rows = "4";
+    questionField.cols = "20";
+    questionField.placeholder = "Your question";
+    questionField.id = "adminInput";
+    questionField.style.cssText = "border: 1px solid black";
+    formField.appendChild(questionField);
+
     this.createInput(formField, "option", "text", "A", "A:", "20");
     this.createInput(formField, "option", "text", "B", "B:", "20");
     this.createInput(formField, "option","text", "C", "C:", "20");
@@ -129,12 +135,12 @@ adminUI.prototype = {
 
       var allQuestions = new Questions();
       allQuestions.add(newQuestion, function(data){
-        new addedUI();
+
       });
     }
 
-    var goBack = this.createGoBackButton(formField);
     var submitButton = this.createSubmitButton(formField, 'submit', 'SAVE');
+    var goBack = this.createGoBackButton(formField);
     div.appendChild(formField);
   },
 
@@ -144,12 +150,14 @@ adminUI.prototype = {
     for(var question of questions){
       var deleteForm = document.createElement('form');
       deleteForm.action = "/api/questions/" + index;
-
+      deleteForm.style.cssText = "float: left"
       // console.log(deleteForm);
       // deleteForm.action = "/api/questions/" + id + "";////!!!!!
       deleteForm.method = "delete";//// !!!!!
       var field = document.createElement('div');
-      field.style.cssText = "border: 7px solid black; background-color: grey; max-height: 300px; width: 900px; margin-bottom: 1%; border-radius: 4px; display:inline-block;";
+      field.style.cssText = "border: 7px solid black; background-color: grey; max-height: 300px; width: 900px; margin-bottom: 1%; border-radius: 4px; display:inline-block";
+      infoField = document.createElement('div');
+      infoField.style.cssText = "float: right; width: 650px"
       var p1= document.createElement('p');
       p1.innerText = question.questionString;
       p1.style.cssText = "font-family: Orbitron; margin-left: 4%";
@@ -173,10 +181,10 @@ adminUI.prototype = {
       }; ////!!!!
 
       field.appendChild(deleteForm); //!!!!!!
-
-      field.appendChild(p1);
-      field.appendChild(list);
-      field.appendChild(ctg);
+      infoField.appendChild(p1);
+      infoField.appendChild(list);
+      infoField.appendChild(ctg);
+      field.appendChild(infoField);
       var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE");
       main.appendChild(field);
       index++;
