@@ -60,9 +60,6 @@ adminUI.prototype = {
     submit.method = "post";
     submit.className = "buttonUI";
     submit.style.cssText = "background-color:#bcf06e; color: black; margin: 0;";
-    submit.onclick = function(){
-
-    }
     form.appendChild(newline);
     form.appendChild(submit);
     return submit;
@@ -77,20 +74,25 @@ adminUI.prototype = {
    submit.value = value;
    submit.className = "buttonUI";
    submit.onclick = function(e) {
-
-    console.log("in onclick",this);
-    e.preventDefault();
-    questions.delete(name, function(){
-      this.removeContent('quiz_field');
-      var questions = new Questions();
-      this.adminForm();
-      questions.all(function(result){
-        this.getQuestions(result);
-      }.bind(this));      
-     }.bind(this));
-  }.bind(this);
-  form.appendChild(newline);
-  form.appendChild(submit);
+    this.removeContent('quiz_field');
+    this.adminForm();
+    var questions = new Questions();
+    questions.all(function(result){
+      this.getQuestions(result);
+      console.log("in onclick",this);
+      e.preventDefault();
+      questions.delete(name, function(){
+        this.removeContent('quiz_field');
+        var questions = new Questions();
+        this.adminForm();
+        questions.all(function(result){
+          this.getQuestions(result);
+        }.bind(this));      
+      }.bind(this));
+    }.bind(this));
+    form.appendChild(newline);
+    form.appendChild(submit);
+  }
 },
 
 adminForm: function(){
@@ -136,21 +138,19 @@ adminForm: function(){
     allQuestions.add(newQuestion, function(data){
       console.log(data);
     });
-  }
 
- 
     div.appendChild(formField);
     formField.appendChild(form);
+  }
+},
 
-  },
-
-  getQuestions: function(questions){
-    var main = document.getElementById('quiz_field');
-    var index = 0;
-    for(var question of questions){
-      var deleteForm = document.createElement('form');
-      deleteForm.action = "/api/questions/" + index;
-      deleteForm.style.cssText = "float: left"
+getQuestions: function(questions){
+  var main = document.getElementById('quiz_field');
+  var index = 0;
+  for(var question of questions){
+    var deleteForm = document.createElement('form');
+    deleteForm.action = "/api/questions/" + index;
+    deleteForm.style.cssText = "float: left"
       // console.log(deleteForm);
       // deleteForm.action = "/api/questions/" + id + "";////!!!!!
       deleteForm.method = "delete";//// !!!!!
