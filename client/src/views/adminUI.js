@@ -81,12 +81,7 @@ adminUI.prototype = {
     submit.onclick = function(e) {
       e.preventDefault();
       questions.delete(name, function(){
-        this.removeContent('quiz_field');
-        var questions = new Questions();
-        this.adminForm();
-        questions.all(function(result){
-          this.getQuestions(result);
-        }.bind(this));      
+        this.setup();    
       }.bind(this));
     }.bind(this);
     form.appendChild(newline);
