@@ -9,7 +9,6 @@ var adminUI = function(){
   document.getElementById('question').style = "display: none";
   document.getElementById('passwordField').style = "display: none";
   this.removeContent('quiz_field');
-
   this.adminForm();
   var questions = new Questions();
   questions.all(function(result){
@@ -57,10 +56,16 @@ adminUI.prototype = {
     var submit = document.createElement('input');
     submit.type = type;
     submit.value = value;
+    submit.action = "/api/questions";
+    submit.method = "post";
     submit.className = "buttonUI";
     submit.style.cssText = "background-color:#bcf06e; color: black; margin: 0;";
+    submit.onclick = function(){
+
+    }
     form.appendChild(newline);
     form.appendChild(submit);
+    return submit;
   },
 
   createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -88,48 +93,54 @@ adminUI.prototype = {
   form.appendChild(submit);
 },
 
- adminForm: function(){
+adminForm: function(){
   var div = document.getElementById('quiz_field');
   // var div = document.getElementById('quiz_field');
   var formField = document.createElement('div');
   formField.id = 'adminField';
   var form = document.createElement('form');
 
-    var questionField = document.createElement('textarea');
-    questionField.name = "question";
-    questionField.rows = "4";
-    questionField.cols = "20";
-    questionField.placeholder = "Your question";
-    questionField.id = "adminInput";
-    questionField.style.cssText = "border: 1px solid black";
-    formField.appendChild(questionField);
+  var questionField = document.createElement('input');
+  questionField.name = "question";
+  questionField.rows = "4";
+  questionField.cols = "20";
+  questionField.placeholder = "Your question";
+  questionField.id = "adminInput";
+  questionField.style.cssText = "border: 1px solid black";
+  form.appendChild(questionField);
 
-    this.createInput(formField, "option", "text", "A", "A:", "20");
-    this.createInput(formField, "option", "text", "B", "B:", "20");
-    this.createInput(formField, "option","text", "C", "C:", "20");
-    this.createInput(formField, "option", "text", "D", "D:", "20");
-    this.createInput(formField, "correct", "text", "correct", "Correct Answer", "20");
-    this.createInput(formField, "category", "text", "category", "Category", "20");
+  this.createInput(form, "option", "text", "A", "A:", "20");
+  this.createInput(form, "option", "text", "B", "B:", "20");
+  this.createInput(form, "option","text", "C", "C:", "20");
+  this.createInput(form, "option", "text", "D", "D:", "20");
+  this.createInput(form, "correct", "text", "correct", "Correct Answer", "20");
+  this.createInput(form, "category", "text", "category", "Category", "20");
+  console.log(form);
+  var submitButton = this.createSubmitButton(form, 'submit', 'SAVE');
+  var goBack = this.createGoBackButton(form);  
+  console.log(submitButton);
+  form.onsubmit = function(e){
+    console.log(this);
+    e.preventDefault();
+    var newQuestion = new Question({
+      questionString: e.target.question.value,
+      possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
+      correctAnswer: e.target.correct.value,
+      category: e.target.category.value
+    });
 
-    form.onsubmit = function(e){
+    console.log(newQuestion);
 
-      e.preventDefault();
-      var newQuestion = new Question({
-        questionString: e.target.question.value,
-        possibleAnswers: [e.target.A.value, e.target.B.value, e.target.C.value, e.target.D.value],
-        correctAnswer: e.target.correct.value,
-        category: e.target.category.value
-      });
+    var allQuestions = new Questions();
 
-      var allQuestions = new Questions();
-      allQuestions.add(newQuestion, function(data){
+    allQuestions.add(newQuestion, function(data){
+      console.log(data);
+    });
+  }
 
-      });
-    }
-
-    var submitButton = this.createSubmitButton(formField, 'submit', 'SAVE');
-    var goBack = this.createGoBackButton(formField);
+ 
     div.appendChild(formField);
+    formField.appendChild(form);
 
   },
 
