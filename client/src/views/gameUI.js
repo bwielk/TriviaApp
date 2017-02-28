@@ -20,10 +20,14 @@ var timerInterval;
 
 
 var gameUI = function() {
+  var welcome = document.getElementById('welcome_content');
+  var buttonsField = document.getElementById('buttons');
+  buttonsField.style.width = "472px";
+  this.createGoBackButton(buttonsField);
+  welcome.style = "display: none";
   var questions = new Questions();
-  this.removeContent('welcome_content');
   this.wrongAnswerButtons = [];
-  this.correctAnswerButton;
+  this.correctAnswerButton;  
   questions.all(function(result) {
     questionsArray = result;
     questionIndex = 0;
@@ -71,6 +75,18 @@ gameUI.prototype = {
     localStorage.setItem("currentPlayer", dataToSave);
   },
 
+  handleGoBackButtonClick: function(){
+    window.location = "/";
+  },
+
+  createGoBackButton: function(container){
+    var goBackButton = document.createElement("button");
+    goBackButton.innerText = "GO BACK";
+    goBackButton.id = "buttonUI";
+    container.appendChild(goBackButton);
+    goBackButton.onclick = this.handleGoBackButtonClick;
+  },
+
   checkAnswer: function(selectedAnswer, correctAnswer, answerButton) {
     this.correctAnswerButton.style.cssText = "background-color: green;";
     if (selectedAnswer === correctAnswer) {
@@ -110,10 +126,11 @@ gameUI.prototype = {
   },
 
   renderButtons: function(question) {
-    var containerDiv = document.getElementById('question');
+    var containerDiv = document.getElementById('choices');
     this.wrongAnswerButtons = [];
     question.possibleAnswers.forEach(function(answer) {
       var answerButton = document.createElement('button');
+      answerButton.id = "buttonOptions";
       this.appendText(answerButton, answer);
       containerDiv.appendChild(answerButton);
       if (answer === question.correctAnswer) {
@@ -147,6 +164,8 @@ gameUI.prototype = {
     if (currentPlayer.lifePreserver5050) {
       var containerDiv = document.getElementById('question');
       var button5050 = document.createElement('button');
+      button5050.id = "buttonGameHints";
+      button5050.style.cssText = "background-color: pink; color: black";
       this.appendText(button5050, "50/50");
       containerDiv.appendChild(button5050);
       button5050.onclick = this.removeTwoAnswers.bind(this);
@@ -180,6 +199,8 @@ gameUI.prototype = {
       console.log("test");
       var containerDiv = document.getElementById('question');
       var buttonHint = document.createElement('button');
+      buttonHint.id = "buttonGameHints";
+      buttonHint.style.cssText = "background-color: powderblue; color: black";
       this.appendText(buttonHint, "Get Hint");
       containerDiv.appendChild(buttonHint);
       buttonHint.onclick = this.giveHint.bind(this);
@@ -223,16 +244,18 @@ gameUI.prototype = {
     timerInterval = setInterval(this.moveTimer.bind(this), 50);
   },
 
-  render: function(question) {
+  render: function(question) {   
     if (questionIndex < questionsArray.length) {
       var containerDiv = document.getElementById('question');
       var p = document.createElement('p');
-      this.appendText(p, question.questionString)
+
+      this.appendText(p, question.questionString);
       containerDiv.appendChild(p);
-      this.renderButtons(question);
+    
+      this.renderTimerBar();
       this.render5050LifePreserver();
       this.renderHintLifePreserver();
-      this.renderTimerBar();
+      this.renderButtons(question);
     }
   }
 }
