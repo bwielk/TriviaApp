@@ -161,7 +161,7 @@ adminForm: function(){
       }; ////!!!!
 
       field.appendChild(deleteForm); //!!!!!!
-
+      
       field.appendChild(p1);
       field.appendChild(list);
       field.appendChild(ctg);
