@@ -266,6 +266,13 @@ gameUI.prototype = {
     scoreDiv.innerText = "Score: " + currentPlayer.score;
   },
 
+  renderCategory: function(question){
+    var containerDiv = document.getElementById('question');
+    var categoryDiv = document.createElement('div');
+    containerDiv.appendChild(categoryDiv);
+    categoryDiv.innerText = "Category: " + (question.category);
+  },
+
   rendering: function(question) {   
     if (questionIndex < questionsArray.length && currentPlayer.lives > 0) {
       var containerDiv = document.getElementById('question');
@@ -280,7 +287,8 @@ gameUI.prototype = {
       this.rendering5050LifePreserver();
       this.renderingHintLifePreserver();
       this.renderingButtons(question);
-      this.renderStats();
+      this.renderStats(question);
+      this.renderCategory(question);
     }
   },
 
