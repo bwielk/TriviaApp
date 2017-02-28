@@ -10,7 +10,7 @@ var welcomeUI = function() {
   document.getElementById('choices').style = "display: none";
   this.createWelcomeText();
   this.createPlayButton();
-  this.createRegisterButton();
+  // this.createRegisterButton();
   this.createLeaderboardButton();
   this.createAdminButton();
   
