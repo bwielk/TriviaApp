@@ -126,7 +126,7 @@ gameUI.prototype = {
   },
 
   renderButtons: function(question) {
-    var containerDiv = document.getElementById('choices');
+    var containerDiv = document.getElementById('question');
     this.wrongAnswerButtons = [];
     question.possibleAnswers.forEach(function(answer) {
       var answerButton = document.createElement('button');

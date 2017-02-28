@@ -43,14 +43,16 @@ body div {
   border: 2px solid yellow;
 }
 
-#buttonUI{
+.buttonUI {
   font-family: Orbitron; 
   padding: 1% 2%;
   font-size: 101%;
   background-color: rgb(138, 138, 92);
   border-color: rgb(138, 138, 92);
   font-weight: bold;
-  color: #36454f
+  color: #36454f;
+  margin: auto;
+  display: inline;
 }
 
 #buttons{
@@ -161,3 +163,12 @@ iframe {
 
 }
 </html>
+#adminInput{
+  font-family: Orbitron; 
+  font-size: 102%;
+  padding: 0.2% 0%;
+  margin: 0.2% auto;
+  background-color: grey;
+  border-color: grey;
+  display: inline-block;
+}
