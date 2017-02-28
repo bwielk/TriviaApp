@@ -251,6 +251,21 @@ gameUI.prototype = {
     timerInterval = setInterval(this.moveTimer.bind(this), 50);
   },
 
+  renderStats: function() {
+    var containerDiv = document.getElementById('question');
+    var livesDiv = document.createElement('div');
+    containerDiv.appendChild(livesDiv);
+    livesDiv.innerText = "Lives: " + currentPlayer.lives;
+
+    var qnNumberDiv = document.createElement('div');
+    containerDiv.appendChild(qnNumberDiv);
+    qnNumberDiv.innerText = "Question " + (questionIndex + 1);
+
+    var scoreDiv = document.createElement('div');
+    containerDiv.appendChild(scoreDiv);
+    scoreDiv.innerText = "Score: " + currentPlayer.score;
+  },
+
   rendering: function(question) {   
     if (questionIndex < questionsArray.length && currentPlayer.lives > 0) {
       var containerDiv = document.getElementById('question');
@@ -265,6 +280,7 @@ gameUI.prototype = {
       this.rendering5050LifePreserver();
       this.renderingHintLifePreserver();
       this.renderingButtons(question);
+      this.renderStats();
     }
   },
 
