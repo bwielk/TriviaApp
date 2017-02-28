@@ -1,3 +1,4 @@
+
 html, body{
   margin: 0;
   padding: 0;
@@ -9,6 +10,7 @@ body{
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 
 #container{
   width: 960px;
@@ -107,3 +109,55 @@ body div {
 iframe {
   margin: 0% 29%;
 }
+
+.animated {
+  -webkit-animation-duration: 3s;
+  animation-duration: 3s;
+  animation-delay: 0.8s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fadeInLeft {
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.zoomIn {
+  animation-name: zoomIn;
+
+}
+</html>
