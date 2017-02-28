@@ -8,12 +8,7 @@ var adminUI = function(){
   document.body.style.backgroundColor = "rgb(138, 138, 92)";
   document.getElementById('question').style = "display: none";
   document.getElementById('passwordField').style = "display: none";
-  this.removeContent('quiz_field');
-  this.adminForm();
-  var questions = new Questions();
-  questions.all(function(result){
-    this.getQuestions(result);
-  }.bind(this));
+  this.setup();
 
 };
 
@@ -24,6 +19,15 @@ adminUI.prototype = {
       toClear.removeChild(toClear.firstChild);
     }
   }, 
+
+  setup: function() {
+    this.removeContent('quiz_field');
+    this.adminForm();
+    var questions = new Questions();
+    questions.all(function(result){
+      this.getQuestions(result);
+    }.bind(this));
+  },
 
   handleGoBackButtonClick: function(){
     window.location = "/";
@@ -65,21 +69,16 @@ adminUI.prototype = {
     return submit;
   },
 
-  createDeleteButton: function(form, name, type, value){///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   var questions = new Questions();
-   var newline = document.createElement('br');
-   var submit = document.createElement('input');
-   submit.name = name;
-   submit.type = type;
-   submit.value = value;
-   submit.className = "buttonUI";
-   submit.onclick = function(e) {
-    this.removeContent('quiz_field');
-    this.adminForm();
+  createDeleteButton: function(form, name, type, value){
+    console.log("in createDeleteButton");
     var questions = new Questions();
-    questions.all(function(result){
-      this.getQuestions(result);
-      console.log("in onclick",this);
+    var newline = document.createElement('br');
+    var submit = document.createElement('input');
+    submit.name = name;
+    submit.type = type;
+    submit.value = value;
+    submit.className = "buttonUI";
+    submit.onclick = function(e) {
       e.preventDefault();
       questions.delete(name, function(){
         this.removeContent('quiz_field');
@@ -89,18 +88,22 @@ adminUI.prototype = {
           this.getQuestions(result);
         }.bind(this));      
       }.bind(this));
-    }.bind(this));
+    }.bind(this);
     form.appendChild(newline);
     form.appendChild(submit);
-  }
-},
+  },
 
 adminForm: function(){
+  console.log("in admin form");
   var div = document.getElementById('quiz_field');
+  div.style.display = "inline";
   // var div = document.getElementById('quiz_field');
   var formField = document.createElement('div');
   formField.id = 'adminField';
   var form = document.createElement('form');
+
+  div.appendChild(formField);
+  formField.appendChild(form);
 
   var questionField = document.createElement('input');
   questionField.name = "question";
@@ -139,8 +142,7 @@ adminForm: function(){
       console.log(data);
     });
 
-    div.appendChild(formField);
-    formField.appendChild(form);
+
   }
 },
 
@@ -151,48 +153,48 @@ getQuestions: function(questions){
     var deleteForm = document.createElement('form');
     deleteForm.action = "/api/questions/" + index;
     deleteForm.style.cssText = "float: left"
-      // console.log(deleteForm);
-      // deleteForm.action = "/api/questions/" + id + "";////!!!!!
-      deleteForm.method = "delete";//// !!!!!
-      var field = document.createElement('div');
-      field.style.cssText = "border: 7px solid black; background-color: grey; max-height: 300px; width: 900px; margin-bottom: 1%; border-radius: 4px; display:inline-block";
-      infoField = document.createElement('div');
-      infoField.style.cssText = "float: right; width: 650px"
+    // console.log(deleteForm);
+    // deleteForm.action = "/api/questions/" + id + "";////!!!!!
+    deleteForm.method = "delete";//// !!!!!
+    var field = document.createElement('div');
+    field.style.cssText = "border: 7px solid black; background-color: grey; max-height: 300px; width: 900px; margin-bottom: 1%; border-radius: 4px; display:inline-block";
+    infoField = document.createElement('div');
+    infoField.style.cssText = "float: right; width: 650px"
 
-      var p1= document.createElement('p');
-      p1.innerText = question.questionString;
-      p1.style.cssText = "font-family: Orbitron; margin-left: 4%";
-      var list  = document.createElement('ul');
-      list.style.cssText = "list-style: none; padding: 0% 5%";
-      var correctAnswer = question.correctAnswer;
-      var category = question.category;
-      for(var answer of question.possibleAnswers){
-        var li = document.createElement('li'); 
-        if(answer === correctAnswer){
-          li.innerText = answer;
-          li.style.cssText = "background-color: green; font-family: Orbitron;";
-        }else{
-          li.innerText = answer;
-          li.style.cssText = "font-family: Orbitron";
-        };
-        list.appendChild(li);
-        var ctg = document.createElement('p');
-        ctg.innerText = "CATEGORY: " + category;
-        ctg.style.cssText = "font-family: Orbitron; margin-left: 4%";
-      }; ////!!!!
+    var p1= document.createElement('p');
+    p1.innerText = question.questionString;
+    p1.style.cssText = "font-family: Orbitron; margin-left: 4%";
+    var list  = document.createElement('ul');
+    list.style.cssText = "list-style: none; padding: 0% 5%";
+    var correctAnswer = question.correctAnswer;
+    var category = question.category;
+    for(var answer of question.possibleAnswers){
+      var li = document.createElement('li'); 
+      if(answer === correctAnswer){
+        li.innerText = answer;
+        li.style.cssText = "background-color: green; font-family: Orbitron;";
+      }else{
+        li.innerText = answer;
+        li.style.cssText = "font-family: Orbitron";
+      };
+      list.appendChild(li);
+      var ctg = document.createElement('p');
+      ctg.innerText = "CATEGORY: " + category;
+      ctg.style.cssText = "font-family: Orbitron; margin-left: 4%";
+    }; ////!!!!
 
-      field.appendChild(deleteForm); //!!!!!!
-      infoField.appendChild(p1);
-      infoField.appendChild(list);
-      infoField.appendChild(ctg);
-      field.appendChild(infoField);
+    field.appendChild(deleteForm); //!!!!!!
+    infoField.appendChild(p1);
+    infoField.appendChild(list);
+    infoField.appendChild(ctg);
+    field.appendChild(infoField);
 
-      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE");
-      main.appendChild(field);
-      index++;
+    var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE");
+    main.appendChild(field);
+    index++;
 
-    }
   }
+}
 }
 
 
