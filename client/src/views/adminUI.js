@@ -3,17 +3,19 @@ var Question = require('../models/question.js');
 var adminUI = require('./adminUI');
 
 var adminUI = function(){
+
   document.body.style.backgroundImage = "url('')";
   document.body.style.backgroundColor = "rgb(138, 138, 92)";
   document.getElementById('question').style = "display: none";
   document.getElementById('passwordField').style = "display: none";
   this.removeContent('quiz_field');
+
   this.adminForm();
   var questions = new Questions();
   questions.all(function(result){
     this.getQuestions(result);
   }.bind(this));
-  // this.getQuestions(questions);
+
 };
 
 adminUI.prototype = {
@@ -65,12 +67,12 @@ adminUI.prototype = {
    var questions = new Questions();
    var newline = document.createElement('br');
    var submit = document.createElement('input');
-   var self = this;
    submit.name = name;
    submit.type = type;
    submit.value = value;
    submit.className = "buttonUI";
    submit.onclick = function(e) {
+
     console.log("in onclick",this);
     e.preventDefault();
     questions.delete(name, function(){
@@ -92,9 +94,7 @@ adminUI.prototype = {
   var formField = document.createElement('div');
   formField.id = 'adminField';
   var form = document.createElement('form');
-    // form.action = "/api/players"
 
-    // this.createInput(formField, "question", "textarea", "question", "Your question: ", "50");
     var questionField = document.createElement('textarea');
     questionField.name = "question";
     questionField.rows = "4";
@@ -110,16 +110,6 @@ adminUI.prototype = {
     this.createInput(formField, "option", "text", "D", "D:", "20");
     this.createInput(formField, "correct", "text", "correct", "Correct Answer", "20");
     this.createInput(formField, "category", "text", "category", "Category", "20");
-
-    // var allAnswers = function(){
-    //   var values = [];
-    //   var arr = document.getElementsByClassName('option');
-    //   console.log(arr);
-    //   for(var element of arr){
-    //     values.push(e.target.option.value);
-    //   }
-    //   return values;
-    // },
 
     form.onsubmit = function(e){
 
@@ -140,6 +130,7 @@ adminUI.prototype = {
     var submitButton = this.createSubmitButton(formField, 'submit', 'SAVE');
     var goBack = this.createGoBackButton(formField);
     div.appendChild(formField);
+
   },
 
   getQuestions: function(questions){
@@ -156,6 +147,7 @@ adminUI.prototype = {
       field.style.cssText = "border: 7px solid black; background-color: grey; max-height: 300px; width: 900px; margin-bottom: 1%; border-radius: 4px; display:inline-block";
       infoField = document.createElement('div');
       infoField.style.cssText = "float: right; width: 650px"
+
       var p1= document.createElement('p');
       p1.innerText = question.questionString;
       p1.style.cssText = "font-family: Orbitron; margin-left: 4%";
@@ -183,6 +175,7 @@ adminUI.prototype = {
       infoField.appendChild(list);
       infoField.appendChild(ctg);
       field.appendChild(infoField);
+
       var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE");
       main.appendChild(field);
       index++;

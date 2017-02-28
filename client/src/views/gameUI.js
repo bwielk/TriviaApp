@@ -31,7 +31,7 @@ var gameUI = function() {
   questions.all(function(result) {
     questionsArray = result;
     questionIndex = 0;
-    this.render(questionsArray[questionIndex]);
+    this.rendering(questionsArray[questionIndex]);
   }.bind(this));
   this.setupPlayer();
 }
@@ -115,12 +115,13 @@ gameUI.prototype = {
   },
 
   endOfQuestion: function() {
-    if (currentPlayer.lives <= 0) {
+
+    if (currentPlayer.lives === 0) {
       this.endGame();
     } else {
       questionIndex += 1;
       this.removeQuestion();
-      this.render(questionsArray[questionIndex]);
+      this.rendering(questionsArray[questionIndex]);
     }
   },
 
@@ -131,7 +132,7 @@ gameUI.prototype = {
     }
   },
 
-  renderButtons: function(question) {
+  renderingButtons: function(question) {
     var containerDiv = document.getElementById('question');
     this.wrongAnswerButtons = [];
     question.possibleAnswers.forEach(function(answer) {
@@ -166,7 +167,7 @@ gameUI.prototype = {
     }
   },
 
-  render5050LifePreserver: function() {
+  rendering5050LifePreserver: function() {
     if (currentPlayer.lifePreserver5050) {
       var containerDiv = document.getElementById('question');
       var button5050 = document.createElement('button');
@@ -200,7 +201,7 @@ gameUI.prototype = {
     }
   },
 
-  renderHintLifePreserver: function() {
+  renderingHintLifePreserver: function() {
     if (currentPlayer.lifePreserverGiveHint) {
       console.log("test");
       var containerDiv = document.getElementById('question');
@@ -216,7 +217,7 @@ gameUI.prototype = {
   timeOut: function() {
     questionIndex += 1;
     this.removeQuestion();
-    this.render(questionsArray[questionIndex]);
+    this.rendering(questionsArray[questionIndex]);
   },
 
   moveTimer: function() {
@@ -236,9 +237,9 @@ gameUI.prototype = {
     }
   },
 
-  renderTimerBar: function() {
+  renderingTimerBar: function() {
     timer = 100;
-    console.log("rendering progress bar");
+    console.log("renderinging progress bar");
     var containerDiv = document.getElementById('question');
     var progressBarBackground = document.createElement('div');
     timerBar = document.createElement('div');
@@ -250,8 +251,8 @@ gameUI.prototype = {
     timerInterval = setInterval(this.moveTimer.bind(this), 50);
   },
 
-  render: function(question) {   
-    if (questionIndex < questionsArray.length) {
+  rendering: function(question) {   
+    if (questionIndex < questionsArray.length && currentPlayer.lives > 0) {
       var containerDiv = document.getElementById('question');
       containerDiv.style.display = "inline";
       console.log(containerDiv);
@@ -260,10 +261,10 @@ gameUI.prototype = {
       this.appendText(p, question.questionString);
       containerDiv.appendChild(p);
     
-      this.renderTimerBar();
-      this.render5050LifePreserver();
-      this.renderHintLifePreserver();
-      this.renderButtons(question);
+      this.renderingTimerBar();
+      this.rendering5050LifePreserver();
+      this.renderingHintLifePreserver();
+      this.renderingButtons(question);
     }
   },
 
