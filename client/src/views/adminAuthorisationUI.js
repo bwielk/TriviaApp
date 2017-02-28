@@ -53,6 +53,7 @@ adminAuthorisationUI.prototype = {
     p.innerText = "ENTER THE ADMIN PASSWORD";
     var password = document.createElement('input');
     password.type = "password";
+    password.name = "password";
     password.size = "30";
     password.placeholder = "PASSWORD";
     password.id = "passwordInput";
