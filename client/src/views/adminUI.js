@@ -3,7 +3,6 @@ var Question = require('../models/question.js');
 var adminUI = require('./adminUI');
 
 var adminUI = function(){
-  document.getElementById('question').style = "display: inline";
   this.removeContent('question');
   document.body.style.backgroundImage = "url('')";
   document.body.style.backgroundColor = "rgb(138, 138, 92)";
@@ -12,6 +11,7 @@ var adminUI = function(){
   questions.all(function(result){
     this.getQuestions(result);
   }.bind(this));
+  document.getElementById('question').style = "display: inline";
 };
 
 adminUI.prototype = {
@@ -29,7 +29,8 @@ adminUI.prototype = {
   createGoBackButton: function(container){
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
-    goBackButton.id = "buttonUI";
+    goBackButton.className = "buttonUI";
+    goBackButton.style.cssText = "background-color:#89cff0; color: black";
     container.appendChild(goBackButton);
     goBackButton.onclick = this.handleGoBackButtonClick;
   },
@@ -52,6 +53,8 @@ adminUI.prototype = {
     var submit = document.createElement('input');
     submit.type = type;
     submit.value = value;
+    submit.className = "buttonUI";
+    submit.style.cssText = "background-color:#bcf06e; color: black; margin: 0;";
     form.appendChild(newline);
     form.appendChild(submit);
   },
@@ -64,6 +67,7 @@ adminUI.prototype = {
    submit.name = name;
    submit.type = type;
    submit.value = value;
+   submit.className = "buttonUI";
    submit.onclick = function(e) {
     e.preventDefault();
     questions.delete(name, function(){
@@ -79,9 +83,10 @@ adminUI.prototype = {
 adminForm: function(){
   var div = document.getElementById('question');
   // var div = document.getElementById('quiz_field');
-  var goBack = this.createGoBackButton(div);
+ 
   var form = document.createElement('form');
     // form.action = "/api/players";
+    var goBack = this.createGoBackButton(div);
 
     this.createInput(form, "question", "textarea", "question", "Your question: ", "50");
     this.createInput(form, "option", "text", "A", "A:", "20");
@@ -132,35 +137,38 @@ adminForm: function(){
       // deleteForm.action = "/api/questions/" + id + "";////!!!!!
       deleteForm.method = "delete";//// !!!!!
       var field = document.createElement('div');
-      field.style.cssText = "border: 1px solid black; background-color: grey; max-height: 300px; width: 300px; margin-bottom: 1%";
+      field.style.cssText = "border: 7px solid black; background-color: grey; max-height: 300px; width: 900px; margin-bottom: 1%; border-radius: 4px; display:inline-block;";
       var p1= document.createElement('p');
       p1.innerText = question.questionString;
+      p1.style.cssText = "font-family: Orbitron; margin-left: 4%";
       var list  = document.createElement('ul');
-      list.style.cssText = "list-style: none";
+      list.style.cssText = "list-style: none; padding: 0% 5%";
       var correctAnswer = question.correctAnswer;
       var category = question.category;
       for(var answer of question.possibleAnswers){
         var li = document.createElement('li'); 
         if(answer === correctAnswer){
           li.innerText = answer;
-          li.style.cssText = "background-color: green";
+          li.style.cssText = "background-color: green; font-family: Orbitron;";
         }else{
           li.innerText = answer;
+          li.style.cssText = "font-family: Orbitron";
         };
         list.appendChild(li);
         var ctg = document.createElement('p');
         ctg.innerText = "CATEGORY: " + category;
-      };
-
-      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE"); ////!!!!
+        ctg.style.cssText = "font-family: Orbitron; margin-left: 4%";
+      }; ////!!!!
 
       field.appendChild(deleteForm); //!!!!!!
 
       field.appendChild(p1);
       field.appendChild(list);
       field.appendChild(ctg);
+      var deleteButton = this.createDeleteButton(deleteForm, index, "submit", "DELETE");
       main.appendChild(field);
       index++;
+
     }
   }
 }
