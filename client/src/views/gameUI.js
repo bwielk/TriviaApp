@@ -159,6 +159,7 @@ gameUI.prototype = {
       this.wrongAnswerButtons.forEach(function(answerButton) {
 
         answerButton.disabled = true;
+        answerButton.style.cssText = "background-color: grey;";
 
       }.bind(this));
       var fiftySound = new FiftySound();
@@ -193,7 +194,7 @@ gameUI.prototype = {
         hintedButton = this.correctAnswerButton;
       }
 
-      hintedButton.style.cssText = "font-weight: bold";
+      hintedButton.style.cssText = "background-color: powderblue";
       var hintSound = new HintSound();
       currentPlayer.lifePreserverGiveHint = false; 
       console.log(currentPlayer);
