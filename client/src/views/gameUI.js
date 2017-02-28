@@ -146,7 +146,6 @@ gameUI.prototype = {
         this.wrongAnswerButtons.push(answerButton);
       }
       answerButton.addEventListener('click', function(){
-        // console.log(answerButton);
         this.checkAnswer(answer, question.correctAnswer, answerButton);
       }.bind(this));
     }.bind(this));
@@ -204,7 +203,6 @@ gameUI.prototype = {
 
   renderingHintLifePreserver: function() {
     if (currentPlayer.lifePreserverGiveHint) {
-      console.log("test");
       var containerDiv = document.getElementById('question');
       var buttonHint = document.createElement('button');
       buttonHint.id = "buttonGameHints";
@@ -240,7 +238,6 @@ gameUI.prototype = {
 
   renderingTimerBar: function() {
     timer = 100;
-    console.log("renderinging progress bar");
     var containerDiv = document.getElementById('question');
     var progressBarBackground = document.createElement('div');
     timerBar = document.createElement('div');
@@ -278,7 +275,6 @@ gameUI.prototype = {
     if (questionIndex < questionsArray.length && currentPlayer.lives > 0) {
       var containerDiv = document.getElementById('question');
       containerDiv.style.display = "inline";
-      console.log(containerDiv);
       var p = document.createElement('p');
 
       this.appendText(p, question.questionString);
@@ -292,8 +288,6 @@ gameUI.prototype = {
       this.renderCategory(question);
     }
   },
-
-
 }
 
 module.exports = gameUI;
