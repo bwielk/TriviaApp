@@ -6,7 +6,7 @@ var PlaySound = require('../models/playSound');
 var adminAuthorisationUI = require('./adminAuthorisationUI.js');
 
 var welcomeUI = function() {
-  document.getElementById('question').style = "display: none";
+  document.getElementById('question2').style = "display: none";
   document.getElementById('choices').style = "display: none";
   this.createWelcomeText();
   this.createPlayButton();
@@ -20,7 +20,7 @@ welcomeUI.prototype = {
 
   createWelcomeText: function() {
     var welcomeText = document.createElement('p');
-    welcomeText.innerText = "Dude! How's it hangin'? Welcome back to the 90s, a time when your radical young mind was like a totally bodacious sponge. Your mind might heinously withered these days, but at least you have memories of the greatest decade ever. Take this test to see if those all night raves, hooch and destroyed your recollections. So quit clowinin'. There's the play button! let's bounce!";
+    welcomeText.innerText = "Dude! How's it hangin'? Welcome back to the 90s, a time when your radical young mind was like a totally bodacious sponge. Your mind might be heinously withered these days, but at least you have memories of the greatest decade ever. Take this test to see if those all night raves and hooch destroyed your recollections. So quit clowinin'. The play button's up there! let's bounce!";
     var div = document.getElementById('welcome_content');
     div.appendChild(welcomeText);
   }, 

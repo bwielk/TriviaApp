@@ -30,9 +30,10 @@ var gameUI = function() {
   welcome.style = "display: none";
   var questions = new Questions();
   this.wrongAnswerButtons = [];
-  this.correctAnswerButton;  
-  questions.all(function(result) {
+  this.correctAnswerButton; 
+  questions.all(function(result){
     questionsArray = result;
+    questionsArray = this.shuffle(questionsArray);
     questionIndex = 0;
     this.rendering(questionsArray[questionIndex]);
   }.bind(this));
@@ -133,18 +134,38 @@ gameUI.prototype = {
   },
 
   removeQuestion: function() {
-    var divToRemove = document.getElementById("question");
+    var divToRemove = document.getElementById("question2");
     while (divToRemove.firstChild) {
       divToRemove.removeChild(divToRemove.firstChild);
     }
   },
 
+  shuffle: function(qnsArray) {
+    var currentIndex = qnsArray.length;
+    var temp;
+    var randomIndex;
+
+    while (currentIndex !== 0) {
+
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temp = qnsArray[currentIndex];
+      qnsArray[currentIndex] = qnsArray[randomIndex];
+      qnsArray[randomIndex] = temp;
+    }
+
+    return qnsArray;
+  },
+
   renderingButtons: function(question) {
-    var containerDiv = document.getElementById('question');
+    console.log("SOMETHING");
+    var containerDiv = document.getElementById('question2');
     this.wrongAnswerButtons = [];
     question.possibleAnswers.forEach(function(answer) {
       var answerButton = document.createElement('button');
       answerButton.id = "buttonOptions";
+      console.log(answerButton);
       this.appendText(answerButton, answer);
       containerDiv.appendChild(answerButton);
       if (answer === question.correctAnswer) {
@@ -156,6 +177,7 @@ gameUI.prototype = {
         this.checkAnswer(answer, question.correctAnswer, answerButton);
       }.bind(this));
     }.bind(this));
+    console.log(containerDiv);
   },
 
   removeTwoAnswers: function() {
@@ -176,7 +198,8 @@ gameUI.prototype = {
 
   rendering5050LifePreserver: function() {
     if (currentPlayer.lifePreserver5050) {
-      var containerDiv = document.getElementById('question');
+      var containerDiv = document.getElementById('lifesavers');
+      this.removeContent('lifesavers');
       var button5050 = document.createElement('button');
       button5050.id = "buttonGameHints";
       button5050.style.cssText = "background-color: pink; color: black";
@@ -210,7 +233,7 @@ gameUI.prototype = {
 
   renderingHintLifePreserver: function() {
     if (currentPlayer.lifePreserverGiveHint) {
-      var containerDiv = document.getElementById('question');
+      var containerDiv = document.getElementById('lifesavers');
       var buttonHint = document.createElement('button');
       buttonHint.id = "buttonGameHints";
       buttonHint.style.cssText = "background-color: powderblue; color: black";
@@ -245,7 +268,7 @@ gameUI.prototype = {
 
   renderingTimerBar: function() {
     timer = 100;
-    var containerDiv = document.getElementById('question');
+    var containerDiv = document.getElementById('category');
     var progressBarBackground = document.createElement('div');
     timerBar = document.createElement('div');
     progressBarBackground.appendChild(timerBar);
@@ -254,14 +277,16 @@ gameUI.prototype = {
     timerBar.style.cssText = "height: 20px; width: 100%; background-color: green;"
     clearInterval(timerInterval);
     timerInterval = setInterval(this.moveTimer.bind(this), 50);
+
   },
 
   renderStats: function() {
-    var containerDiv = document.getElementById('question');
-    
+    var containerDiv = document.getElementById('category');
+
     var livesDiv = document.createElement('div');
     livesDiv.id = 'gameStats';
     containerDiv.appendChild(livesDiv);
+    livesDiv.style.cssText = "background-color: red";
     livesDiv.innerText = "Lives: " + currentPlayer.lives;
 
     var qnNumberDiv = document.createElement('div');
@@ -276,20 +301,24 @@ gameUI.prototype = {
   },
 
   renderCategory: function(question){
-    var containerDiv = document.getElementById('question');
+    var containerDiv = document.getElementById('category');
     var categoryDiv = document.createElement('div');
     containerDiv.appendChild(categoryDiv);
     categoryDiv.style.cssText = "font-family: Orbitron; font-weight: bold; font-size: 120%";
     categoryDiv.innerText = "Category: " + (question.category);
   },
 
-  rendering: function(question) {   
+  rendering: function(question) { 
+    var question2Div = document.getElementById('question2');
+    question2Div.style.cssText = "display: inline";  
+    this.removeContent('category');
     if (questionIndex < questionsArray.length && currentPlayer.lives > 0) {
       var background = document.getElementById('quiz_field');
       background.style.cssText = "background-color: #8A8A5C; width: 550px; border: 8px solid black; border-radius: 10px; margin: auto";
-      var containerDiv = document.getElementById('question');
+      var containerDiv = document.getElementById('category');
       containerDiv.style.display = "inline";
       var p = document.createElement('p');
+      p.style.cssText = "font-family: Orbitron; font-size: 120%; font-weight: bold; margin-top: 2%";
 
       this.renderStats(question);
       this.rendering5050LifePreserver();
@@ -299,7 +328,6 @@ gameUI.prototype = {
       this.renderCategory(question);
       this.renderingTimerBar();
       this.renderingButtons(question);
-      
     }
   },
 }

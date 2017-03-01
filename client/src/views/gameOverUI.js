@@ -2,11 +2,16 @@ var leaderboardUI = require('./leaderboardUI.js');
 var GameOverSound = require('../models/gameOverSound');
 
 var gameOverUI = function() {
+  var div = document.getElementById('buttons');
+  div.style.cssText = "width: 485px";
   this.stringified = localStorage.getItem("currentPlayer");
   this.currentPlayer = JSON.parse(this.stringified);
   this.currentPlayerName = this.currentPlayer.name;
   this.currentPlayerScore = this.currentPlayer.score;
   this.container = document.getElementById('quiz_field');
+  var question2 = document.getElementById('question2');
+  question2.style.display = "none";
+  this.container.style.display = "inline";
   this.setup();
 }
 
@@ -15,15 +20,17 @@ gameOverUI.prototype = {
   setup: function() {
     // this.removeContent("quiz_field");
     this.setBackground('music');
-    this.removeContent("question");
+    this.removeContent("question2");
+    this.removeContent("category");
+    this.removeContent("lifesavers");
     this.changeTitle();
     this.createOutcomeText();
     var newField = document.createElement('div');
     var leader = this.createLeaderboardButton();
     var restart = this.createStartNewGameButton();
     newField.appendChild(leader);
-    newField.appendChild(restaert);
-    var quizField = document.getElementById('quiz_field');
+    newField.appendChild(restart);
+    var quizField = document.createElement('div');
     quizField.appendChild(newField);
     setTimeout(GameOverSound, 800);
   },
@@ -52,12 +59,13 @@ gameOverUI.prototype = {
     var textField = document.createElement('h2');
     console.log(this.currentPlayer);
     textField.innerText = "You score " + this.currentPlayerScore;
-    textField.style.cssText = "font-family: Orbitron; font-size: 130%; margin-left: 35%";
+    textField.style.cssText = "font-family: Orbitron; font-size: 130%; margin-left: 35%; background-color: rgb(138, 138, 92); border: 4px solid black; border-radius: 2px; padding: 1% 2%; width: 150px; text-align: center; margin: auto";
     this.container.appendChild(textField);
   },
 
   createForm: function() {
     var form = document.createElement('form');
+    form.style.cssText = "background-color: rgb(138, 138, 92); font-family: Orbitron; width: 400px; font-weight: bold; padding: 2% 1%; border: 6px solid black; border-radius: 2%; margin: auto";
     form.action = "/api/players/";
     form.method = "post";
     this.container.appendChild(form);
@@ -93,6 +101,7 @@ gameOverUI.prototype = {
       event.preventDefault();
       var url = "/api/players";
       var nameInput = document.getElementById("nameInput");
+      nameInput.id = "passwordInput";
       var scoresInput = document.getElementById("scoresInput");
       var params = "name="+nameInput.value+"&scores="+scoresInput.value;
       var request = new XMLHttpRequest();
@@ -110,9 +119,10 @@ gameOverUI.prototype = {
  createStartNewGameButton: function(){
    var startNewGameButton = document.createElement('button');
    startNewGameButton.className = "buttonUI";
-   startNewGameButton.style.cssText = "background-color: orange; color: black; padding: 2%"
+   startNewGameButton.style.cssText = "background-color: orange; color: black;"
    startNewGameButton.innerText = "Start New Game";
-   var div = document.getElementById('quiz_field');
+   var div = document.getElementById('buttons');
+   div.style.cssTest = "width: 485px";
    div.appendChild(startNewGameButton);
    startNewGameButton.onclick = this.handleNewGameButtonClick;
  }

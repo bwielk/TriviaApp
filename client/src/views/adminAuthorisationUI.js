@@ -3,7 +3,7 @@ var adminUI = require('./adminUI');
 
 var adminAuthorisationUI = function(){
   document.getElementById('welcome_content').style = "display:none";
-  document.getElementById('question').style = "display: none";
+  // document.getElementById('question').style = "display: none";
   var buttons = document.getElementById('buttons');
   buttons.style = "display:none";
   this.setBackground("TV");

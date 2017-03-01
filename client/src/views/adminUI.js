@@ -6,7 +6,7 @@ var adminUI = function(){
 
   document.body.style.backgroundImage = "url('')";
   document.body.style.backgroundColor = "rgb(138, 138, 92)";
-  document.getElementById('question').style = "display: none";
+  // document.getElementById('question').style = "display: none";
   document.getElementById('passwordField').style = "display: none";
   this.setup();
 

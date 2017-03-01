@@ -38,11 +38,11 @@ body{
   margin-top: 2%;
 }
 
-/*
+
 body div {
   border: 2px solid yellow;
 }
-*/
+
 .buttonUI {
   font-family: Orbitron; 
   padding: 3% 2%;
@@ -104,8 +104,9 @@ body div {
   border-color: rgb(138, 138, 92);
   font-weight: bold;
   color: #36454f;
-  display: inline-block;
-  width: 230px;
+  position: relative;
+  display: flex;
+  width: 220px;
 }
 
 iframe {
@@ -224,7 +225,7 @@ iframe {
 }
 
 #gameStats {
-  width:90px;
+  width:160px;
   background-color: #8A8A5C;
   padding: 1% 1%;
   border-radius: 5px;
@@ -256,25 +257,20 @@ iframe {
   display: inline;
 }
 
-#question {
-  max-width: 960px;
-  max-height: 960px;
+#question2 {
+  width: 300px;
   text-align: center;
-  margin-left:15%;
+  margin: auto 22.5%;
   display: inline-block;
 }
 
-#question p {
+#question2 p {
   font-family: Orbitron;
   font-size: 120%;
   font-weight: bold;
 }
 
-#buttonGameHints {
-  flex-direction: column;
-}
 .leaderboardSumbission {
-  #adminInput{
     font-family: Orbitron; 
     font-size: 102%;
     padding: 0.2% 0%;
@@ -282,7 +278,17 @@ iframe {
     background-color: grey;
     border-color: grey;
     display: inline-block;
-  }
+},
+
+#lifesavers {
+  width: 300px;
+  text-align: center;
+  margin: auto 22.5%;
 }
+
+#lifesavers button{
+  display: absolute
+}
+
 
 }
