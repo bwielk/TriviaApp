@@ -20,10 +20,13 @@ var timerInterval;
 
 
 var gameUI = function() {
-  var welcome = document.getElementById('welcome_content');
+  this.setBackground("movies");
   var buttonsField = document.getElementById('buttons');
-  buttonsField.style.width = "472px";
   this.createGoBackButton(buttonsField);
+  var button = document.getElementById('buttonAdmin');
+  button.style.cssText = "display: none";
+  buttonsField.style.width = "285px";
+  var welcome = document.getElementById('welcome_content');
   welcome.style = "display: none";
   var questions = new Questions();
   this.wrongAnswerButtons = [];
@@ -43,10 +46,14 @@ gameUI.prototype = {
     return p;
   },
 
+  setBackground: function(name){
+    document.body.style.backgroundImage = "url('./" + name + ".jpg')";
+  },
+
   removeContent: function(htmlElementId) {
     var toClear = document.getElementById(htmlElementId);
     while (toClear.firstChild) {
-        toClear.removeChild(toClear.firstChild);
+      toClear.removeChild(toClear.firstChild);
     }
   }, 
 
@@ -81,8 +88,8 @@ gameUI.prototype = {
 
   createGoBackButton: function(container){
     var goBackButton = document.createElement("button");
+    goBackButton.className = "buttonUI";
     goBackButton.innerText = "GO BACK";
-    goBackButton.id = "buttonUI";
     container.appendChild(goBackButton);
     goBackButton.onclick = this.handleGoBackButtonClick;
   },
@@ -98,7 +105,7 @@ gameUI.prototype = {
       this.wrongAnswerButtons.forEach(function(button) {
         console.log(button.innerText);
         console.log(correctAnswer);
-          answerButton.style.cssText = "background-color: red;";
+        answerButton.style.cssText = "background-color: red;";
       });
       var wrongSound = new WrongSound();
       currentPlayer.lives -= 1;
@@ -108,9 +115,9 @@ gameUI.prototype = {
     this.correctAnswerButton.disabled = true;
     var wrng = this.wrongAnswerButtons;
     for(var i = 0; i < wrng.length; i++) {
-        wrng[i].disabled = true;
+      wrng[i].disabled = true;
     }
-   
+
     setTimeout(this.endOfQuestion.bind(this), 1000);
   },
 
@@ -128,7 +135,7 @@ gameUI.prototype = {
   removeQuestion: function() {
     var divToRemove = document.getElementById("question");
     while (divToRemove.firstChild) {
-        divToRemove.removeChild(divToRemove.firstChild);
+      divToRemove.removeChild(divToRemove.firstChild);
     }
   },
 
@@ -251,15 +258,19 @@ gameUI.prototype = {
 
   renderStats: function() {
     var containerDiv = document.getElementById('question');
+    
     var livesDiv = document.createElement('div');
+    livesDiv.id = 'gameStats';
     containerDiv.appendChild(livesDiv);
     livesDiv.innerText = "Lives: " + currentPlayer.lives;
 
     var qnNumberDiv = document.createElement('div');
+    qnNumberDiv.id = 'gameStats';
     containerDiv.appendChild(qnNumberDiv);
     qnNumberDiv.innerText = "Question " + (questionIndex + 1);
 
     var scoreDiv = document.createElement('div');
+    scoreDiv.id = 'gameStats';
     containerDiv.appendChild(scoreDiv);
     scoreDiv.innerText = "Score: " + currentPlayer.score;
   },
@@ -268,24 +279,27 @@ gameUI.prototype = {
     var containerDiv = document.getElementById('question');
     var categoryDiv = document.createElement('div');
     containerDiv.appendChild(categoryDiv);
+    categoryDiv.style.cssText = "font-family: Orbitron; font-weight: bold; font-size: 120%";
     categoryDiv.innerText = "Category: " + (question.category);
   },
 
   rendering: function(question) {   
     if (questionIndex < questionsArray.length && currentPlayer.lives > 0) {
+      var background = document.getElementById('quiz_field');
+      background.style.cssText = "background-color: #8A8A5C; width: 550px; border: 8px solid black; border-radius: 10px; margin: auto";
       var containerDiv = document.getElementById('question');
       containerDiv.style.display = "inline";
       var p = document.createElement('p');
 
-      this.appendText(p, question.questionString);
-      containerDiv.appendChild(p);
-    
-      this.renderingTimerBar();
+      this.renderStats(question);
       this.rendering5050LifePreserver();
       this.renderingHintLifePreserver();
-      this.renderingButtons(question);
-      this.renderStats(question);
+      this.appendText(p, question.questionString);
+      containerDiv.appendChild(p);
       this.renderCategory(question);
+      this.renderingTimerBar();
+      this.renderingButtons(question);
+      
     }
   },
 }

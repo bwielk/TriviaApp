@@ -55,6 +55,7 @@ welcomeUI.prototype = {
     playButton.id = "buttonPlay";
     playButton.className = "buttonUI";
     playButton.innerText = "PLAY";
+    playButton.style.cssText = "color: black; background-color: orange";
     var div = document.getElementById('buttons');
     div.appendChild(playButton);
     playButton.onclick = this.handlePlayButtonClick;
@@ -75,6 +76,7 @@ welcomeUI.prototype = {
     leaderboardButton.className = "buttonUI";
     leaderboardButton.id = "buttonLeader";
     leaderboardButton.innerText = "LEADERBOARD";
+    leaderboardButton.style.cssText = "background-color:cyan";
     var div = document.getElementById('buttons');
     div.appendChild(leaderboardButton);
     leaderboardButton.onclick = this.handleLeaderboardButtonClick;

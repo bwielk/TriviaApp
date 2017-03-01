@@ -38,11 +38,11 @@ body{
   margin-top: 2%;
 }
 
-
+/*
 body div {
   border: 2px solid yellow;
 }
-
+*/
 .buttonUI {
   font-family: Orbitron; 
   padding: 3% 2%;
@@ -74,7 +74,7 @@ body div {
   margin: auto;
 }
 
-#optionsField{
+/*#optionsField{
   width:400px;
   background-color: rgb(138, 138, 92);
   padding: 1% 1%;
@@ -85,7 +85,7 @@ body div {
   font-size: 100%;
   text-align: center;
   margin: auto;
-}
+}*/
 
 #buttonGameHints{
   font-family: Orbitron; 
@@ -99,13 +99,13 @@ body div {
 
 #buttonOptions{
   font-family: Orbitron; 
-  font-size: 101%;
+  font-size: 100%;
   background-color: rgb(138, 158, 52);
   border-color: rgb(138, 138, 92);
   font-weight: bold;
   color: #36454f;
-  display: block;
-  width: 250px;
+  display: inline-block;
+  width: 230px;
 }
 
 iframe {
@@ -221,6 +221,68 @@ iframe {
   font-weight: bold;
   text-align: center;
   margin: 2% auto;
+}
+
+#gameStats {
+  width:90px;
+  background-color: #8A8A5C;
+  padding: 1% 1%;
+  border-radius: 5px;
+  border: 2px solid black;
+  font-family: Orbitron;
+  /*color: #36454f;*/
+  color: white;
+  font-size: 100%;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.2% auto;
+  flex-direction:row ;
+  float:left;
+}
+
+#upperTabGame {
+  width:400px;
+  background-color: #8A8A5C;
+  padding: 1% 1%;
+  border-radius: 5px;
+  border: 5px solid black;
+  font-family: Orbitron;
+  /*color: #36454f;*/
+  color: white;
+  font-size: 100%;
+  font-weight: bold;
+  text-align: center;
+  margin: 2% auto;
+  display: inline;
+}
+
+#question {
+  max-width: 960px;
+  max-height: 960px;
+  text-align: center;
+  margin-left:15%;
+  display: inline-block;
+}
+
+#question p {
+  font-family: Orbitron;
+  font-size: 120%;
+  font-weight: bold;
+}
+
+#buttonGameHints {
+  flex-direction: column;
+}
+.leaderboardSumbission {
+  #adminInput{
+    font-family: Orbitron; 
+    font-size: 102%;
+    padding: 0.2% 0%;
+    margin: 0.2% auto;
+    background-color: grey;
+    border-color: grey;
+    display: inline-block;
+  }
 }
 
 }

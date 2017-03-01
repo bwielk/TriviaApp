@@ -14,11 +14,17 @@ gameOverUI.prototype = {
 
   setup: function() {
     // this.removeContent("quiz_field");
+    this.setBackground('music');
     this.removeContent("question");
     this.changeTitle();
     this.createOutcomeText();
-    this.createLeaderboardButton();
-    this.createStartNewGameButton();
+    var newField = document.createElement('div');
+    var leader = this.createLeaderboardButton();
+    var restart = this.createStartNewGameButton();
+    newField.appendChild(leader);
+    newField.appendChild(restaert);
+    var quizField = document.getElementById('quiz_field');
+    quizField.appendChild(newField);
     setTimeout(GameOverSound, 800);
   },
 
@@ -38,10 +44,15 @@ gameOverUI.prototype = {
     }
   }, 
 
+  setBackground: function(name){
+    document.body.style.backgroundImage = "url('./" + name + ".jpg')";
+  },
+
   createOutcomeText: function() {
     var textField = document.createElement('h2');
     console.log(this.currentPlayer);
     textField.innerText = "You score " + this.currentPlayerScore;
+    textField.style.cssText = "font-family: Orbitron; font-size: 130%; margin-left: 35%";
     this.container.appendChild(textField);
   },
 
@@ -58,6 +69,7 @@ gameOverUI.prototype = {
     input.type = inputType;
     input.name = inputName;
     input.value = inputValue;
+    input.id = inputValue;
     form.appendChild(input);
     return input;
   },
@@ -66,12 +78,15 @@ gameOverUI.prototype = {
     var form = this.createForm();
     var nameInput = this.addInput(form, "text", "name", "Input Name");
     nameInput.id = "nameInput";
+    nameInput.className = "leaderboardSubmission";
     var scoresInput = this.addInput(form, "hidden", "scores", this.currentPlayerScore);
     scoresInput.id = "scoresInput";
 
     var submit = document.createElement("input");
     submit.type = "submit";
     submit.value = "Save to leaderboard";
+    submit.className = "buttonUI";
+    submit.style.cssText = "background-color: powderblue; color: black; padding: 2%; display: inline";
     form.appendChild(submit);
 
     form.onsubmit = function(event) {
@@ -94,8 +109,10 @@ gameOverUI.prototype = {
 
  createStartNewGameButton: function(){
    var startNewGameButton = document.createElement('button');
+   startNewGameButton.className = "buttonUI";
+   startNewGameButton.style.cssText = "background-color: orange; color: black; padding: 2%"
    startNewGameButton.innerText = "Start New Game";
-   var div = document.getElementById('container');
+   var div = document.getElementById('quiz_field');
    div.appendChild(startNewGameButton);
    startNewGameButton.onclick = this.handleNewGameButtonClick;
  }

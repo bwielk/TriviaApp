@@ -1,6 +1,7 @@
 var Players = require('../models/players');
 
 var leaderboardUI = function(){
+  this.setBackground('politicssociety');
   this.removeContent("buttons");
   this.removeContent("quiz_field");
   this.createGoBackButton();
@@ -17,6 +18,10 @@ leaderboardUI.prototype = {
         toClear.removeChild(toClear.firstChild);
     }
   }, 
+
+  setBackground: function(name){
+    document.body.style.backgroundImage = "url('./" + name + ".jpg')";
+  },
 
   render: function(players){
     var maindiv = document.getElementById('quiz_field');
@@ -40,6 +45,7 @@ leaderboardUI.prototype = {
 
   createGoBackButton: function(){
     var container = document.getElementById("quiz_field");
+    container.style.cssText = "width: 400px";
     var goBackButton = document.createElement("button");
     goBackButton.innerText = "GO BACK";
     goBackButton.className = "buttonUI";
