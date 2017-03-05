@@ -199,7 +199,6 @@ gameUI.prototype = {
   rendering5050LifePreserver: function() {
     if (currentPlayer.lifePreserver5050) {
       var containerDiv = document.getElementById('lifesavers');
-      this.removeContent('lifesavers');
       var button5050 = document.createElement('button');
       button5050.id = "buttonGameHints";
       button5050.style.cssText = "background-color: pink; color: black";
@@ -226,7 +225,6 @@ gameUI.prototype = {
       hintedButton.style.cssText = "background-color: powderblue";
       var hintSound = new HintSound();
       currentPlayer.lifePreserverGiveHint = false; 
-      console.log(currentPlayer);
       this.savePlayer(currentPlayer);
     }
   },
@@ -321,6 +319,7 @@ gameUI.prototype = {
       p.style.cssText = "font-family: Orbitron; font-size: 120%; font-weight: bold; margin-top: 2%";
 
       this.renderStats(question);
+      this.removeContent('lifesavers');
       this.rendering5050LifePreserver();
       this.renderingHintLifePreserver();
       this.appendText(p, question.questionString);

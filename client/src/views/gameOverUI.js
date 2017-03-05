@@ -119,7 +119,7 @@ gameOverUI.prototype = {
  createStartNewGameButton: function(){
    var startNewGameButton = document.createElement('button');
    startNewGameButton.className = "buttonUI";
-   startNewGameButton.style.cssText = "background-color: orange; color: black;"
+   startNewGameButton.style.cssText = "background-color: orange; color: black;";
    startNewGameButton.innerText = "Start New Game";
    var div = document.getElementById('buttons');
    div.style.cssTest = "width: 485px";
